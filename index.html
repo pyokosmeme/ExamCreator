@@ -13,297 +13,147 @@
         color: #111827;
         background: #f8fafc;
       }
-      * {
-        box-sizing: border-box;
+      * { box-sizing: border-box; }
+      body { margin: 0; }
+      button { cursor: pointer; }
+      input, select, textarea, button { font: inherit; }
+      textarea { resize: vertical; }
+
+      .border { border: 1px solid rgba(148, 163, 184, 0.6); }
+      .border-l-4 { border-left: 4px solid rgba(37, 99, 235, 0.3); }
+      .rounded { border-radius: 0.25rem; }
+      .rounded-md { border-radius: 0.375rem; }
+      .rounded-lg { border-radius: 0.5rem; }
+      .rounded-xl { border-radius: 0.75rem; }
+      .rounded-2xl { border-radius: 1rem; }
+
+      .shadow-sm { box-shadow: 0 1px 2px rgba(15, 23, 42, 0.12); }
+      .shadow-xl { box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18); }
+
+      .p-1 { padding: 0.25rem; }
+      .p-2 { padding: 0.5rem; }
+      .p-3 { padding: 0.75rem; }
+      .p-4 { padding: 1rem; }
+      .p-6 { padding: 1.5rem; }
+      .px-1 { padding-left: 0.25rem; padding-right: 0.25rem; }
+      .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+      .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+      .py-0\.5 { padding-top: 0.125rem; padding-bottom: 0.125rem; }
+      .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+      .py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+
+      .min-w-12 { min-width: 3rem; }
+      .w-full { width: 100%; }
+      .flex-1 { flex: 1 1 0%; }
+      .h-24 { height: 6rem; }
+      .h-72 { height: 18rem; }
+      .max-w-3xl { max-width: 48rem; }
+      .max-w-4xl { max-width: 56rem; }
+
+      .grid { display: grid; }
+      .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+      .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .lg\:grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+      .md\:grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+      @media (min-width: 768px) {
+        .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }
-      body {
-        margin: 0;
+      @media (min-width: 1024px) {
+        .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }
-      button {
-        cursor: pointer;
-      }
-      .border {
-        border: 1px solid rgba(148, 163, 184, 0.6);
-      }
-      .rounded-xl {
-        border-radius: 0.75rem;
-      }
-      .rounded-2xl {
-        border-radius: 1rem;
-      }
-      .p-4 {
-        padding: 1rem;
-      }
-      .p-6 {
-        padding: 1.5rem;
-      }
-      .px-3 {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-      }
-      .py-1 {
-        padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
-      }
-      .min-w-12 {
-        min-width: 3rem;
-      }
-      .text-center {
-        text-align: center;
-      }
-      .text-sm {
-        font-size: 0.875rem;
-      }
-      .text-lg {
-        font-size: 1.125rem;
-      }
-      .text-xl {
-        font-size: 1.25rem;
-      }
-      .text-2xl {
-        font-size: 1.5rem;
-      }
-      .font-semibold {
-        font-weight: 600;
-      }
-      .font-medium {
-        font-weight: 500;
-      }
+
+      .flex { display: flex; }
+      .flex-wrap { flex-wrap: wrap; }
+      .items-center { align-items: center; }
+      .items-end { align-items: flex-end; }
+      .justify-between { justify-content: space-between; }
+      .justify-center { justify-content: center; }
+      .justify-end { justify-content: flex-end; }
+      .gap-1 { gap: 0.25rem; }
+      .gap-2 { gap: 0.5rem; }
+      .gap-3 { gap: 0.75rem; }
+      .gap-4 { gap: 1rem; }
+      .gap-6 { gap: 1.5rem; }
+
+      .text-xs { font-size: 0.75rem; }
+      .text-sm { font-size: 0.875rem; }
+      .text-lg { font-size: 1.125rem; }
+      .text-xl { font-size: 1.25rem; }
+      .text-2xl { font-size: 1.5rem; }
+      .font-semibold { font-weight: 600; }
+      .font-medium { font-weight: 500; }
       .font-mono {
         font-family: 'Fira Code', 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
       }
-      .bg-white {
+
+      .bg-white { background: #ffffff; }
+      .bg-gray-50 { background: #f9fafb; }
+      .bg-yellow-100 { background: #fef9c3; }
+      .bg-black { background: #111827; color: white; }
+      .bg-black\/40 { background: rgba(0, 0, 0, 0.4); }
+      .text-white { color: #ffffff; }
+      .text-gray-400 { color: #9ca3af; }
+      .text-gray-600 { color: #4b5563; }
+      .ml-auto { margin-left: auto; }
+      .ml-4 { margin-left: 1rem; }
+      .ml-6 { margin-left: 1.5rem; }
+      .mr-1 { margin-right: 0.25rem; }
+      .mt-1 { margin-top: 0.25rem; }
+      .mt-2 { margin-top: 0.5rem; }
+      .mt-3 { margin-top: 0.75rem; }
+      .mt-4 { margin-top: 1rem; }
+      .mb-1 { margin-bottom: 0.25rem; }
+      .mb-2 { margin-bottom: 0.5rem; }
+      .mb-3 { margin-bottom: 0.75rem; }
+      .mb-4 { margin-bottom: 1rem; }
+      .my-1 { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+      .my-2 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+      .my-4 { margin-top: 1rem; margin-bottom: 1rem; }
+      .mx-auto { margin-left: auto; margin-right: auto; }
+
+      .list-\[lower-alpha\] { list-style-type: lower-alpha; }
+      .clear-both { clear: both; }
+      .block { display: block; }
+      .z-30 { z-index: 30; }
+      .z-40 { z-index: 40; }
+      .fixed { position: fixed; }
+      .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+
+      .instructions {
         background: #ffffff;
+        color: #000000;
+        min-height: 7.8in;
+        padding: 0.8in 0.9in 0.6in 0.9in;
+        position: relative;
       }
-      .bg-gray-50 {
-        background: #f9fafb;
-      }
-      .bg-yellow-100 {
-        background: #fef9c3;
-      }
-      .bg-black {
-        background: #111827;
-        color: white;
-      }
-      .text-white {
-        color: white;
-      }
-      .text-gray-400 {
-        color: #9ca3af;
-      }
-      .text-gray-600 {
-        color: #4b5563;
-      }
-      .ml-auto {
-        margin-left: auto;
-      }
-      .ml-4 {
-        margin-left: 1rem;
-      }
-      .mr-1 {
-        margin-right: 0.25rem;
-      }
-      .mb-2 {
-        margin-bottom: 0.5rem;
-      }
-      .mb-3 {
-        margin-bottom: 0.75rem;
-      }
-      .mb-4 {
-        margin-bottom: 1rem;
-      }
-      .mt-1 {
-        margin-top: 0.25rem;
-      }
-      .mt-3 {
-        margin-top: 0.75rem;
-      }
-      .my-1 {
-        margin-top: 0.25rem;
-        margin-bottom: 0.25rem;
-      }
-      .my-2 {
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-      }
-      .my-4 {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-      }
-      .gap-2 {
-        gap: 0.5rem;
-      }
-      .gap-3 {
-        gap: 0.75rem;
-      }
-      .gap-4 {
-        gap: 1rem;
-      }
-      .gap-6 {
-        gap: 1.5rem;
-      }
-      .grid {
-        display: grid;
-      }
-      .grid-cols-1 {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-      }
-      .lg\:grid-cols-2 {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-      }
-      @media (min-width: 1024px) {
-        .lg\:grid-cols-2 {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-      .flex {
+      .instructions p { max-width: 7.2in; line-height: 1.45; margin: 0.25rem 0; font-size: 11pt; }
+      .nd-block { position: absolute; top: 0.9in; left: 0.9in; }
+      .nd-block p { margin: 0.15rem 0; font-size: 11pt; }
+      .title-wrap {
         display: flex;
-      }
-      .flex-wrap {
-        flex-wrap: wrap;
-      }
-      .items-center {
+        flex-direction: column;
         align-items: center;
-      }
-      .items-end {
-        align-items: flex-end;
-      }
-      .justify-between {
-        justify-content: space-between;
-      }
-      .justify-center {
         justify-content: center;
+        margin-top: 2.3in;
+        margin-bottom: 2in;
+        text-align: center;
       }
-      .shadow-sm {
-        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.12);
-      }
-      .shadow-xl {
-        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18);
-      }
-      .w-full {
-        width: 100%;
-      }
-      .h-72 {
-        height: 18rem;
-      }
-      .max-w-3xl {
-        max-width: 48rem;
-      }
-      .max-w-4xl {
-        max-width: 56rem;
-      }
-      .rounded-lg {
-        border-radius: 0.5rem;
-      }
-      .rounded-md {
-        border-radius: 0.375rem;
-      }
-      .px-2 {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-      }
-      .py-0\.5 {
-        padding-top: 0.125rem;
-        padding-bottom: 0.125rem;
-      }
-      .py-1 {
-        padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
-      }
-      .px-1 {
-        padding-left: 0.25rem;
-        padding-right: 0.25rem;
-      }
-      .px-2 {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-      }
-      .py-1\.5 {
-        padding-top: 0.375rem;
-        padding-bottom: 0.375rem;
-      }
-      .p-1 {
-        padding: 0.25rem;
-      }
-      .p-3 {
-        padding: 0.75rem;
-      }
-      .p-4 {
-        padding: 1rem;
-      }
-      .p-6 {
-        padding: 1.5rem;
-      }
-      .z-30 {
-        z-index: 30;
-      }
-      .z-40 {
-        z-index: 40;
-      }
-      .fixed {
-        position: fixed;
-      }
-      .inset-0 {
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-      }
-      .bg-black\/40 {
-        background: rgba(0, 0, 0, 0.4);
-      }
-      .max-w-3xl {
-        max-width: 48rem;
-      }
-      .max-w-4xl {
-        max-width: 56rem;
-      }
-      .truncate {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .list-\[lower-alpha\] {
-        list-style-type: lower-alpha;
-      }
-      .ml-6 {
-        margin-left: 1.5rem;
-      }
-      .clear-both {
-        clear: both;
-      }
-      .rounded {
-        border-radius: 0.25rem;
-      }
-      .rounded-md {
-        border-radius: 0.375rem;
-      }
-      .rounded-lg {
-        border-radius: 0.5rem;
-      }
-      .rounded-xl {
-        border-radius: 0.75rem;
-      }
-      .rounded-2xl {
-        border-radius: 1rem;
-      }
-      .border-l-4 {
-        border-left: 4px solid rgba(37, 99, 235, 0.3);
-      }
-      .bg-white\/60 {
-        background: rgba(255, 255, 255, 0.6);
-      }
-      .text-xs {
-        font-size: 0.75rem;
-      }
-      .align-super {
-        vertical-align: super;
-      }
-      textarea {
-        resize: vertical;
-      }
-      input, select, textarea, button {
-        font: inherit;
+      .title-wrap h1 { font-size: 28pt; font-weight: 600; margin: 0 0 0.25rem 0; }
+      .title-wrap h2 { font-size: 22pt; font-weight: 600; margin: 0; }
+      .variant-mark { font-size: 7pt; opacity: 0.35; vertical-align: super; margin-left: 2px; }
+      .inst-heading { color: #2b579a; font-weight: 700; margin: 0 0 0.25rem 0; }
+
+      .sheet { margin: 1rem 0; }
+      .sheet-img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+      .page-break { height: 1px; margin: 1.5rem 0; border-top: 1px dashed rgba(148, 163, 184, 0.4); }
+      .option { margin: 0.18rem 0; }
+      .options { margin-top: 0.35rem; }
+      .q-label { color: #2b579a; font-weight: 700; }
+
+      @media print {
+        @page { size: Letter; margin: 0.5in; }
+        .page-break { page-break-before: always; border: none; height: 0; margin: 0; }
+        .firstpage-only { break-after: page; page-break-after: always; }
       }
     </style>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -415,20 +265,151 @@
         });
       }
 
+      function FrontPage({ seedIndex, meta, showSolutions }) {
+        const letter = GREEK[seedIndex % GREEK.length] || "α";
+        const paras = String(meta.instructions || "").split(/\r?\n+/g).filter(Boolean);
+        return (
+          <section className="instructions firstpage-only">
+            <div className="nd-block">
+              {meta.nameLine && <p>Name:</p>}
+              {meta.idLine && <p>ID:</p>}
+              {meta.dateStr ? <p>Date: {meta.dateStr}</p> : <p>Date:</p>}
+            </div>
+            <div className="title-wrap">
+              <h1>{meta.course}</h1>
+              <h2>
+                {meta.examTitle}
+                <sup className="variant-mark">{letter}</sup>
+                {showSolutions ? " — Solutions" : ""}
+              </h2>
+              {meta.timeLimit && <div className="mt-1 text-sm">Time limit: {meta.timeLimit}</div>}
+            </div>
+            <h3 className="inst-heading">Instructions</h3>
+            {paras.length ? (
+              paras.map((t, i) => <p key={i}>{t}</p>)
+            ) : (
+              <>
+                <p>This exam consists of 10 multiple choice questions. Five are conceptual, five involve more complex calculations.</p>
+                <p>
+                  Complete all problems in the allotted time. <strong>Show all work.</strong> Scratch paper will be provided on request.
+                  Any scratch paper returned with the exam at the end of the allotted time may be considered for partial credit while grading.
+                  Equation sheets, useful constants, and mathematical formulas are provided in the last pages of the exam handout.
+                </p>
+              </>
+            )}
+          </section>
+        );
+      }
+
+      function EquationSheetsView({ sheets }) {
+        return (
+          <div>
+            {sheets.map((img, i) => (
+              <section key={i} className="sheet">
+                <img className="sheet-img" src={img.src} alt={img.alt || `Equation Sheet ${i + 1}`} />
+                <div className="page-break" />
+              </section>
+            ))}
+          </div>
+        );
+      }
+
+      function PreambleButton({ meta, onChange }) {
+        const [open, setOpen] = useState(false);
+        const [draft, setDraft] = useState(meta);
+        return (
+          <>
+            <button className="px-3 py-1 rounded-xl border" onClick={() => { setDraft(meta); setOpen(true); }}>Preamble &amp; Settings</button>
+            {open && (
+              <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-40">
+                <div className="bg-white rounded-2xl p-4 w-full max-w-3xl shadow-xl">
+                  <div className="text-lg font-semibold mb-3">Front Page / Preamble</div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <label className="text-sm">Course<input className="border rounded-md px-2 py-1 w-full" value={draft.course} onChange={e => setDraft({ ...draft, course: e.target.value })} /></label>
+                    <label className="text-sm">Exam Title<input className="border rounded-md px-2 py-1 w-full" value={draft.examTitle} onChange={e => setDraft({ ...draft, examTitle: e.target.value })} /></label>
+                    <label className="text-sm">Term<input className="border rounded-md px-2 py-1 w-full" value={draft.term} onChange={e => setDraft({ ...draft, term: e.target.value })} /></label>
+                    <label className="text-sm">Date<input className="border rounded-md px-2 py-1 w-full" value={draft.dateStr} onChange={e => setDraft({ ...draft, dateStr: e.target.value })} /></label>
+                    <label className="text-sm">Time Limit<input className="border rounded-md px-2 py-1 w-full" value={draft.timeLimit} onChange={e => setDraft({ ...draft, timeLimit: e.target.value })} /></label>
+                  </div>
+                  <div className="mt-3">
+                    <label className="text-sm">Instructions
+                      <textarea className="border rounded-md px-2 py-1 w-full h-24" value={draft.instructions} onChange={e => setDraft({ ...draft, instructions: e.target.value })} />
+                    </label>
+                  </div>
+                  <div className="mt-2 flex items-center gap-4 text-sm">
+                    <label className="flex items-center gap-2"><input type="checkbox" checked={draft.nameLine} onChange={e => setDraft({ ...draft, nameLine: e.target.checked })} /> Name line</label>
+                    <label className="flex items-center gap-2"><input type="checkbox" checked={draft.idLine} onChange={e => setDraft({ ...draft, idLine: e.target.checked })} /> ID line</label>
+                  </div>
+                  <div className="mt-4 flex justify-end gap-2">
+                    <button className="px-3 py-1 rounded-xl border" onClick={() => setOpen(false)}>Cancel</button>
+                    <button className="px-3 py-1 rounded-xl border bg-black text-white" onClick={() => { onChange(draft); setOpen(false); }}>Apply</button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        );
+      }
+
+      function SheetsButton({ sheets, onChange }) {
+        const [open, setOpen] = useState(false);
+        const [files, setFiles] = useState([]);
+        return (
+          <>
+            <button className="px-3 py-1 rounded-xl border" onClick={() => setOpen(true)}>Equation Sheets</button>
+            {open && (
+              <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-40">
+                <div className="bg-white rounded-2xl p-4 w-full max-w-3xl shadow-xl">
+                  <div className="text-lg font-semibold mb-3">Equation Sheets</div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <input type="file" accept="image/*" multiple onChange={(e) => setFiles(Array.from(e.target.files || []))} />
+                    <button className="px-3 py-1 rounded-xl border bg-black text-white" onClick={async () => {
+                      const added = [];
+                      for (const f of files) { const src = await fileToDataUrl(f); added.push({ src: String(src), alt: f.name }); }
+                      onChange([...(sheets || []), ...added]); setFiles([]);
+                    }}>Add image(s)</button>
+                  </div>
+                  {(sheets || []).map((s, i) => (
+                    <div key={i} className="flex items-center gap-3 border rounded-xl p-2 mb-2">
+                      <img src={s.src} alt={s.alt || "sheet"} style={{ height: 60 }} />
+                      <input className="border rounded-md px-2 py-1 flex-1" value={s.alt || ""} onChange={(e) => {
+                        const next = [...sheets]; next[i] = { ...s, alt: e.target.value }; onChange(next);
+                      }} />
+                      <button className="px-2 py-1 rounded border" onClick={() => {
+                        const next = [...sheets]; if (i > 0) [next[i - 1], next[i]] = [next[i], next[i - 1]]; onChange(next);
+                      }}>↑</button>
+                      <button className="px-2 py-1 rounded border" onClick={() => {
+                        const next = [...sheets]; if (i < next.length - 1) [next[i + 1], next[i]] = [next[i], next[i + 1]]; onChange(next);
+                      }}>↓</button>
+                      <button className="px-2 py-1 rounded border" onClick={() => {
+                        const next = [...sheets]; next.splice(i, 1); onChange(next);
+                      }}>Remove</button>
+                    </div>
+                  ))}
+                  <div className="mt-3 flex justify-end gap-2">
+                    <button className="px-3 py-1 rounded-xl border" onClick={() => setOpen(false)}>Close</button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        );
+      }
+
       function ProblemCard({ problem, bindings, correctIndex, onEdit, onImages }) {
         const rendered = renderTemplate(problem.stem, bindings);
         return (
-          <div className="border rounded-2xl p-4 shadow-sm mb-4 bg-white">
+          <div className="border rounded-2xl p-4 shadow-sm mb-4">
             <div className="text-sm text-gray-600 mb-2 flex items-center gap-2">
               <span>Problem ID: {problem.id}</span>
               <span className="text-gray-400">•</span>
-              <span>{problem.images?.length || 0} image{(problem.images?.length||0) === 1 ? "" : "s"}</span>
+              <span>{problem.images?.length || 0} image{(problem.images?.length || 0) === 1 ? "" : "s"}</span>
             </div>
             <div className="font-medium mb-2">{rendered}</div>
             {!!(problem.images && problem.images.length) && (
               <div className="flex flex-wrap gap-3 my-2">
                 {problem.images.map((img, i) => (
-                  <div key={i} className="border rounded-xl p-1 bg-white">
+                  <div key={i} className="border rounded-xl p-1">
                     <img
                       src={img.src}
                       alt={img.alt || ""}
@@ -436,12 +417,7 @@
                         width: `${img.widthPct ?? 50}%`,
                         display: "block",
                         margin: img.align === "center" ? "0 auto" : undefined,
-                        float:
-                          img.align === "left"
-                            ? "left"
-                            : img.align === "right"
-                            ? "right"
-                            : undefined,
+                        float: img.align === "left" ? "left" : img.align === "right" ? "right" : undefined,
                       }}
                     />
                   </div>
@@ -487,9 +463,7 @@
                       alert("Invalid JSON: " + e.message);
                     }
                   }}
-                >
-                  Apply
-                </button>
+                >Apply</button>
               </div>
             </div>
           </div>
@@ -498,6 +472,7 @@
 
       function ImageEditor({ problem, onChange, onClose }) {
         const [files, setFiles] = useState([]);
+        if (!problem) return null;
         return (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-40">
             <div className="bg-white rounded-2xl p-4 w-full max-w-4xl shadow-xl">
@@ -507,20 +482,15 @@
               </div>
               <div className="flex items-center gap-3 mb-3">
                 <input type="file" accept="image/*" multiple onChange={(e) => setFiles(Array.from(e.target.files || []))} />
-                <button
-                  className="px-3 py-1 rounded-xl border bg-black text-white"
-                  onClick={async () => {
-                    const newImgs = [];
-                    for (const f of files) {
-                      const data = await fileToDataUrl(f);
-                      newImgs.push({ src: String(data), alt: f.name, widthPct: 60, align: "center" });
-                    }
-                    onChange([...(problem.images || []), ...newImgs]);
-                    setFiles([]);
-                  }}
-                >
-                  Add image(s)
-                </button>
+                <button className="px-3 py-1 rounded-xl border bg-black text-white" onClick={async () => {
+                  const newImgs = [];
+                  for (const f of files) {
+                    const data = await fileToDataUrl(f);
+                    newImgs.push({ src: String(data), alt: f.name, widthPct: 60, align: "center" });
+                  }
+                  onChange([...(problem.images || []), ...newImgs]);
+                  setFiles([]);
+                }}>Add image(s)</button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {(problem.images || []).map((img, i) => (
@@ -528,75 +498,23 @@
                     <div className="flex items-center justify-between mb-2">
                       <div className="text-sm text-gray-600 truncate">{img.alt || `Image ${i + 1}`}</div>
                       <div className="flex items-center gap-2">
-                        <button
-                          className="px-2 py-1 rounded-lg border"
-                          onClick={() => {
-                            const next = [...(problem.images || [])];
-                            if (i > 0) [next[i - 1], next[i]] = [next[i], next[i - 1]];
-                            onChange(next);
-                          }}
-                        >
-                          ↑
-                        </button>
-                        <button
-                          className="px-2 py-1 rounded-lg border"
-                          onClick={() => {
-                            const next = [...(problem.images || [])];
-                            if (i < next.length - 1) [next[i + 1], next[i]] = [next[i], next[i + 1]];
-                            onChange(next);
-                          }}
-                        >
-                          ↓
-                        </button>
-                        <button
-                          className="px-2 py-1 rounded-lg border"
-                          onClick={() => {
-                            const next = [...(problem.images || [])];
-                            next.splice(i, 1);
-                            onChange(next);
-                          }}
-                        >
-                          Remove
-                        </button>
+                        <button className="px-2 py-1 rounded-lg border" onClick={() => { const next = [...(problem.images || [])]; if (i > 0) [next[i - 1], next[i]] = [next[i], next[i - 1]]; onChange(next); }}>↑</button>
+                        <button className="px-2 py-1 rounded-lg border" onClick={() => { const next = [...(problem.images || [])]; if (i < next.length - 1) [next[i + 1], next[i]] = [next[i], next[i + 1]]; onChange(next); }}>↓</button>
+                        <button className="px-2 py-1 rounded-lg border" onClick={() => { const next = [...(problem.images || [])]; next.splice(i, 1); onChange(next); }}>Remove</button>
                       </div>
                     </div>
                     <img src={img.src} alt={img.alt || ""} className="block mx-auto mb-2" style={{ maxWidth: "100%" }} />
                     <div className="grid grid-cols-2 gap-3 items-center">
                       <label className="text-sm">Width: {img.widthPct ?? 60}%</label>
-                      <input
-                        type="range"
-                        min={20}
-                        max={100}
-                        value={img.widthPct ?? 60}
-                        onChange={(e) => {
-                          const next = [...(problem.images || [])];
-                          next[i] = { ...img, widthPct: Number(e.target.value) };
-                          onChange(next);
-                        }}
-                      />
+                      <input type="range" min={20} max={100} value={img.widthPct ?? 60} onChange={(e) => { const next = [...(problem.images || [])]; next[i] = { ...img, widthPct: Number(e.target.value) }; onChange(next); }} />
                       <label className="text-sm">Align</label>
-                      <select
-                        value={img.align || "center"}
-                        onChange={(e) => {
-                          const next = [...(problem.images || [])];
-                          next[i] = { ...img, align: e.target.value };
-                          onChange(next);
-                        }}
-                      >
+                      <select value={img.align || "center"} onChange={(e) => { const next = [...(problem.images || [])]; next[i] = { ...img, align: e.target.value }; onChange(next); }}>
                         <option value="left">Left</option>
                         <option value="center">Center</option>
                         <option value="right">Right</option>
                       </select>
                       <label className="text-sm">Alt text</label>
-                      <input
-                        className="border rounded-md px-2 py-1"
-                        value={img.alt || ""}
-                        onChange={(e) => {
-                          const next = [...(problem.images || [])];
-                          next[i] = { ...img, alt: e.target.value };
-                          onChange(next);
-                        }}
-                      />
+                      <input className="border rounded-md px-2 py-1" value={img.alt || ""} onChange={(e) => { const next = [...(problem.images || [])]; next[i] = { ...img, alt: e.target.value }; onChange(next); }} />
                     </div>
                   </div>
                 ))}
@@ -611,9 +529,7 @@
         return (
           <div className="flex items-end gap-2">
             <h2 className="text-xl font-semibold">{title}</h2>
-            <span className="align-super text-xs">
-              {subtitle} <sup className="ml-1">{letter}</sup>
-            </span>
+            <span className="align-super text-xs">{subtitle} <sup className="ml-1">{letter}</sup></span>
           </div>
         );
       }
@@ -631,16 +547,12 @@
         return (
           <div>
             <div className="mb-4">
-              <VariantHeader
-                seedIndex={seedIndex}
-                title="Physics 227"
-                subtitle={showSolutions ? "Practice Exam — Solutions" : "Practice Exam"}
-              />
+              <VariantHeader seedIndex={seedIndex} title="Physics 227" subtitle={showSolutions ? "Practice Exam — Solutions" : "Practice Exam"} />
               <div className="text-sm text-gray-600">Multiple Choice — 10 questions</div>
             </div>
 
             {rendered.map(({ p, b, index }, qIdx) => (
-              <div key={p.id} className="my-4 border-l-4 pl-3 bg-white/60">
+              <div key={p.id} className="my-4 border-l-4 pl-3">
                 <div className="font-medium mb-2">
                   <span className="q-label mr-1">[Q{qIdx + 1}]</span>
                   {renderTemplate(p.stem, b)}
@@ -650,54 +562,14 @@
                   <div className="mb-2 clear-both">
                     {p.images.map((img, i) => (
                       <div key={i} className="my-2" style={{ textAlign: img.align || "center" }}>
-                        <img
-                          src={img.src}
-                          alt={img.alt || ""}
-                          style={{ width: `${img.widthPct ?? 60}%`, display: "inline-block" }}
-                        />
+                        <img src={img.src} alt={img.alt || ""} style={{ width: `${img.widthPct ?? 60}%`, display: "inline-block" }} />
                         {layoutMode && (
                           <div className="flex items-center gap-2 mt-1 text-xs justify-center">
-                            <button
-                              className="px-2 py-0.5 rounded border"
-                              onClick={() => {
-                                const next = [...(p.images || [])];
-                                if (i > 0) [next[i - 1], next[i]] = [next[i], next[i - 1]];
-                                onUpdateImages(p.id, next);
-                              }}
-                            >
-                              ↑
-                            </button>
-                            <button
-                              className="px-2 py-0.5 rounded border"
-                              onClick={() => {
-                                const next = [...(p.images || [])];
-                                if (i < next.length - 1) [next[i + 1], next[i]] = [next[i], next[i + 1]];
-                                onUpdateImages(p.id, next);
-                              }}
-                            >
-                              ↓
-                            </button>
+                            <button className="px-2 py-0.5 rounded border" onClick={() => { const next = [...(p.images || [])]; if (i > 0) [next[i - 1], next[i]] = [next[i], next[i - 1]]; onUpdateImages(p.id, next); }}>↑</button>
+                            <button className="px-2 py-0.5 rounded border" onClick={() => { const next = [...(p.images || [])]; if (i < next.length - 1) [next[i + 1], next[i]] = [next[i], next[i + 1]]; onUpdateImages(p.id, next); }}>↓</button>
                             <label>W:{img.widthPct ?? 60}%</label>
-                            <input
-                              type="range"
-                              min={20}
-                              max={100}
-                              value={img.widthPct ?? 60}
-                              onChange={(e) => {
-                                const next = [...(p.images || [])];
-                                next[i] = { ...img, widthPct: Number(e.target.value) };
-                                onUpdateImages(p.id, next);
-                              }}
-                            />
-                            <select
-                              className="border rounded px-1"
-                              value={img.align || "center"}
-                              onChange={(e) => {
-                                const next = [...(p.images || [])];
-                                next[i] = { ...img, align: e.target.value };
-                                onUpdateImages(p.id, next);
-                              }}
-                            >
+                            <input type="range" min={20} max={100} value={img.widthPct ?? 60} onChange={(e) => { const next = [...(p.images || [])]; next[i] = { ...img, widthPct: Number(e.target.value) }; onUpdateImages(p.id, next); }} />
+                            <select className="border rounded px-1" value={img.align || "center"} onChange={(e) => { const next = [...(p.images || [])]; next[i] = { ...img, align: e.target.value }; onUpdateImages(p.id, next); }}>
                               <option value="left">Left</option>
                               <option value="center">Center</option>
                               <option value="right">Right</option>
@@ -711,12 +583,7 @@
 
                 <div className="options ml-4">
                   {p.options.map((opt, i) => (
-                    <div
-                      key={i}
-                      className={"option " + (showSolutions && i === index ? "bg-yellow-100 font-semibold" : "")}
-                    >
-                      {String.fromCharCode(97 + i)}. {opt}
-                    </div>
+                    <div key={i} className={"option " + (showSolutions && i === index ? "bg-yellow-100 font-semibold" : "")}>{String.fromCharCode(97 + i)}. {opt}</div>
                   ))}
                 </div>
               </div>
@@ -739,22 +606,33 @@
 
       function buildStandaloneHTML({ title, bodyHTML, showSolutions }) {
         const baseCss = `
-        body { font-family: 'Times New Roman', Georgia, serif; font-size: 11pt; line-height: 1.4; color: #000; }
-        .q-label { color: #2b579a; font-weight: 700; }
-        .option { margin: 0.18rem 0; }
-        .options { margin-top: 0.35rem; }
-        img { page-break-inside: avoid; }
-        @media print { @page { size: Letter; margin: 0.5in; } }
-        .solutions .option { background: #fff59d; font-weight: 700; }
-        `;
+  body { font-family: 'Times New Roman', Georgia, serif; font-size: 11pt; line-height: 1.4; color: #000; background: #fff; }
+  .q-label { color: #2b579a; font-weight: 700; }
+  .option { margin: 0.18rem 0; }
+  .options { margin-top: 0.35rem; }
+  img { page-break-inside: avoid; }
+  .sheet-img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  .page-break { page-break-before: always; }
+  .instructions { background: #fff; color: #000; min-height: 7.8in; padding: 0.8in 0.9in 0.6in 0.9in; position: relative; }
+  .nd-block { position: absolute; top: 0.9in; left: 0.9in; }
+  .nd-block p { margin: 0.15rem 0; font-size: 11pt; }
+  .title-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 2.3in; margin-bottom: 2.0in; text-align: center; }
+  .title-wrap h1 { font-size: 28pt; font-weight: 600; margin: 0 0 0.25rem 0; }
+  .title-wrap h2 { font-size: 22pt; font-weight: 600; margin: 0; }
+  .variant-mark { font-size: 7pt; opacity: 0.35; vertical-align: super; margin-left: 2px; }
+  .inst-heading { color: #2b579a; font-weight: 700; margin: 0 0 0.25rem 0; }
+  .instructions p { max-width: 7.2in; line-height: 1.45; margin: 0.25rem 0; font-size: 11pt; }
+  @media print { @page { size: Letter; margin: 0.5in; } .firstpage-only { break-after: page; page-break-after: always; } }
+  .solutions .option { font-weight: 700; }
+  `;
 
         return `<!DOCTYPE html><html><head><meta charset="utf-8"/>
-        <title>${title}</title>
-        <style>${baseCss}</style>
-        </head>
-        <body class="${showSolutions ? "solutions" : ""}">
-          ${bodyHTML}
-        </body></html>`;
+  <title>${title}</title>
+  <style>${baseCss}</style>
+  </head>
+  <body class="${showSolutions ? "solutions" : ""}">
+    ${bodyHTML}
+  </body></html>`;
       }
 
       function App() {
@@ -764,10 +642,30 @@
         const [seedIndex, setSeedIndex] = useState(0);
         const [showSolutions, setShowSolutions] = useState(false);
         const [layoutMode, setLayoutMode] = useState(false);
+        const [meta, setMeta] = useState({
+          course: "Physics 227",
+          examTitle: "Practice Exam",
+          term: "",
+          dateStr: "",
+          timeLimit: "",
+          instructions: "Answer all questions. Show work where applicable.",
+          nameLine: true,
+          idLine: true,
+        });
+        const [equationSheets, setEquationSheets] = useState([]);
 
         const exportNow = () => {
           const rng = mulberry32(12345 + seedIndex);
-          let html = `<div>`;
+          const letter = GREEK[seedIndex % GREEK.length] || "α";
+          const front = `<section class="instructions firstpage-only">\n      <div class="nd-block">\n        ${meta.nameLine ? `<p>Name:</p>` : ""}\n        ${meta.idLine ? `<p>ID:</p>` : ""}\n        <p>Date:${meta.dateStr ? ` ${meta.dateStr}` : ""}</p>\n      </div>\n      <div class="title-wrap">\n        <h1>${meta.course}</h1>\n        <h2>${meta.examTitle}<sup class="variant-mark">${letter}</sup>${showSolutions ? " — Solutions" : ""}</h2>\n      </div>\n      <h3 class="inst-heading">Instructions</h3>\n      <p>${(meta.instructions || "").replace(/\r?\n/g, "</p><p>")}</p>\n    </section><div class="page-break"></div>`;
+
+          const sheets = equationSheets
+            .map((img, i) =>
+              `<section class="sheet">\n          <img src="${img.src}" alt="${img.alt || `Equation Sheet ${i + 1}`}" class="sheet-img"/>\n        </section><div class="page-break"></div>`
+            )
+            .join("");
+
+          let problemsHTML = `<div>`;
           const items = bank.map((p, idx) => {
             const b = generateBindings(p, Math.floor(rng() * 1e9));
             const { index } = chooseCorrectIndex(p, b);
@@ -782,73 +680,64 @@
               .join("");
             const opts = p.options
               .map((opt, i) => {
-                const cls = showSolutions && i === index ? "option" + " solutions-correct" : "option";
+                const cls = showSolutions && i === index ? "option solutions-correct" : "option";
                 return `<div class="${cls}">${String.fromCharCode(97 + i)}. ${opt}</div>`;
               })
               .join("");
-            return `<div class="question"><div class="stem"><span class="q-label">[Q${idx + 1}]</span> ${stem}</div>${
-              imgs ? `<div class="images">${imgs}</div>` : ""
-            }<div class="options">${opts}</div></div>`;
+            return `<div class="question"><div class="stem"><span class="q-label">[Q${idx + 1}]</span> ${stem}</div>${imgs ? `<div class="images">${imgs}</div>` : ""}<div class="options">${opts}</div></div>`;
           });
-          html += items.join("") + `</div>`;
-
-          const header = `<div class="header"><h1>Physics 227 <sup>${GREEK[seedIndex % GREEK.length] || "α"}</sup></h1><h2>${
-            showSolutions ? "Practice Exam — Solutions" : "Practice Exam"
-          }</h2></div>`;
+          problemsHTML += items.join("") + `</div>`;
 
           const full = buildStandaloneHTML({
-            title: `Exam Variant ${seedIndex}`,
-            bodyHTML: header + html,
+            title: `${meta.course} — ${meta.examTitle} ${showSolutions ? "(Solutions)" : ""}`,
+            bodyHTML: front + sheets + problemsHTML,
             showSolutions,
           });
           downloadHTML(`exam_variant_${seedIndex}${showSolutions ? "_solutions" : ""}.html`, full);
         };
 
         return (
-          <div className="p-6" style={{ display: "grid", gap: "1.5rem" }}>
+          <div className="p-6 grid gap-4">
             <div className="flex flex-wrap items-center gap-3">
               <div className="text-2xl font-semibold">Exam Variant Builder</div>
               <div className="ml-auto flex items-center gap-2">
                 <label className="text-sm">Variant</label>
-                <button className="px-3 py-1 rounded-xl border" onClick={() => setSeedIndex((s) => Math.max(0, s - 1))}>
-                  −
-                </button>
+                <button className="px-3 py-1 rounded-xl border" onClick={() => setSeedIndex((s) => Math.max(0, s - 1))}>−</button>
                 <div className="px-3 py-1 rounded-xl border bg-gray-50 min-w-12 text-center">
                   {seedIndex} <sup>{GREEK[seedIndex % GREEK.length] || "α"}</sup>
                 </div>
-                <button className="px-3 py-1 rounded-xl border" onClick={() => setSeedIndex((s) => s + 1)}>
-                  +
-                </button>
+                <button className="px-3 py-1 rounded-xl border" onClick={() => setSeedIndex((s) => s + 1)}>+</button>
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
               <button className="px-3 py-1 rounded-xl border" onClick={() => setEditing(true)}>Edit Problems (JSON)</button>
+              <PreambleButton meta={meta} onChange={setMeta} />
+              <SheetsButton sheets={equationSheets} onChange={setEquationSheets} />
               <button className="px-3 py-1 rounded-xl border" onClick={() => setLayoutMode((v) => !v)}>
                 {layoutMode ? "Done Layout" : "Edit Image Layout"}
               </button>
               <button className="px-3 py-1 rounded-xl border" onClick={() => setShowSolutions((v) => !v)}>
                 {showSolutions ? "Show Exam" : "Show Solutions"}
               </button>
-              <button className="px-3 py-1 rounded-xl border bg-black text-white" onClick={exportNow}>
-                Export HTML
-              </button>
+              <button className="px-3 py-1 rounded-xl border bg-black text-white" onClick={exportNow}>Export HTML</button>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="p-4 rounded-2xl border bg-white">
+              <div className="p-4 rounded-2xl border">
                 <div className="text-lg font-semibold mb-2">Preview — {showSolutions ? "Solutions" : "Exam"}</div>
+                <FrontPage seedIndex={seedIndex} meta={meta} showSolutions={showSolutions} />
+                {!!equationSheets.length && <EquationSheetsView sheets={equationSheets} />}
+                <div className="page-break" />
                 <ExamView
                   bank={bank}
                   seedIndex={seedIndex}
                   showSolutions={showSolutions}
                   layoutMode={layoutMode}
-                  onUpdateImages={(id, imgs) =>
-                    setBank((prev) => prev.map((p) => (p.id === id ? { ...p, images: imgs } : p)))
-                  }
+                  onUpdateImages={(id, imgs) => setBank((prev) => prev.map((p) => (p.id === id ? { ...p, images: imgs } : p)))}
                 />
               </div>
-              <div className="p-4 rounded-2xl border bg-white">
+              <div className="p-4 rounded-2xl border">
                 <div className="text-lg font-semibold mb-2">Problem Bank</div>
                 {bank.map((p, idx) => {
                   const b = generateBindings(p, idx + 999);
@@ -878,9 +767,7 @@
             {imageEditorFor && (
               <ImageEditor
                 problem={bank.find((p) => p.id === imageEditorFor)}
-                onChange={(imgs) =>
-                  setBank((prev) => prev.map((p) => (p.id === imageEditorFor ? { ...p, images: imgs } : p)))
-                }
+                onChange={(imgs) => setBank((prev) => prev.map((p) => (p.id === imageEditorFor ? { ...p, images: imgs } : p)))}
                 onClose={() => setImageEditorFor(null)}
               />
             )}
@@ -909,6 +796,11 @@
 
           const html = buildStandaloneHTML({ title: "t", bodyHTML: "<div>ok</div>", showSolutions: false });
           console.assert(typeof html === "string" && html.includes("<style>"), "Export HTML should include inlined style");
+
+          const parts = String("Line1\n\nLine2\r\nLine3").split(/\r?\n+/g);
+          console.assert(parts.length === 3 && parts[0] === "Line1" && parts[2] === "Line3", "Paragraph splitting failed");
+
+          console.assert(GREEK[0] === "α" && GREEK[23] === "ω", "Greek marker mapping incorrect");
         } catch (e) {
           console.warn("Self-tests encountered an error:", e);
         }
