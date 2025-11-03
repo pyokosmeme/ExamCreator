@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>{{course_title}} - {{exam_title}}</title>
+
+<style>
+/* Base */
+html, body { margin: 0; padding: 0; font-family: system-ui, Arial, sans-serif; font-size: 11pt; line-height: 1.35; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* Layout blocks */
+.doc-section { padding: 18px 24px; }
+.grid-container { margin: 12px 0; padding: 8px; }
+
+/* Questions and spacing */
+.question { margin: 0.45rem 0; }
+.question + .question { margin-top: 0.4rem; }
+h1, h2, h3, h4 { margin: 0.6rem 0 0.35rem 0; }
+p { margin: 0.35rem 0; }
+
+/* Options */
+.option { margin: 0.2rem 0; }
+
+/* Equations / constants sheet spacing */
+.equation-section { margin: 0.4rem 0 0.6rem 0; }
+.equation-title { margin: 0.25rem 0 0.45rem 0; font-weight: 600; }
+.equation-group { margin: 0.3rem 0 0.6rem 0; }
+.equation { margin: 0.25rem 0 0.45rem 0; }
+
+/* variations */
+.inst-heading .variant-mark,
+.variant-mark {
+  font-size: 0.45em; /* scales with the parent heading */
+  opacity: 0.35;
+  vertical-align: super;
+  margin-left: 2px;
+}
+
+/* Titles in that area */
+.section-title { font-size: 18px; margin: 0.4rem 0 0.4rem 0; color: #333; }
+
+/* Make the last section (equation sheet) slightly tighter but avoid cramping */
+.fourth .equation-section, .fourth .grid-container { font-size: 0.96em; line-height: 1.28; }
+
+/* Print */
+@media print {
+  @page { size: Letter; margin: 0.5in; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
+  .question, .equation-section, .grid-container, img, table { orphans: 3; widows: 3; }
+  .doc-section.fourth { margin-top: 0 !important; padding-top: 6px !important; }
+  .doc-section.fourth img { max-height: 9in; }
+}
+</style>
+
+<!-- (Your additional style blocks preserved exactly; feel free to keep or trim)
+     If you want a single definitive look, you can remove the alternate “themes”
+     and keep only one block. For brevity, leaving your main behaviors above. -->
+<style>
+/* Word-like blue/purple labels for questions */
+.q-label { color: #2b579a; font-weight: 700; }
+.q-label + * { margin-left: 0.05rem; }
+
+@media print {
+  .firstpage-only { break-after: page; page-break-after: always; }
+}
+</style>
+
+<style>
+/* First Page Layout */
+.instructions {
+  background: #fff;
+  color: #000;
+  min-height: 7.8in;
+  padding: 0.8in 0.9in 0.6in 0.9in;
+  position: relative;
+}
+.nd-block { position: absolute; top: 0.9in; left: 0.9in; }
+.nd-block p { margin: 0.15rem 0; font-size: 11pt; }
+.title-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 2.3in; margin-bottom: 2.0in; text-align: center; }
+.title-wrap h1 { font-family: 'Times New Roman', Georgia, serif; font-size: 28pt; font-weight: 600; margin: 0 0 0.25rem 0; }
+.title-wrap h2 { font-family: 'Times New Roman', Georgia, serif; font-size: 22pt; font-weight: 600; margin: 0; }
+.inst-heading { color: #2b579a; font-weight: 700; margin: 0 0 0.25rem 0; }
+.instructions p { max-width: 7.2in; line-height: 1.45; margin: 0.25rem 0; font-size: 11pt; }
+@media print { .instructions { break-after: page; page-break-after: always; } }
+</style>
+
+<style>
+/* === Margin fix: make later pages match page 1's inner margins === */
+.doc-section.second, .doc-section.third, .doc-section.fourth { padding: 0.8in 0.9in 0.6in 0.9in !important; }
+@media print {
+  .doc-section.second, .doc-section.third, .doc-section.fourth { padding: 0.8in 0.9in 0.6in 0.9in !important; }
+  .doc-section.second .section-title, .doc-section.third .section-title, .doc-section.fourth .section-title { margin-top: 0 !important; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== Page 1: Cover / Instructions ===== -->
+<div class="instructions firstpage-only">
+  <div class="nd-block">
+    <p>Name: ____________________</p>
+    <p>Date: ____________________</p>
+  </div>
+
+  <div class="title-wrap">
+    <h1>{{course_title}}</h1>
+    <h2>{{exam_title}}</h2>
+  </div>
+
+  <h3 class="inst-heading">
+    {{instructions_heading}}<sup class="variant-mark">{{variant_mark}}</sup>
+  </h3>
+
+  {{#each instructions_paragraphs}}
+    <p>{{this}}</p>
+  {{/each}}
+</div>
+
+<!-- ===== Section: Multiple Choice ===== -->
+<div class="doc-section second">
+  <h2 class="section-title">{{mc_section_title}}</h2>
+  <p>{{mc_section_intro}}</p>
+
+  {{#each mc_questions}}
+  <div class="question">
+    <div class="stem">
+      <span class="q-label">[{{label}}] </span>{{stem}}
+    </div>
+
+    {{#if image_src}}
+      <img alt="{{image_alt}}" src="{{image_src}}" style="display:block; width: {{image_width}}; height: auto;"/>
+    {{/if}}
+
+    {{#each options}}
+      <div class="option">{{this}}</div>
+    {{/each}}
+  </div>
+  {{/each}}
+</div>
+
+<!-- ===== Section: Calculations ===== -->
+<div class="doc-section third">
+  <h2 class="section-title">{{calc_section_title}}</h2>
+  <p>{{calc_section_intro}}</p>
+
+  {{#each calc_questions}}
+  <div class="question">
+    <div class="stem">
+      <span class="q-label">[{{label}}] </span>{{stem}}
+    </div>
+
+    {{#if image_src}}
+      <img alt="{{image_alt}}" src="{{image_src}}" style="display:block; width: {{image_width}}; height: auto;"/>
+    {{/if}}
+
+    {{#each options}}
+      <div class="option">{{this}}</div>
+    {{/each}}
+  </div>
+  {{/each}}
+</div>
+
+<!-- ===== Section: Reference Materials ===== -->
+<div class="doc-section fourth">
+
+  {{#if constants_image.src}}
+    <img alt="{{constants_image.alt}}" src="{{constants_image.src}}" style="display:block; width: 650px; height:auto; max-width:100%;"/>
+  {{/if}}
+
+  {{#if trigcalc_image.src}}
+    <h2 class="section-title" style="margin-top: 20px;">{{trigcalc_title}}</h2>
+    <img alt="{{trigcalc_image.alt}}" src="{{trigcalc_image.src}}" style="display:block; width: 650px; height:auto; max-width:100%;"/>
+  {{/if}}
+
+  <h2 class="section-title" style="margin-top: 20px;">{{equations_title}}</h2>
+
+  <div class="grid-container">
+
+    <!-- Left Column -->
+    <div>
+      {{#each left_equation_sections}}
+      <div class="equation-section">
+        <div class="equation-title">{{title}}</div>
+
+        {{#each groups}}
+        <div class="equation-group">
+          {{#if subtitle}}<div class="equation-subtitle">{{subtitle}}</div>{{/if}}
+          {{#each lines}}
+            <div class="equation">{{{this}}}</div>
+          {{/each}}
+        </div>
+        {{/each}}
+
+        {{#if var_defs}}
+        <div class="var-defs">
+          <div class="equation-title">Variable definitions</div>
+          <ul class="var-list">
+            {{#each var_defs}}
+              <li><strong>{{label}}:</strong> {{text}}</li>
+            {{/each}}
+          </ul>
+          {{#if constants_note}}<div class="constants-note">{{constants_note}}</div>{{/if}}
+        </div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+
+    <!-- Right Column -->
+    <div>
+      {{#each right_equation_sections}}
+      <div class="equation-section">
+        <div class="equation-title">{{title}}</div>
+
+        {{#each groups}}
+        <div class="equation-group">
+          {{#if subtitle}}<div class="equation-subtitle">{{subtitle}}</div>{{/if}}
+          {{#each lines}}
+            <div class="equation">{{{this}}}</div>
+          {{/each}}
+        </div>
+        {{/each}}
+
+        {{#if var_defs}}
+        <div class="var-defs">
+          <div class="equation-title">Variable definitions</div>
+          <ul class="var-list">
+            {{#each var_defs}}
+              <li><strong>{{label}}:</strong> {{text}}</li>
+            {{/each}}
+          </ul>
+          {{#if constants_note}}<div class="constants-note">{{constants_note}}</div>{{/if}}
+        </div>
+        {{/if}}
+      </div>
+      {{/each}}
+
+      {{#if extra_right_sections}}
+        {{#each extra_right_sections}}
+        <div class="equation-section">{{{html}}}</div>
+        {{/each}}
+      {{/if}}
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
