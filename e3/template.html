@@ -54,7 +54,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* Print safety */
 @media print {
-  @page { size: Letter; margin: 0.5in; }
+  @page { size: Letter; margin: 1in; }  /* Increased to typical 1-inch margins for printing */
   html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .firstpage-only { break-after: page; page-break-after: always; }
   .question, .equation, .equation-section, .equation-group, .var-defs { page-break-inside: avoid; break-inside: avoid; }
