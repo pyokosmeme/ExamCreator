@@ -272,19 +272,18 @@
           <section className="instructions firstpage-only">
             <div className="nd-block">
               {meta.nameLine && <p>Name:</p>}
-              {meta.idLine && <p>ID:</p>}
               {meta.dateStr ? <p>Date: {meta.dateStr}</p> : <p>Date:</p>}
             </div>
             <div className="title-wrap">
               <h1>{meta.course}</h1>
               <h2>
                 {meta.examTitle}
-                <sup className="variant-mark">{letter}</sup>
+                
                 {showSolutions ? " — Solutions" : ""}
               </h2>
               {meta.timeLimit && <div className="mt-1 text-sm">Time limit: {meta.timeLimit}</div>}
             </div>
-            <h3 className="inst-heading">Instructions</h3>
+            <h3 className="inst-heading">Instructions<sup className="variant-mark">{letter}</sup></h3>
             {paras.length ? (
               paras.map((t, i) => <p key={i}>{t}</p>)
             ) : (
