@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <title>{{course_title}} - {{exam_title}}</title>
 
-<!-- ====== ALL ORIGINAL STYLE BLOCKS, ORDER-PRESERVED ====== -->
+<!-- ====== Original styles (order preserved) ====== -->
 <style>
 /* Base */
 html, body { margin: 0; padding: 0; font-family: system-ui, Arial, sans-serif; font-size: 11pt; line-height: 1.35; }
@@ -32,38 +32,33 @@ p { margin: 0.35rem 0; }
 /* variations */
 .inst-heading .variant-mark,
 .variant-mark {
-  font-size: 0.45em;      /* scales with the parent heading */
+  font-size: 0.45em;
   opacity: 0.35;
   vertical-align: super;
-  margin-left: 0px;
+  margin-left: 2px;
 }
 
-/* Titles in that area */
+/* Titles */
 .section-title { font-size: 18px; margin: 0.4rem 0 0.4rem 0; color: #333; }
 
-/* Make the last section (equation sheet) slightly tighter but avoid cramping */
+/* Make the last section slightly tighter */
 .fourth .equation-section, .fourth .grid-container { font-size: 0.96em; line-height: 1.28; }
 
 /* Print */
 @media print {
   @page { size: Letter; margin: 0.5in; }
   html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  /* Avoid over-constraining pagination: let the engine flow content naturally */
   h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
   .question, .equation-section, .grid-container, img, table { orphans: 3; widows: 3; }
-  /* Ensure the equations sheet doesn't start with a giant top gap */
   .doc-section.fourth { margin-top: 0 !important; padding-top: 6px !important; }
-  /* Constrain any tall images before the equations sheet */
   .doc-section.fourth img { max-height: 9in; }
 }
 </style>
 <style>
 /* Spacing after questions */
 .question { margin-bottom: 0.65rem; }
-/* Keep questions intact on a page when printing (gentle, non-aggressive) */
-@media print {
-  .question { page-break-inside: avoid; break-inside: avoid; }
-}
+/* Keep questions intact on a page */
+@media print { .question { page-break-inside: avoid; break-inside: avoid; } }
 </style>
 <style>
 .var-defs { margin-top: 0.35rem; padding-left: 0; }
@@ -79,94 +74,56 @@ p { margin: 0.35rem 0; }
 <style>
 /* ===== Base Typography ===== */
 html, body {
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, "Apple Color Emoji", "Segoe UI Emoji";
-  font-size: 11.25pt;
-  line-height: 1.45;
-  color: #111;
+  font-size: 11.25pt; line-height: 1.45; color: #111;
 }
-p { margin: 0.4rem 0; }
-strong, b { font-weight: 600; }
+p { margin: 0.4rem 0; } strong, b { font-weight: 600; }
 
-/* ===== Section & Header Styling (similar to original) ===== */
-.header, .exam-header {
-  padding: 8px 24px 4px 24px;
-  border-bottom: 2px solid #2a5faa;
-}
-.header h1, .exam-header h1 {
-  font-size: 22px;
-  margin: 0 0 4px 0;
-  color: #234e8f;
-}
+/* ===== Section & Header Styling ===== */
+.header, .exam-header { padding: 8px 24px 4px 24px; border-bottom: 2px solid #2a5faa; }
+.header h1, .exam-header h1 { font-size: 22px; margin: 0 0 4px 0; color: #234e8f; }
 .header h2, .exam-header h2 { margin: 0; font-size: 16px; color: #234e8f; }
 
 .section-title {
-  color: #234e8f;
-  font-weight: 700;
-  font-size: 18px;
-  margin: 0.6rem 0 0.45rem 0;
-  padding-left: 8px;
-  border-left: 4px solid #2a5faa;
+  color: #234e8f; font-weight: 700; font-size: 18px;
+  margin: 0.6rem 0 0.45rem 0; padding-left: 8px; border-left: 4px solid #2a5faa;
 }
 
-/* ===== Layout Blocks ===== */
+/* Layout Blocks */
 .doc-section { padding: 18px 24px; }
 .grid-container { margin: 10px 0; padding: 8px; }
 
-/* ===== Question Blocks (card-like, but light) ===== */
+/* Question blocks */
 .question {
-  position: relative;
-  background: #fff;
-  padding: 12px 14px;
-  margin: 0.9rem 0 1.0rem 0; /* More space after questions */
-  border: 1px solid #e3e6ec;
-  border-left: 4px solid #2a5faa;
-  border-radius: 6px;
+  position: relative; background: #fff; padding: 12px 14px;
+  margin: 0.9rem 0 1.0rem 0; border: 1px solid #e3e6ec; border-left: 4px solid #2a5faa; border-radius: 6px;
 }
 .question .stem { margin-bottom: 0.45rem; }
 .question-number {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  background: #2a5faa;
-  color: white;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 1;
-  padding: 6px 8px;
-  border-radius: 6px;
+  position: absolute; top: -10px; left: -10px; background: #2a5faa; color: white; font-weight: 700; font-size: 12px;
+  line-height: 1; padding: 6px 8px; border-radius: 6px;
 }
 .option { margin: 0.22rem 0; }
 .options { margin-top: 0.35rem; }
 
-/* ===== Images ===== */
+/* Images */
 img { max-width: 100%; height: auto; display: block; margin: 0.3rem 0 0.55rem 0; }
 
-/* ===== Equation Sheet Styling ===== */
-.equation-section {
-  margin: 0.55rem 0 0.8rem 0;
-  padding: 10px 12px;
-  background: #f7f9fc;
-  border: 1px solid #d7deee;
-  border-radius: 6px;
-}
-.equation-title {
-  margin: 0.2rem 0 0.45rem 0;
-  color: #234e8f;
-  font-weight: 700;
-}
+/* Equation sheet */
+.equation-section { margin: 0.55rem 0 0.8rem 0; padding: 10px 12px; background: #f7f9fc; border: 1px solid #d7deee; border-radius: 6px; }
+.equation-title { margin: 0.2rem 0 0.45rem 0; color: #234e8f; font-weight: 700; }
 .equation-group { margin: 0.3rem 0 0.55rem 0; }
 .equation { margin: 0.25rem 0 0.4rem 0; }
 .var-defs { margin-top: 0.3rem; }
 .var-defs .var-list { margin: 0.2rem 0 0.5rem 0; padding-left: 1.1rem; }
 .var-defs .var-list li { margin: 0.14rem 0; }
 
-/* ===== Tables (if any) ===== */
+/* Tables */
 table { border-collapse: collapse; margin: 0.45rem 0; width: 100%; }
 th, td { border: 1px solid #e3e6ec; padding: 6px 8px; }
 
-/* ===== Print: gentle pagination, keep questions intact ===== */
+/* Print */
 @media print {
   @page { size: Letter; margin: 0.5in; }
   html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -176,209 +133,76 @@ th, td { border: 1px solid #e3e6ec; padding: 6px 8px; }
 }
 </style>
 <style>
-/* ===== Spacing: Questions ===== */
-.question { margin: 1.15rem 0 1.25rem 0; }          /* more breathing room after questions */
+/* Spacing: Questions */
+.question { margin: 1.15rem 0 1.25rem 0; }
 .question .stem { margin-bottom: 0.55rem; }
 .options { margin-top: 0.45rem; }
 .option { margin: 0.26rem 0; }
 
-/* ===== Equation Sheet: Compact Layout ===== */
-/* Use CSS Grid for compact multi-column layout while staying print-safe */
+/* Equation Sheet: Compact Grid */
 .equation-section { padding: 12px 14px; }
 .equation-group {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  grid-column-gap: 18px;
-  grid-row-gap: 6px;
-  align-items: start;
+  grid-column-gap: 18px; grid-row-gap: 6px; align-items: start;
 }
 .equation { margin: 0.15rem 0 0.3rem 0; }
 .var-defs { margin-top: 0.25rem; }
 .var-defs .var-list { margin: 0.15rem 0 0.4rem 0; }
-
-/* Keep titles sticky to their sections visually */
 .equation-title { margin: 0.15rem 0 0.3rem 0; }
 
-/* ===== Print: keep blocks intact, but avoid forced page breaks ===== */
 @media print {
   .question, .equation-section, .equation-group, .var-defs { page-break-inside: avoid; break-inside: avoid; }
-  /* Slightly tighter text in the equations area for compactness */
   .equation-section { font-size: 0.96em; line-height: 1.32; }
-  /* Allow grid to pack efficiently on paper */
   .equation-group { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); grid-row-gap: 4px; grid-column-gap: 14px; }
 }
 </style>
 <style>
-/* ===== Classic Exam Look (serif, minimal, print-first) ===== */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: "Times New Roman", Georgia, serif;
-  font-size: 11pt;
-  line-height: 1.4;
-  color: #000;
-  background: #fff;
-}
-/* Headings: bold, no color accents */
-h1, h2, h3, h4 { 
-  margin: 0.6rem 0 0.35rem 0; 
-  font-weight: 700; 
-  color: #000; 
-}
-.section-title { 
-  font-weight: 700; 
-  font-size: 14pt; 
-  margin: 0.6rem 0 0.4rem 0; 
-  padding-left: 0; 
-  border: none; 
-}
-
-/* Layout blocks: simple padding, no boxes */
+/* ===== Classic Exam Look ===== */
+html, body { margin: 0; padding: 0; font-family: "Times New Roman", Georgia, serif; font-size: 11pt; line-height: 1.4; color: #000; background: #fff; }
+h1, h2, h3, h4 { margin: 0.6rem 0 0.35rem 0; font-weight: 700; color: #000; }
+.section-title { font-weight: 700; font-size: 14pt; margin: 0.6rem 0 0.4rem 0; padding-left: 0; border: none; }
 .doc-section { padding: 18px 24px; }
 .grid-container { margin: 0.2in 0 0.15in 0; padding: 0; border: 0; }
-
-/* Questions: no borders, no background; clear spacing like original */
-.question { 
-  padding: 0; 
-  margin: 0.9rem 0 1.1rem 0;   /* more space after each question */
-  border: 0; 
-  background: transparent; 
-}
+.question { padding: 0; margin: 0.9rem 0 1.1rem 0; border: 0; background: transparent; }
 .question .stem { margin-bottom: 0.45rem; }
 .options { margin-top: 0.35rem; }
 .option { margin: 0.18rem 0; }
-
-/* Images: modest spacing, centered inline block feel */
-img { 
-  max-width: 100%; 
-  height: auto; 
-  display: block; 
-  margin: 0.3rem auto 0.5rem auto; 
-}
-
-/* Equation sheet: compact, plain, two columns where it fits */
-.equation-section { 
-  margin: 0.45rem 0 0.65rem 0; 
-  padding: 0; 
-  background: none; 
-  border: 0; 
-}
-.equation-title { 
-  margin: 0.1rem 0 0.3rem 0; 
-  font-weight: 700; 
-  font-size: 12pt; 
-}
-/* Use CSS columns for compact packing; avoid heavy grids */
-.equation-group, .equation-section { 
-  column-count: 2; 
-  column-gap: 18px; 
-}
-/* Keep each equation tight and readable; prevent awkward splits */
-.equation { 
-  break-inside: avoid; 
-  -webkit-column-break-inside: avoid; 
-  margin: 0.15rem 0 0.3rem 0; 
-}
-/* Variable definitions: small, plain list */
-.var-defs { 
-  margin-top: 0.25rem; 
-  font-size: 10.5pt; 
-  line-height: 1.35; 
-}
-.var-defs .equation-title { 
-  font-size: 11pt; 
-  margin: 0.2rem 0 0.2rem 0; 
-}
-.var-defs .var-list { 
-  margin: 0.1rem 0 0.35rem 0; 
-  padding-left: 1.0rem; 
-}
-.var-defs .var-list li { 
-  margin: 0.1rem 0; 
-}
-
-/* Tables: minimal borders */
+img { max-width: 100%; height: auto; display: block; margin: 0.3rem auto 0.5rem auto; }
+.equation-section { margin: 0.45rem 0 0.65rem 0; padding: 0; background: none; border: 0; }
+.equation-title { margin: 0.1rem 0 0.3rem 0; font-weight: 700; font-size: 12pt; }
+.equation-group, .equation-section { column-count: 2; column-gap: 18px; }
+.equation { break-inside: avoid; -webkit-column-break-inside: avoid; margin: 0.15rem 0 0.3rem 0; }
+.var-defs { margin-top: 0.25rem; font-size: 10.5pt; line-height: 1.35; }
+.var-defs .equation-title { font-size: 11pt; margin: 0.2rem 0 0.2rem 0; }
+.var-defs .var-list { margin: 0.1rem 0 0.35rem 0; padding-left: 1.0rem; }
+.var-defs .var-list li { margin: 0.1rem 0; }
 table { border-collapse: collapse; margin: 0.4rem 0; width: 100%; }
 th, td { border: 1px solid #000; padding: 4px 6px; }
-
-/* Print: keep questions/equations intact without hard page forcing */
 @media print {
   @page { size: Letter; margin: 0.5in; }
   html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .question, .equation, .equation-section { page-break-inside: avoid; break-inside: avoid; }
   h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
-  /* Slightly tighter equations in print to pack better */
   .equation-section { font-size: 0.98em; line-height: 1.32; }
-  /* If three columns are desired on wide paper, uncomment next line */
-  /* .equation-section { column-count: 3; } */
 }
 </style>
 <style>
-/* Word-like blue/purple labels for questions */
+/* Word-like labels */
 .q-label { color: #2b579a; font-weight: 700; }
-/* Slight extra spacing after the label to separate from text */
 .q-label + * { margin-left: 0.05rem; }
-
-@media print {
-  /* Insert a single controlled page break after the instructions page */
-  .firstpage-only { break-after: page; page-break-after: always; }
-}
+@media print { .firstpage-only { break-after: page; page-break-after: always; } }
 </style>
 <style>
-/* ===== First Page Layout (light mode) ===== */
-.instructions {
-  background: #fff;
-  color: #000;
-  min-height: 7.8in; /* ensures generous white space similar to the screenshot */
-  padding: 0.8in 0.9in 0.6in 0.9in;
-  position: relative;
-}
-/* Top-left name/date block */
-.nd-block {
-  position: absolute;
-  top: 0.9in;
-  left: 0.9in;
-}
-.nd-block p {
-  margin: 0.15rem 0;
-  font-size: 11pt;
-}
-
-/* Centered title */
-.title-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2.3in;   /* push title down for balanced page */
-  margin-bottom: 2.0in;
-  text-align: center;
-}
-.title-wrap h1 {
-  font-family: 'Times New Roman', Georgia, serif;
-  font-size: 28pt;
-  font-weight: 600;
-  margin: 0 0 0.25rem 0;
-}
-.title-wrap h2 {
-  font-family: 'Times New Roman', Georgia, serif;
-  font-size: 22pt;
-  font-weight: 600;
-  margin: 0;
-}
-
-/* Instructions heading + paragraphs */
-.inst-heading {
-  color: #2b579a; /* Word-like blue */
-  font-weight: 700;
-  margin: 0 0 0.25rem 0;
-}
-.instructions p {
-  max-width: 7.2in;
-  line-height: 1.45;
-  margin: 0.25rem 0;
-  font-size: 11pt;
-}
+/* First Page Layout */
+.instructions { background: #fff; color: #000; min-height: 7.8in; padding: 0.8in 0.9in 0.6in 0.9in; position: relative; }
+.nd-block { position: absolute; top: 0.9in; left: 0.9in; }
+.nd-block p { margin: 0.15rem 0; font-size: 11pt; }
+.title-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 2.3in; margin-bottom: 2.0in; text-align: center; }
+.title-wrap h1 { font-family: 'Times New Roman', Georgia, serif; font-size: 28pt; font-weight: 600; margin: 0 0 0.25rem 0; }
+.title-wrap h2 { font-family: 'Times New Roman', Georgia, serif; font-size: 22pt; font-weight: 600; margin: 0; }
+.inst-heading { color: #2b579a; font-weight: 700; margin: 0 0 0.25rem 0; }
+.instructions p { max-width: 7.2in; line-height: 1.45; margin: 0.25rem 0; font-size: 11pt; }
 @media print { .instructions { break-after: page; page-break-after: always; } }
 </style>
 <style>
@@ -386,35 +210,26 @@ th, td { border: 1px solid #000; padding: 4px 6px; }
 @media print { .var-defs .constants-note { font-size: 9.5pt; } }
 </style>
 <style>
-/* === Margin fix: make later pages match page 1's inner margins === */
-.doc-section.second,
-.doc-section.third,
-.doc-section.fourth {
-  padding: 0.8in 0.9in 0.6in 0.9in !important; /* top right bottom left */
-}
+/* Page margin parity */
+.doc-section.second, .doc-section.third, .doc-section.fourth { padding: 0.8in 0.9in 0.6in 0.9in !important; }
 @media print {
-  .doc-section.second,
-  .doc-section.third,
-  .doc-section.fourth {
-    padding: 0.8in 0.9in 0.6in 0.9in !important;
-  }
-  /* Keep headings from adding unexpected extra top spacing on new pages */
-  .doc-section.second .section-title,
-  .doc-section.third .section-title,
-  .doc-section.fourth .section-title {
-    margin-top: 0 !important;
-  }
+  .doc-section.second, .doc-section.third, .doc-section.fourth { padding: 0.8in 0.9in 0.6in 0.9in !important; }
+  .doc-section.second .section-title, .doc-section.third .section-title, .doc-section.fourth .section-title { margin-top: 0 !important; }
 }
 </style>
-<!-- ====== END ORIGINAL STYLES ====== -->
-
+<style>
+/* Tighter alpha next to "Instructions" */
+.inst-heading .variant-mark {
+  margin-left: 0; line-height: 0; vertical-align: text-top; position: relative; left: -1px;
+}
+</style>
+<!-- ====== End styles ====== -->
 </head>
-<body>
 
-<!-- Mount point -->
+<body>
 <div id="app">Loading…</div>
 
-<!-- ===== Handlebars Template: EXACT MARKUP WITH MINIMAL PLACEHOLDERS ===== -->
+<!-- ===== Handlebars Template ===== -->
 <script id="tpl" type="text/x-handlebars-template">
 <div class="instructions firstpage-only">
   <div class="nd-block"><p>Name:</p><p>Date:</p></div>
@@ -440,12 +255,19 @@ th, td { border: 1px solid #000; padding: 4px 6px; }
 
   {{#each mc_questions}}
     <div class="question">
-      <div class="stem"><span class="q-label">[{{label}}] </span>{{{stem}}}</div>
-      {{#each options}}
-        <div class="option">{{{this}}}</div>
-      {{/each}}
+      <div class="stem">
+        <span class="q-label">[{{label}}] </span>
+        {{#if stem_html}}{{{stem_html}}}{{else}}{{{stem}}}{{/if}}
+      </div>
+
+      {{#each options}} <div class="option">{{{this}}}</div> {{/each}}
+
       {{#if trailing_image}}
         <img alt="{{trailing_image.alt}}" src="{{trailing_image.src}}" style="display:block; width: {{trailing_image.width}}; height:auto;"/>
+      {{else}}
+        {{#if image_src}}
+          <img alt="{{image_alt}}" src="{{image_src}}" style="display:block; width: {{image_width}}; height:auto;"/>
+        {{/if}}
       {{/if}}
     </div>
   {{/each}}
@@ -458,296 +280,145 @@ th, td { border: 1px solid #000; padding: 4px 6px; }
 
   {{#each calc_questions}}
     <div class="question">
-      <div class="stem"><span class="q-label">[{{label}}] </span>{{{stem}}}</div>
-      {{#each options}}
-        <div class="option">{{{this}}}</div>
-      {{/each}}
+      <div class="stem">
+        <span class="q-label">[{{label}}] </span>
+        {{#if stem_html}}{{{stem_html}}}{{else}}{{{stem}}}{{/if}}
+      </div>
+
+      {{#each options}} <div class="option">{{{this}}}</div> {{/each}}
+
       {{#if trailing_image}}
         <img alt="{{trailing_image.alt}}" src="{{trailing_image.src}}" style="display:block; width: {{trailing_image.width}}; height:auto;"/>
+      {{else}}
+        {{#if image_src}}
+          <img alt="{{image_alt}}" src="{{image_src}}" style="display:block; width: {{image_width}}; height:auto;"/>
+        {{/if}}
       {{/if}}
     </div>
   {{/each}}
 </div>
 
-<!-- Reference Materials - continuous section -->
+<!-- Reference Materials (dynamic) -->
 <div class="doc-section fourth">
   {{#if constants_image.src}}
-    <img alt="{{constants_image.alt}}" src="{{constants_image.src}}" style="display: block; width: 650px; height: auto; max-width: 100%;"/>
+    <img alt="{{constants_image.alt}}" src="{{constants_image.src}}" style="display:block; width:650px; height:auto; max-width:100%;"/>
   {{/if}}
 
+  <h2 class="section-title" style="margin-top:20px;">{{trigcalc_title}}</h2>
   {{#if trigcalc_image.src}}
-    <h2 class="section-title" style="margin-top: 20px;">{{trigcalc_title}}</h2>
-    <img alt="{{trigcalc_image.alt}}" src="{{trigcalc_image.src}}" style="display: block; width: 650px; height: auto; max-width: 100%;"/>
+    <img alt="{{trigcalc_image.alt}}" src="{{trigcalc_image.src}}" style="display:block; width:650px; height:auto; max-width:100%;"/>
   {{/if}}
 
-  <h2 class="section-title" style="margin-top: 20px;">{{equations_title}}</h2>
+  {{#if equations_title}}
+    <h2 class="section-title" style="margin-top:20px;">{{equations_title}}</h2>
+  {{/if}}
 
-  <!-- Keep your original equations markup verbatim for pixel match -->
   <div class="grid-container">
     <div>
-      <!-- Capacitance Section -->
-      <div class="equation-section">
-        <div class="equation-title">Capacitance</div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Parallel-Plate Capacitor</div>
-          <div class="equation">C = ε₀ A/d</div>
-          <div class="equation">With dielectric: C = κε₀ A/d</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Spherical Capacitor</div>
-          <div class="equation">C = 4πε₀(ab)/(b-a)</div>
-          <div class="equation">With dielectric: C = 4πκε₀(ab)/(b-a)</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Cylindrical Capacitor</div>
-          <div class="equation">C = 2πε₀L/ln(b/a)</div>
-          <div class="equation">With dielectric: C = 2πκε₀L/ln(b/a)</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Capacitors in Series</div>
-          <div class="equation">1/C<sub>eq</sub> = 1/C₁ + 1/C₂ + 1/C₃ + ...</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Capacitors in Parallel</div>
-          <div class="equation">C<sub>eq</sub> = C₁ + C₂ + C₃ + ...</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Energy Stored in a Capacitor</div>
-          <div class="equation">U = ½QV = ½CV² = ½Q²/C</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Energy Density in Electric Field</div>
-          <div class="equation">u = ½ε₀E²</div>
-          <div class="equation">With dielectric: u = ½κε₀E²</div>
-        </div>
-        <div class="equation">Inside linear dielectric: E = E₀/κ (for the same free charge configuration)</div>
-        <div class="var-defs">
-          <div class="equation-title">Variable definitions</div>
-          <ul class="var-list">
-            <li><strong>C: </strong>capacitance (farads, F)</li>
-            <li><strong>κ: </strong>dielectric constant (relative permittivity, unitless)</li>
-            <li><strong>A: </strong>plate area (m²)</li>
-            <li><strong>d: </strong>plate separation (m)</li>
-            <li><strong>a, b: </strong>inner and outer radii (m)</li>
-            <li><strong>L: </strong>cylinder length (m)</li>
-            <li><strong>V: </strong>potential difference (volts, V)</li>
-            <li><strong>U: </strong>stored energy (joules, J)</li>
-            <li><strong>u: </strong>energy density (J/m³)</li>
-          </ul>
-          <div class="constants-note">Note: constants (e, ε₀) are listed in Useful constants.</div>
-        </div>
-      </div>
+      {{#each left_equation_sections}}
+        <div class="equation-section">
+          {{#if title}}<div class="equation-title">{{title}}</div>{{/if}}
 
-      <!-- Current and Resistance Section -->
-      <div class="equation-section">
-        <div class="equation-title">Current and Resistance</div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Current and Current Density</div>
-          <div class="equation">I = dQ/dt</div>
-          <div class="equation">J = nev<sub>d</sub></div>
-          <div class="equation">I = ∫J·dA</div>
+          {{#if groups}}
+            <div class="equation-group">
+              {{#each groups}}
+                {{#if subtitle}}<div class="equation-subtitle">{{subtitle}}</div>{{/if}}
+                {{#each lines}} <div class="equation">{{{this}}}</div> {{/each}}
+              {{/each}}
+            </div>
+          {{/if}}
+
+          {{#if var_defs}}
+            <div class="var-defs">
+              <div class="equation-title">Variable definitions</div>
+              <ul class="var-list">
+                {{#each var_defs}}
+                  <li><strong>{{label}}: </strong>{{text}}</li>
+                {{/each}}
+              </ul>
+              {{#if constants_note}}<div class="constants-note">{{constants_note}}</div>{{/if}}
+            </div>
+          {{/if}}
         </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Drift Velocity</div>
-          <div class="equation">v<sub>d</sub> = I/(neA)</div>
-          <div class="note">n = number density of carriers</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Resistance and Resistivity</div>
-          <div class="equation">R = ρL/A</div>
-          <div class="equation">ρ = E/J = m/(ne²τ)</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Temperature Dependence</div>
-          <div class="equation">R = R₀[1 + α(T - T₀)]</div>
-          <div class="equation">ρ = ρ₀[1 + α(T - T₀)]</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Ohm's Law</div>
-          <div class="equation">V = IR</div>
-          <div class="equation">J = σE</div>
-          <div class="equation">σ = 1/ρ</div>
-        </div>
-        <div class="var-defs">
-          <div class="equation-title">Variable definitions</div>
-          <ul class="var-list">
-            <li><strong>I: </strong>current (amperes, A)</li>
-            <li><strong>Q: </strong>charge (coulombs, C)</li>
-            <li><strong>t: </strong>time (s)</li>
-            <li><strong>J: </strong>current density (A/m²)</li>
-            <li><strong>n: </strong>charge carrier density (1/m³)</li>
-            <li><strong>v_d: </strong>drift velocity (m/s)</li>
-            <li><strong>A: </strong>cross-sectional area (m²)</li>
-            <li><strong>ρ: </strong>resistivity (Ω·m)</li>
-            <li><strong>σ: </strong>conductivity (S/m), σ = 1/ρ</li>
-            <li><strong>m: </strong>carrier mass (kg)</li>
-            <li><strong>τ: </strong>mean free time between collisions (s)</li>
-            <li><strong>α: </strong>temperature coefficient (1/K)</li>
-            <li><strong>R: </strong>resistance (ohms, Ω)</li>
-            <li><strong>L: </strong>conductor length (m)</li>
-            <li><strong>V: </strong>voltage (volts, V)</li>
-          </ul>
-          <div class="constants-note">Note: constants (e, ε₀) are listed in Useful constants.</div>
-        </div>
-      </div>
+      {{/each}}
     </div>
 
     <div>
-      <!-- DC Circuits Section -->
-      <div class="equation-section">
-        <div class="equation-title">DC Circuits</div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Kirchhoff's Rules</div>
-          <div class="equation">Junction rule: ∑I<sub>in</sub> = ∑I<sub>out</sub></div>
-          <div class="equation">Loop rule: ∑V = 0</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Resistors in Series</div>
-          <div class="equation">R<sub>eq</sub> = R₁ + R₂ + R₃ + ...</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Resistors in Parallel</div>
-          <div class="equation">1/R<sub>eq</sub> = 1/R₁ + 1/R₂ + 1/R₃ + ...</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Voltage Divider</div>
-          <div class="equation">V<sub>out</sub> = (R<sub>out</sub>/(R₁ + R₂)) × V<sub>in</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Current Divider</div>
-          <div class="equation">I₁ = (R₂/(R₁ + R₂)) × I<sub>total</sub></div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Power</div>
-          <div class="equation">P = IV = I²R = V²/R</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">EMF and Terminal Voltage</div>
-          <div class="equation">V<sub>terminal</sub> = ε - Ir</div>
-          <div class="note">r = internal resistance of source</div>
-        </div>
-        <div class="var-defs">
-          <div class="equation-title">Variable definitions</div>
-          <ul class="var-list">
-            <li><strong>ε: </strong>emf (volts, V)</li>
-            <li><strong>r: </strong>internal resistance of source (Ω)</li>
-            <li><strong>R_eq: </strong>equivalent resistance (Ω)</li>
-            <li><strong>R₁, R₂, …: </strong>individual resistances (Ω)</li>
-            <li><strong>I_total, I₁: </strong>total and branch currents (A)</li>
-            <li><strong>V_in, V_out: </strong>input/output voltages (V)</li>
-            <li><strong>P: </strong>power (watts, W)</li>
-          </ul>
-          <div class="constants-note">Note: constants (e, ε₀) are listed in Useful constants.</div>
-        </div>
-      </div>
+      {{#each right_equation_sections}}
+        <div class="equation-section">
+          {{#if title}}<div class="equation-title">{{title}}</div>{{/if}}
 
-      <!-- RC Circuits Section -->
-      <div class="equation-section">
-        <div class="equation-title">RC Circuits</div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Time Constant</div>
-          <div class="equation">τ = RC</div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Charging a Capacitor</div>
-          <div class="equation">q = C·ε(1 - e<sup>-t/τ</sup>)</div>
-          <div class="equation">V<sub>C</sub> = ε(1 - e<sup>-t/τ</sup>)</div>
-          <div class="equation">I = (ε/R)e<sup>-t/τ</sup></div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Discharging a Capacitor</div>
-          <div class="equation">q = q₀e<sup>-t/τ</sup></div>
-          <div class="equation">V<sub>C</sub> = V₀e<sup>-t/τ</sup></div>
-          <div class="equation">I = (V₀/R)e<sup>-t/τ</sup></div>
-        </div>
-        <div class="equation-group">
-          <div class="equation-subtitle">Energy in RC Circuit</div>
-          <div class="equation">U = U₀e<sup>-2t/τ</sup></div>
-          <div class="note">Energy dissipated: U₀(1 - e<sup>-2t/τ</sup>)</div>
-        </div>
-        <div class="var-defs">
-          <div class="equation-title">Variable definitions</div>
-          <ul class="var-list">
-            <li><strong>R: </strong>resistance (Ω)</li>
-            <li><strong>C: </strong>capacitance (F)</li>
-            <li><strong>τ: </strong>time constant = RC (s)</li>
-            <li><strong>ε: </strong>emf / source voltage (V)</li>
-            <li><strong>q, q₀: </strong>capacitor charge (C)</li>
-            <li><strong>V_C, V₀: </strong>capacitor voltage (V)</li>
-            <li><strong>I: </strong>current (A)</li>
-            <li><strong>t: </strong>time (s)</li>
-            <li><strong>U, U₀: </strong>energy stored in capacitor (J)</li>
-          </ul>
-          <div class="constants-note">Note: constants (e, ε₀) are listed in Useful constants.</div>
-        </div>
-      </div>
+          {{#if groups}}
+            <div class="equation-group">
+              {{#each groups}}
+                {{#if subtitle}}<div class="equation-subtitle">{{subtitle}}</div>{{/if}}
+                {{#each lines}} <div class="equation">{{{this}}}</div> {{/each}}
+              {{/each}}
+            </div>
+          {{/if}}
 
-      <!-- Empty extra section preserved -->
-      <div class="equation-section"></div>
+          {{#if var_defs}}
+            <div class="var-defs">
+              <div class="equation-title">Variable definitions</div>
+              <ul class="var-list">
+                {{#each var_defs}}
+                  <li><strong>{{label}}: </strong>{{text}}</li>
+                {{/each}}
+              </ul>
+              {{#if constants_note}}<div class="constants-note">{{constants_note}}</div>{{/if}}
+            </div>
+          {{/if}}
+        </div>
+      {{/each}}
+
+      <!-- Empty extra section preserved if needed -->
+      {{#if extra_right_placeholder}}<div class="equation-section"></div>{{/if}}
     </div>
   </div>
 </div>
 </script>
 
-<!-- Handlebars (no integrity attr to avoid SRI mismatch) -->
+<!-- Handlebars -->
 <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.8/dist/handlebars.min.js"></script>
 
+<!-- Render script -->
 <script>
-/*
-Expected JSON shape (exam_data.json), minimal:
-{
-  "course_title": "Physics 227",
-  "exam_title": "Exam #3",
-  "instructions_heading": "Instructions",
-  "variant_mark": "α",
-  "instructions_paragraphs": [
-    "This exam consists of 10 multiple choice questions...",
-    "Equation sheets, useful constants..."
-  ],
-  "mc_section_title": "Multiple Choice Questions",
-  "mc_section_intro": "There are 5 questions...",
-  "mc_questions": [
-    {
-      "label": "Q1",
-      "stem_html": "A copper wire and an aluminum wire ... which statement is correct?",
-      "options": [
-        "a. The current is larger in the copper wire than in the aluminum wire",
-        "b. The electric field is stronger in the copper wire than in the aluminum wire",
-        "c. The electric field is stronger in the aluminum wire than in the copper wire",
-        "d. The current density is larger in the copper wire than in the aluminum wire",
-        "e. The current density is smaller in the copper wire than in the aluminum wire"
-      ],
-      "trailing_image": null
-    }
-  ],
-  "calc_section_title": "Calculations",
-  "calc_section_intro": "There are 5 questions...",
-  "calc_questions": [
-    {
-      "label": "Q6",
-      "stem_html": "A 10.0-meter-long copper wire ... what is the resistance?",
-      "options": ["a. 0.95 Ω","b. 9.5 Ω","c. 0.095 Ω","d. 95 Ω","e. 0.48 Ω"],
-      "trailing_image": null
-    }
-  ],
-  "constants_image": { "src": "physical_constants.PNG", "alt": "Table of Physical Constants" },
-  "trigcalc_title": "Trigonometry & Calculus",
-  "trigcalc_image": { "src": "trig_calc.PNG", "alt": "Table of Trig and Calc" },
-  "equations_title": "Exam #3 Key Equations"
-}
-*/
-
 async function render() {
   const mount = document.getElementById('app');
   try {
-    const tplSrc = document.getElementById('tpl').innerHTML;
-    const template = Handlebars.compile(tplSrc);
-
+    const template = Handlebars.compile(document.getElementById('tpl').innerHTML);
     const resp = await fetch('exam_data.json', { cache: 'no-cache' });
-    if (!resp.ok) throw new Error(`Failed to load exam_data.json (${resp.status})`);
+    if (!resp.ok) throw new Error(\`Failed to load exam_data.json (\${resp.status})\`);
     const data = await resp.json();
 
-    // render
+    // ---- Defaults & normalization ----
+    // 1) Always show Trig & Calculus section (default title + image if missing)
+    if (!data.trigcalc_title) data.trigcalc_title = "Trigonometry & Calculus";
+    if (!data.trigcalc_image || !data.trigcalc_image.src) {
+      data.trigcalc_image = { src: "trig_calc.PNG", alt: "Table of Trig and Calc" };
+    }
+
+    // 2) Titles
+    if (!data.equations_title) data.equations_title = "Key Equations";
+
+    // 3) Normalize question stems & images
+    const normalizeQ = (arr = []) => arr.map(q => {
+      const trailing_image = q.trailing_image ??
+        (q.image_src ? { src: q.image_src, alt: q.image_alt || "", width: q.image_width || "200px" } : undefined);
+      return { ...q, stem_html: q.stem_html ?? q.stem ?? "", trailing_image };
+    });
+    data.mc_questions   = normalizeQ(data.mc_questions);
+    data.calc_questions = normalizeQ(data.calc_questions);
+
+    // 4) Ensure equation columns exist (empty arrays OK)
+    data.left_equation_sections  = Array.isArray(data.left_equation_sections)  ? data.left_equation_sections  : [];
+    data.right_equation_sections = Array.isArray(data.right_equation_sections) ? data.right_equation_sections : [];
+
+    // 5) Optional constants image default if you want it commonly present (else omit)
+    // if (!data.constants_image || !data.constants_image.src) {
+    //   data.constants_image = { src: "physical_constants.PNG", alt: "Table of Physical Constants" };
+    // }
+
     mount.innerHTML = template(data);
   } catch (e) {
     console.error(e);
@@ -759,31 +430,8 @@ async function render() {
       </div>`;
   }
 }
-
 window.addEventListener('DOMContentLoaded', render);
 </script>
-<script>
-const resp = await fetch('exam_data.json', { cache: 'no-cache' });
-const data = await resp.json();
 
-function ensureStemAndImage(arr = []) {
-  return arr.map(q => {
-    const trailing_image =
-      q.trailing_image ??
-      (q.image_src ? { src: q.image_src, alt: q.image_alt || "", width: q.image_width || "200px" } : undefined);
-
-    return {
-      ...q,
-      stem_html: q.stem_html ?? q.stem ?? "",
-      trailing_image
-    };
-  });
-}
-
-data.mc_questions   = ensureStemAndImage(data.mc_questions);
-data.calc_questions = ensureStemAndImage(data.calc_questions);
-
-mount.innerHTML = template(data);
-</script>
 </body>
 </html>
