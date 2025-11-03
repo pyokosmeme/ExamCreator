@@ -29,7 +29,14 @@ p { margin: 0.35rem 0; }
 .equation { margin: 0.25rem 0 0.45rem 0; }
 
 /* variations */
-.variant-mark { font-size: 3pt; opacity: 0.35; vertical-align: super; margin-left: 2px; }
+.variant-mark {
+  font-size: 3pt;         /* was 7pt */
+  line-height: 0;
+  opacity: 0.2;           /* make it faint as well */
+  vertical-align: super;
+  margin-left: 1px;
+}
+
 
 /* Titles in that area */
 .section-title { font-size: 18px; margin: 0.4rem 0 0.4rem 0; color: #333; }
