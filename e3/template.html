@@ -159,6 +159,7 @@ th, td { border: 1px solid #e3e6ec; padding: 6px 8px; }
 </style>
 <style>
 /* ===== Classic Exam Look ===== */
+/* (Removed column-count rules to avoid conflict with grid) */
 html, body { margin: 0; padding: 0; font-family: "Times New Roman", Georgia, serif; font-size: 11pt; line-height: 1.4; color: #000; background: #fff; }
 h1, h2, h3, h4 { margin: 0.6rem 0 0.35rem 0; font-weight: 700; color: #000; }
 .section-title { font-weight: 700; font-size: 14pt; margin: 0.6rem 0 0.4rem 0; padding-left: 0; border: none; }
@@ -171,7 +172,6 @@ h1, h2, h3, h4 { margin: 0.6rem 0 0.35rem 0; font-weight: 700; color: #000; }
 img { max-width: 100%; height: auto; display: block; margin: 0.3rem auto 0.5rem auto; }
 .equation-section { margin: 0.45rem 0 0.65rem 0; padding: 0; background: none; border: 0; }
 .equation-title { margin: 0.1rem 0 0.3rem 0; font-weight: 700; font-size: 12pt; }
-.equation-group, .equation-section { column-count: 2; column-gap: 18px; }
 .equation { break-inside: avoid; -webkit-column-break-inside: avoid; margin: 0.15rem 0 0.3rem 0; }
 .var-defs { margin-top: 0.25rem; font-size: 10.5pt; line-height: 1.35; }
 .var-defs .equation-title { font-size: 11pt; margin: 0.2rem 0 0.2rem 0; }
@@ -320,12 +320,13 @@ th, td { border: 1px solid #000; padding: 4px 6px; }
           {{#if title}}<div class="equation-title">{{title}}</div>{{/if}}
 
           {{#if groups}}
-            <div class="equation-group">
-              {{#each groups}}
+            {{!-- FIX: one equation-group per group to match original spacing --}}
+            {{#each groups}}
+              <div class="equation-group">
                 {{#if subtitle}}<div class="equation-subtitle">{{subtitle}}</div>{{/if}}
                 {{#each lines}} <div class="equation">{{{this}}}</div> {{/each}}
-              {{/each}}
-            </div>
+              </div>
+            {{/each}}
           {{/if}}
 
           {{#if var_defs}}
@@ -349,12 +350,13 @@ th, td { border: 1px solid #000; padding: 4px 6px; }
           {{#if title}}<div class="equation-title">{{title}}</div>{{/if}}
 
           {{#if groups}}
-            <div class="equation-group">
-              {{#each groups}}
+            {{!-- FIX: one equation-group per group to match original spacing --}}
+            {{#each groups}}
+              <div class="equation-group">
                 {{#if subtitle}}<div class="equation-subtitle">{{subtitle}}</div>{{/if}}
                 {{#each lines}} <div class="equation">{{{this}}}</div> {{/each}}
-              {{/each}}
-            </div>
+              </div>
+            {{/each}}
           {{/if}}
 
           {{#if var_defs}}
@@ -371,7 +373,6 @@ th, td { border: 1px solid #000; padding: 4px 6px; }
         </div>
       {{/each}}
 
-      <!-- Empty extra section preserved if needed -->
       {{#if extra_right_placeholder}}<div class="equation-section"></div>{{/if}}
     </div>
   </div>
@@ -388,36 +389,28 @@ async function render() {
   try {
     const template = Handlebars.compile(document.getElementById('tpl').innerHTML);
     const resp = await fetch('exam_data.json', { cache: 'no-cache' });
-    if (!resp.ok) throw new Error(\`Failed to load exam_data.json (\${resp.status})\`);
+    if (!resp.ok) throw new Error(`Failed to load exam_data.json (${resp.status})`);
     const data = await resp.json();
 
-    // ---- Defaults & normalization ----
-    // 1) Always show Trig & Calculus section (default title + image if missing)
+    // Defaults: trig section always present unless explicitly removed
     if (!data.trigcalc_title) data.trigcalc_title = "Trigonometry & Calculus";
     if (!data.trigcalc_image || !data.trigcalc_image.src) {
       data.trigcalc_image = { src: "trig_calc.PNG", alt: "Table of Trig and Calc" };
     }
-
-    // 2) Titles
     if (!data.equations_title) data.equations_title = "Key Equations";
 
-    // 3) Normalize question stems & images
-    const normalizeQ = (arr = []) => arr.map(q => {
+    // Normalize question stems & images
+    const norm = (arr = []) => arr.map(q => {
       const trailing_image = q.trailing_image ??
         (q.image_src ? { src: q.image_src, alt: q.image_alt || "", width: q.image_width || "200px" } : undefined);
       return { ...q, stem_html: q.stem_html ?? q.stem ?? "", trailing_image };
     });
-    data.mc_questions   = normalizeQ(data.mc_questions);
-    data.calc_questions = normalizeQ(data.calc_questions);
+    data.mc_questions   = norm(data.mc_questions);
+    data.calc_questions = norm(data.calc_questions);
 
-    // 4) Ensure equation columns exist (empty arrays OK)
+    // Ensure arrays exist
     data.left_equation_sections  = Array.isArray(data.left_equation_sections)  ? data.left_equation_sections  : [];
     data.right_equation_sections = Array.isArray(data.right_equation_sections) ? data.right_equation_sections : [];
-
-    // 5) Optional constants image default if you want it commonly present (else omit)
-    // if (!data.constants_image || !data.constants_image.src) {
-    //   data.constants_image = { src: "physical_constants.PNG", alt: "Table of Physical Constants" };
-    // }
 
     mount.innerHTML = template(data);
   } catch (e) {
@@ -426,7 +419,7 @@ async function render() {
       <div style="padding:16px; color:#b00020;">
         <strong>Could not render the exam.</strong><br/>
         ${e.message}<br/>
-        <small>Tip: serve this folder (e.g., <code>python -m http.server 8000</code>) so <code>fetch()</code> can read <code>exam_data.json</code>.</small>
+        <small>Serve this folder (e.g., <code>python -m http.server 8000</code>) so <code>fetch()</code> can read <code>exam_data.json</code>.</small>
       </div>`;
   }
 }
