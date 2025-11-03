@@ -1,0 +1,198 @@
+{
+  "course_title": "Physics 227",
+  "exam_title": "Exam #3",
+  "instructions_heading": "Instructions",
+  "variant_mark": "α",
+  "instructions_paragraphs": [
+    "This exam consists of 10 multiple choice questions. Five are conceptual, five involve calculations. Complete all problems in the allotted time. Show all work.",
+    "Equation sheets, useful constants, and mathematical formulas are provided in the last pages of the exam handout."
+  ],
+  "mc_section_title": "Multiple Choice Questions",
+  "mc_section_intro": "There are 5 questions in this section, each is graded out of a total of 5 points.",
+  "mc_questions": [
+    {
+      "label": "Q1",
+      "stem": "A copper wire and an aluminum wire with identical length and cross-sectional area are connected in series. Which statement is correct?",
+      "options": [
+        "a. The current is larger in the copper wire than in the aluminum wire",
+        "b. The electric field is stronger in the copper wire than in the aluminum wire",
+        "c. The electric field is stronger in the aluminum wire than in the copper wire",
+        "d. The current density is larger in the copper wire than in the aluminum wire",
+        "e. The current density is smaller in the copper wire than in the aluminum wire"
+      ]
+    },
+    {
+      "label": "Q2",
+      "stem": "Which of the following statements about RC circuits is correct?",
+      "options": [
+        "a. The time constant of an RC circuit depends on the applied voltage",
+        "b. When a capacitor discharges through a resistor, the current decreases exponentially",
+        "c. In a charging RC circuit, the capacitor voltage increases linearly with time",
+        "d. When a battery is connected to an RC circuit, the current is initially zero",
+        "e. The energy stored in a fully charged capacitor equals the product of charge and voltage (E = QV)"
+      ]
+    },
+    {
+      "label": "Q3",
+      "stem": "Three resistors with values R, 2R, and 3R are connected in parallel. The equivalent resistance is:",
+      "image_src": "e33rb.png",
+      "image_alt": "Parallel network",
+      "image_width": "200px",
+      "options": ["a. 6R","b. R/6","c. 11R/6","d. 6R/11","e. None of the above"]
+    },
+    {
+      "label": "Q4",
+      "stem": "A dielectric slab with κ = 3.0 is inserted halfway between the plates of a charged, isolated capacitor. What happens to the electric field in the region with the dielectric?",
+      "image_src": "dielectric_half.png",
+      "image_alt": "Half dielectric",
+      "image_width": "150px",
+      "options": ["a. Decreases by factor 3","b. Increases by factor 3","c. Remains the same","d. Decreases by 1.5","e. Increases by 1.5"]
+    },
+    {
+      "label": "Q5",
+      "stem": "What happens to the resistance of a copper wire if both its length and diameter are doubled?",
+      "options": ["a. Doubles","b. Stays the same","c. Half","d. One-fourth","e. Four times"]
+    }
+  ],
+  "calc_section_title": "Calculations",
+  "calc_section_intro": "There are 5 questions in this section, each is graded out of a total of 10 points.",
+  "calc_questions": [
+    {
+      "label": "Q6",
+      "stem": "A 10.0 m copper wire of diameter 1.5 mm (ρ = 1.68 × 10⁻⁸ Ω·m at 20°C). What is the resistance?",
+      "options": ["a. 0.95 Ω","b. 9.5 Ω","c. 0.095 Ω","d. 95 Ω","e. 0.48 Ω"]
+    },
+    {
+      "label": "Q7",
+      "stem": "In the circuit shown, what is the equivalent resistance between A and B?",
+      "image_src": "e33R.png",
+      "image_alt": "Network",
+      "image_width": "200px",
+      "options": ["a. 10 Ω","b. 2.2 Ω","c. 5.3 Ω","d. 8.4 Ω","e. 4.8 Ω"]
+    },
+    {
+      "label": "Q8",
+      "stem": "A 6.0 μF capacitor charged to 120 V is connected across a 20 kΩ resistor at t = 0. What is τ?",
+      "options": ["a. 120 ms","b. 833 ms","c. 1.2 s","d. 0.3 s","e. 83.3 ms"]
+    },
+    {
+      "label": "Q9",
+      "stem": "C₁ = 4.0 μF and C₂ = 6.0 μF in series across 12 V. C₃ = 3.0 μF in parallel with the series combo. What is C_eq?",
+      "image_src": "e3eqc3.png",
+      "image_alt": "Capacitor network",
+      "image_width": "200px",
+      "options": ["a. 13.0 μF","b. 5.4 μF","c. 2.4 μF","d. 3.4 μF","e. 7.4 μF"]
+    },
+    {
+      "label": "Q10",
+      "stem": "Battery ε = 12.0 V, internal r = 0.50 Ω, current 2.0 A. Terminal voltage?",
+      "options": ["a. 12.0 V","b. 11.0 V","c. 13.0 V","d. 10.0 V","e. 11.5 V"]
+    }
+  ],
+  "constants_image": { "src": "physical_constants.PNG", "alt": "Table of Physical Constants" },
+  "trigcalc_title": "Trigonometry & Calculus",
+  "trigcalc_image": { "src": "trig_calc.PNG", "alt": "Table of Trig and Calc" },
+  "equations_title": "Exam #3 Key Equations",
+
+  "left_equation_sections": [
+    {
+      "title": "Capacitance",
+      "groups": [
+        { "subtitle": "Parallel-Plate Capacitor", "lines": ["C = ε₀ A/d", "With dielectric: C = κε₀ A/d"] },
+        { "subtitle": "Spherical Capacitor", "lines": ["C = 4πε₀(ab)/(b-a)", "With dielectric: C = 4πκε₀(ab)/(b-a)"] },
+        { "subtitle": "Cylindrical Capacitor", "lines": ["C = 2πε₀L/ln(b/a)", "With dielectric: C = 2πκε₀L/ln(b/a)"] },
+        { "subtitle": "Capacitors in Series", "lines": ["1/C<sub>eq</sub> = 1/C₁ + 1/C₂ + 1/C₃ + ..."] },
+        { "subtitle": "Capacitors in Parallel", "lines": ["C<sub>eq</sub> = C₁ + C₂ + C₃ + ..."] },
+        { "subtitle": "Energy Stored in a Capacitor", "lines": ["U = ½QV = ½CV² = ½Q²/C"] },
+        { "subtitle": "Energy Density in Electric Field", "lines": ["u = ½ε₀E²", "With dielectric: u = ½κε₀E²"] },
+        { "subtitle": null, "lines": ["Inside linear dielectric: E = E₀/κ (for the same free charge configuration)"] }
+      ],
+      "var_defs": [
+        {"label":"C","text":"capacitance (F)"},
+        {"label":"κ","text":"dielectric constant (unitless)"},
+        {"label":"A","text":"plate area (m²)"},
+        {"label":"d","text":"plate separation (m)"},
+        {"label":"a, b","text":"inner and outer radii (m)"},
+        {"label":"L","text":"cylinder length (m)"},
+        {"label":"V","text":"potential difference (V)"},
+        {"label":"U","text":"stored energy (J)"},
+        {"label":"u","text":"energy density (J/m³)"}
+      ],
+      "constants_note": "Note: constants (e, ε₀) are listed in Useful constants."
+    },
+    {
+      "title": "Current and Resistance",
+      "groups": [
+        { "subtitle": "Current and Current Density", "lines": ["I = dQ/dt", "J = nev<sub>d</sub>", "I = ∫J·dA"] },
+        { "subtitle": "Drift Velocity", "lines": ["v<sub>d</sub> = I/(neA)", "<div class=\"note\">n = number density of carriers</div>"] },
+        { "subtitle": "Resistance and Resistivity", "lines": ["R = ρL/A", "ρ = E/J = m/(ne²τ)"] },
+        { "subtitle": "Temperature Dependence", "lines": ["R = R₀[1 + α(T - T₀)]", "ρ = ρ₀[1 + α(T - T₀)]"] },
+        { "subtitle": "Ohm's Law", "lines": ["V = IR", "J = σE", "σ = 1/ρ"] }
+      ],
+      "var_defs": [
+        {"label":"I","text":"current (A)"},
+        {"label":"Q","text":"charge (C)"},
+        {"label":"t","text":"time (s)"},
+        {"label":"J","text":"current density (A/m²)"},
+        {"label":"n","text":"carrier density (1/m³)"},
+        {"label":"v_d","text":"drift velocity (m/s)"},
+        {"label":"A","text":"cross-sectional area (m²)"},
+        {"label":"ρ","text":"resistivity (Ω·m)"},
+        {"label":"σ","text":"conductivity (S/m)"},
+        {"label":"m","text":"carrier mass (kg)"},
+        {"label":"τ","text":"mean free time (s)"},
+        {"label":"α","text":"temperature coefficient (1/K)"},
+        {"label":"R","text":"resistance (Ω)"},
+        {"label":"L","text":"length (m)"},
+        {"label":"V","text":"voltage (V)"}
+      ],
+      "constants_note": "Note: constants (e, ε₀) are listed in Useful constants."
+    }
+  ],
+
+  "right_equation_sections": [
+    {
+      "title": "DC Circuits",
+      "groups": [
+        { "subtitle": "Kirchhoff's Rules", "lines": ["Junction rule: ∑I<sub>in</sub> = ∑I<sub>out</sub>", "Loop rule: ∑V = 0"] },
+        { "subtitle": "Resistors in Series", "lines": ["R<sub>eq</sub> = R₁ + R₂ + R₃ + ..."] },
+        { "subtitle": "Resistors in Parallel", "lines": ["1/R<sub>eq</sub> = 1/R₁ + 1/R₂ + 1/R₃ + ..."] },
+        { "subtitle": "Voltage Divider", "lines": ["V<sub>out</sub> = (R<sub>out</sub>/(R₁ + R₂)) × V<sub>in</sub>"] },
+        { "subtitle": "Current Divider", "lines": ["I₁ = (R₂/(R₁ + R₂)) × I<sub>total</sub>"] },
+        { "subtitle": "Power", "lines": ["P = IV = I²R = V²/R"] },
+        { "subtitle": "EMF and Terminal Voltage", "lines": ["V<sub>terminal</sub> = ε - Ir", "<div class=\"note\">r = internal resistance of source</div>"] }
+      ],
+      "var_defs": [
+        {"label":"ε","text":"emf (V)"},
+        {"label":"r","text":"internal resistance (Ω)"},
+        {"label":"R_eq","text":"equivalent resistance (Ω)"},
+        {"label":"R₁, R₂, …","text":"individual resistances (Ω)"},
+        {"label":"I_total, I₁","text":"total/branch currents (A)"},
+        {"label":"V_in, V_out","text":"input/output voltages (V)"},
+        {"label":"P","text":"power (W)"}
+      ],
+      "constants_note": "Note: constants (e, ε₀) are listed in Useful constants."
+    },
+    {
+      "title": "RC Circuits",
+      "groups": [
+        { "subtitle": "Time Constant", "lines": ["τ = RC"] },
+        { "subtitle": "Charging a Capacitor", "lines": ["q = C·ε(1 - e<sup>-t/τ</sup>)","V<sub>C</sub> = ε(1 - e<sup>-t/τ</sup>)","I = (ε/R)e<sup>-t/τ</sup>"] },
+        { "subtitle": "Discharging a Capacitor", "lines": ["q = q₀e<sup>-t/τ</sup>","V<sub>C</sub> = V₀e<sup>-t/τ</sup>","I = (V₀/R)e<sup>-t/τ</sup>"] },
+        { "subtitle": "Energy in RC Circuit", "lines": ["U = U₀e<sup>-2t/τ</sup>", "<div class=\"note\">Energy dissipated: U₀(1 - e<sup>-2t/τ</sup>)</div>"] }
+      ],
+      "var_defs": [
+        {"label":"R","text":"resistance (Ω)"},
+        {"label":"C","text":"capacitance (F)"},
+        {"label":"τ","text":"time constant (s)"},
+        {"label":"ε","text":"source voltage (V)"},
+        {"label":"q, q₀","text":"charge (C)"},
+        {"label":"V_C, V₀","text":"capacitor voltage (V)"},
+        {"label":"I","text":"current (A)"},
+        {"label":"t","text":"time (s)"},
+        {"label":"U, U₀","text":"energy (J)"}
+      ],
+      "constants_note": "Note: constants (e, ε₀) are listed in Useful constants."
+    }
+  ]
+}
