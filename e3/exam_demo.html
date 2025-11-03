@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Exam Render</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- Minimal styling (you can paste your full CSS here if you like) -->
+  <style>
+    html, body { margin:0; padding:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica; color:#111; line-height:1.45; }
+    .doc-section { padding: 18px 24px; }
+    .instructions { background:#fff; color:#000; min-height: 40vh; padding: 0.8in 0.9in 0.6in 0.9in; position: relative; }
+    .nd-block { position:absolute; top:0.9in; left:0.9in; }
+    .nd-block p { margin:0.15rem 0; font-size: 11pt; }
+    .title-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center; margin-top: 2.3in; margin-bottom: 2.0in; text-align:center; }
+    .title-wrap h1 { font-family: 'Times New Roman', Georgia, serif; font-size: 28pt; font-weight: 600; margin:0 0 0.25rem 0; }
+    .title-wrap h2 { font-family: 'Times New Roman', Georgia, serif; font-size: 22pt; font-weight: 600; margin:0; }
+    .inst-heading { color:#2b579a; font-weight:700; margin:0 0 0.25rem 0; }
+    .inst-heading .variant-mark, .variant-mark { font-size:0.45em; opacity:0.35; vertical-align: super; margin-left:2px; }
+
+    .section-title { color:#234e8f; font-weight:700; font-size:18px; margin: 0.6rem 0 0.45rem 0; padding-left:8px; border-left:4px solid #2a5faa; }
+    .question { position:relative; background:#fff; padding:12px 14px; margin:0.9rem 0 1.0rem 0; border:1px solid #e3e6ec; border-left:4px solid #2a5faa; border-radius:6px; }
+    .question .stem { margin-bottom:0.45rem; }
+    .q-label { color:#2b579a; font-weight:700; }
+    .option { margin:0.22rem 0; }
+    img { max-width:100%; height:auto; display:block; margin: 0.3rem 0 0.55rem 0; }
+
+    @media print {
+      @page { size: Letter; margin: 0.5in; }
+      html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .question { page-break-inside: avoid; break-inside: avoid; }
+      h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
+      .firstpage-only { break-after: page; page-break-after: always; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Render target -->
+  <div id="app" aria-live="polite">Loading…</div>
+
+  <!-- Handlebars template -->
+  <script id="exam-template" type="text/x-handlebars-template">
+    <!-- ===== Page 1: Cover / Instructions ===== -->
+    <div class="instructions firstpage-only">
+      <div class="nd-block">
+        <p>Name: ____________________</p>
+        <p>Date: ____________________</p>
+      </div>
+
+      <div class="title-wrap">
+        <h1>{{course_title}}</h1>
+        <h2>{{exam_title}}</h2>
+      </div>
+
+      <h3 class="inst-heading">
+        {{instructions_heading}}<sup class="variant-mark">{{variant_mark}}</sup>
+      </h3>
+
+      {{#each instructions_paragraphs}}
+        <p>{{this}}</p>
+      {{/each}}
+    </div>
+
+    <!-- ===== Multiple Choice ===== -->
+    <div class="doc-section second">
+      <h2 class="section-title">{{mc_section_title}}</h2>
+      <p>{{mc_section_intro}}</p>
+
+      {{#each mc_questions}}
+      <div class="question">
+        <div class="stem">
+          <span class="q-label">[{{label}}]</span> {{stem}}
+        </div>
+
+        {{#if image_src}}
+          <img alt="{{image_alt}}" src="{{image_src}}" style="width: {{image_width}}; height:auto;"/>
+        {{/if}}
+
+        {{#each options}}
+          <div class="option">{{{this}}}</div>
+        {{/each}}
+      </div>
+      {{/each}}
+    </div>
+
+    <!-- ===== Calculations ===== -->
+    <div class="doc-section third">
+      <h2 class="section-title">{{calc_section_title}}</h2>
+      <p>{{calc_section_intro}}</p>
+
+      {{#each calc_questions}}
+      <div class="question">
+        <div class="stem">
+          <span class="q-label">[{{label}}]</span> {{stem}}
+        </div>
+
+        {{#if image_src}}
+          <img alt="{{image_alt}}" src="{{image_src}}" style="width: {{image_width}}; height:auto;"/>
+        {{/if}}
+
+        {{#each options}}
+          <div class="option">{{{this}}}</div>
+        {{/each}}
+      </div>
+      {{/each}}
+    </div>
+
+    <!-- ===== Reference Materials (optional images) ===== -->
+    <div class="doc-section fourth">
+      {{#if constants_image.src}}
+        <img alt="{{constants_image.alt}}" src="{{constants_image.src}}" style="display:block; width:650px; height:auto; max-width:100%;"/>
+      {{/if}}
+
+      {{#if trigcalc_image.src}}
+        <h2 class="section-title" style="margin-top:20px;">{{trigcalc_title}}</h2>
+        <img alt="{{trigcalc_image.alt}}" src="{{trigcalc_image.src}}" style="display:block; width:650px; height:auto; max-width:100%;"/>
+      {{/if}}
+
+      <h2 class="section-title" style="margin-top:20px;">{{equations_title}}</h2>
+
+      <!-- Example: show a few lines if provided -->
+      {{#if left_equation_sections.0.title}}
+        <div class="question">
+          <div class="stem"><strong>{{left_equation_sections.0.title}}</strong></div>
+          {{#each left_equation_sections.0.groups}}
+            {{#each lines}}
+              <div class="option">{{{this}}}</div>
+            {{/each}}
+          {{/each}}
+        </div>
+      {{/if}}
+    </div>
+  </script>
+
+  <!-- Handlebars (runtime is enough since we compile in-browser) -->
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.8/dist/handlebars.min.js" integrity="sha384-9eYwRk0CkR6pQbW2eWzGkSO1oJx6d/4Nf2aAI1k8oW7p8W7K9p5nF7wDq4Pj6wWc" crossorigin="anonymous"></script>
+
+  <script>
+    // Utility: render function
+    async function renderExam() {
+      const mount = document.getElementById('app');
+      try {
+        // 1) Load template from the script tag
+        const tplSrc = document.getElementById('exam-template').innerHTML;
+        const template = Handlebars.compile(tplSrc);
+
+        // 2) Fetch data JSON from same folder (ensure file is named exactly 'exam_data.json')
+        const resp = await fetch('exam_data.json', { cache: 'no-cache' });
+        if (!resp.ok) throw new Error('Failed to load exam_data.json: ' + resp.status + ' ' + resp.statusText);
+        const data = await resp.json();
+
+        // 3) Render
+        const html = template(data);
+
+        // 4) Inject
+        mount.innerHTML = html;
+      } catch (err) {
+        console.error(err);
+        mount.innerHTML = `
+          <div style="padding:16px; color:#b00020;">
+            <strong>Could not render the exam.</strong><br/>
+            ${err.message}<br/>
+            <small>Tip: If you opened this file directly (file://), run a local server so fetch() can read exam_data.json.</small>
+          </div>
+        `;
+      }
+    }
+
+    // Register any helpers you want (optional)
+    // Example: {{upper someText}}
+    Handlebars.registerHelper('upper', s => String(s).toUpperCase());
+
+    // Run on load
+    window.addEventListener('DOMContentLoaded', renderExam);
+  </script>
+</body>
+</html>
