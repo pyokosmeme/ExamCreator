@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Physics 227 - Practice Exam #3</title>
+<style>
+/* Base */
+html, body { margin: 0; padding: 0; font-family: system-ui, Arial, sans-serif; font-size: 11pt; line-height: 1.35; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* Layout blocks */
+.doc-section { padding: 18px 24px; }
+.grid-container { margin: 12px 0; padding: 8px; }
+
+/* Questions and spacing */
+.question { margin: 0.45rem 0; }
+.question + .question { margin-top: 0.4rem; }
+h1, h2, h3, h4 { margin: 0.6rem 0 0.35rem 0; }
+p { margin: 0.35rem 0; }
+
+/* Options */
+.option { margin: 0.2rem 0; }
+
+/* Equations / constants sheet spacing */
+.equation-section { margin: 0.4rem 0 0.6rem 0; }
+.equation-title { margin: 0.25rem 0 0.45rem 0; font-weight: 600; }
+.equation-group { margin: 0.3rem 0 0.6rem 0; }
+.equation { margin: 0.25rem 0 0.45rem 0; }
+
+/* Titles in that area */
+.section-title { font-size: 18px; margin: 0.4rem 0 0.4rem 0; color: #333; }
+
+/* Make the last section (equation sheet) slightly tighter but avoid cramping */
+.fourth .equation-section, .fourth .grid-container { font-size: 0.96em; line-height: 1.28; }
+
+/* Print */
+@media print {
+  @page { size: Letter; margin: 0.5in; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* Avoid over-constraining pagination: let the engine flow content naturally */
+  h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
+  .question, .equation-section, .grid-container, img, table { orphans: 3; widows: 3; }
+  /* Ensure the equations sheet doesn't start with a giant top gap */
+  .doc-section.fourth { margin-top: 0 !important; padding-top: 6px !important; }
+  /* Constrain any tall images before the equations sheet */
+  .doc-section.fourth img { max-height: 9in; }
+}
+</style>
+<style>
+/* Spacing after questions */
+.question { margin-bottom: 0.65rem; }
+/* Keep questions intact on a page when printing (gentle, non-aggressive) */
+@media print {
+  .question { page-break-inside: avoid; break-inside: avoid; }
+}
+</style><style>
+.var-defs { margin-top: 0.35rem; padding-left: 0; }
+.var-defs .equation-title { font-size: 16px; margin: 0.3rem 0 0.25rem 0; }
+.var-defs .var-list { margin: 0.2rem 0 0.4rem 0; padding-left: 1.1rem; }
+.var-defs .var-list li { margin: 0.12rem 0; }
+@media print {
+  .var-defs { margin-top: 0.25rem; }
+  .var-defs .equation-title { page-break-after: avoid; }
+  .var-defs .var-list { orphans: 3; widows: 3; }
+}
+</style>
+<style>
+/* ===== Base Typography ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 11.25pt;
+  line-height: 1.45;
+  color: #111;
+}
+p { margin: 0.4rem 0; }
+strong, b { font-weight: 600; }
+
+/* ===== Section & Header Styling (similar to original) ===== */
+.header, .exam-header {
+  padding: 8px 24px 4px 24px;
+  border-bottom: 2px solid #2a5faa;
+}
+.header h1, .exam-header h1 {
+  font-size: 22px;
+  margin: 0 0 4px 0;
+  color: #234e8f;
+}
+.header h2, .exam-header h2 { margin: 0; font-size: 16px; color: #234e8f; }
+
+.section-title {
+  color: #234e8f;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0.6rem 0 0.45rem 0;
+  padding-left: 8px;
+  border-left: 4px solid #2a5faa;
+}
+
+/* ===== Layout Blocks ===== */
+.doc-section { padding: 18px 24px; }
+.grid-container { margin: 10px 0; padding: 8px; }
+
+/* ===== Question Blocks (card-like, but light) ===== */
+.question {
+  position: relative;
+  background: #fff;
+  padding: 12px 14px;
+  margin: 0.9rem 0 1.0rem 0; /* More space after questions */
+  border: 1px solid #e3e6ec;
+  border-left: 4px solid #2a5faa;
+  border-radius: 6px;
+}
+.question .stem { margin-bottom: 0.45rem; }
+.question-number {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: #2a5faa;
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+.option { margin: 0.22rem 0; }
+.options { margin-top: 0.35rem; }
+
+/* ===== Images ===== */
+img { max-width: 100%; height: auto; display: block; margin: 0.3rem 0 0.55rem 0; }
+
+/* ===== Equation Sheet Styling ===== */
+.equation-section {
+  margin: 0.55rem 0 0.8rem 0;
+  padding: 10px 12px;
+  background: #f7f9fc;
+  border: 1px solid #d7deee;
+  border-radius: 6px;
+}
+.equation-title {
+  margin: 0.2rem 0 0.45rem 0;
+  color: #234e8f;
+  font-weight: 700;
+}
+.equation-group { margin: 0.3rem 0 0.55rem 0; }
+.equation { margin: 0.25rem 0 0.4rem 0; }
+.var-defs { margin-top: 0.3rem; }
+.var-defs .var-list { margin: 0.2rem 0 0.5rem 0; padding-left: 1.1rem; }
+.var-defs .var-list li { margin: 0.14rem 0; }
+
+/* ===== Tables (if any) ===== */
+table { border-collapse: collapse; margin: 0.45rem 0; width: 100%; }
+th, td { border: 1px solid #e3e6ec; padding: 6px 8px; }
+
+/* ===== Print: gentle pagination, keep questions intact ===== */
+@media print {
+  @page { size: Letter; margin: 0.5in; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .question { page-break-inside: avoid; break-inside: avoid; }
+  .equation-section { page-break-inside: avoid; break-inside: avoid; }
+  h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
+}
+</style>
+<style>
+/* ===== Spacing: Questions ===== */
+.question { margin: 1.15rem 0 1.25rem 0; }          /* more breathing room after questions */
+.question .stem { margin-bottom: 0.55rem; }
+.options { margin-top: 0.45rem; }
+.option { margin: 0.26rem 0; }
+
+/* ===== Equation Sheet: Compact Layout ===== */
+/* Use CSS Grid for compact multi-column layout while staying print-safe */
+.equation-section { padding: 12px 14px; }
+.equation-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-column-gap: 18px;
+  grid-row-gap: 6px;
+  align-items: start;
+}
+.equation { margin: 0.15rem 0 0.3rem 0; }
+.var-defs { margin-top: 0.25rem; }
+.var-defs .var-list { margin: 0.15rem 0 0.4rem 0; }
+
+/* Keep titles sticky to their sections visually */
+.equation-title { margin: 0.15rem 0 0.3rem 0; }
+
+/* ===== Print: keep blocks intact, but avoid forced page breaks ===== */
+@media print {
+  .question, .equation-section, .equation-group, .var-defs { page-break-inside: avoid; break-inside: avoid; }
+  /* Slightly tighter text in the equations area for compactness */
+  .equation-section { font-size: 0.96em; line-height: 1.32; }
+  /* Allow grid to pack efficiently on paper */
+  .equation-group { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); grid-row-gap: 4px; grid-column-gap: 14px; }
+}
+</style>
+<style>
+/* ===== Classic Exam Look (serif, minimal, print-first) ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 11pt;
+  line-height: 1.4;
+  color: #000;
+  background: #fff;
+}
+/* Headings: bold, no color accents */
+h1, h2, h3, h4 { 
+  margin: 0.6rem 0 0.35rem 0; 
+  font-weight: 700; 
+  color: #000; 
+}
+.section-title { 
+  font-weight: 700; 
+  font-size: 14pt; 
+  margin: 0.6rem 0 0.4rem 0; 
+  padding-left: 0; 
+  border: none; 
+}
+
+/* Layout blocks: simple padding, no boxes */
+.doc-section { padding: 18px 24px; }
+.grid-container { margin: 0.2in 0 0.15in 0; padding: 0; border: 0; }
+
+/* Questions: no borders, no background; clear spacing like original */
+.question { 
+  padding: 0; 
+  margin: 0.9rem 0 1.1rem 0;   /* more space after each question */
+  border: 0; 
+  background: transparent; 
+}
+.question .stem { margin-bottom: 0.45rem; }
+.options { margin-top: 0.35rem; }
+.option { margin: 0.18rem 0; }
+
+/* Images: modest spacing, centered inline block feel */
+img { 
+  max-width: 100%; 
+  height: auto; 
+  display: block; 
+  margin: 0.3rem auto 0.5rem auto; 
+}
+
+/* Equation sheet: compact, plain, two columns where it fits */
+.equation-section { 
+  margin: 0.45rem 0 0.65rem 0; 
+  padding: 0; 
+  background: none; 
+  border: 0; 
+}
+.equation-title { 
+  margin: 0.1rem 0 0.3rem 0; 
+  font-weight: 700; 
+  font-size: 12pt; 
+}
+/* Use CSS columns for compact packing; avoid heavy grids */
+.equation-group, .equation-section { 
+  column-count: 2; 
+  column-gap: 18px; 
+}
+/* Keep each equation tight and readable; prevent awkward splits */
+.equation { 
+  break-inside: avoid; 
+  -webkit-column-break-inside: avoid; 
+  margin: 0.15rem 0 0.3rem 0; 
+}
+/* Variable definitions: small, plain list */
+.var-defs { 
+  margin-top: 0.25rem; 
+  font-size: 10.5pt; 
+  line-height: 1.35; 
+}
+.var-defs .equation-title { 
+  font-size: 11pt; 
+  margin: 0.2rem 0 0.2rem 0; 
+}
+.var-defs .var-list { 
+  margin: 0.1rem 0 0.35rem 0; 
+  padding-left: 1.0rem; 
+}
+.var-defs .var-list li { 
+  margin: 0.1rem 0; 
+}
+
+/* Tables: minimal borders */
+table { border-collapse: collapse; margin: 0.4rem 0; width: 100%; }
+th, td { border: 1px solid #000; padding: 4px 6px; }
+
+/* Print: keep questions/equations intact without hard page forcing */
+@media print {
+  @page { size: Letter; margin: 0.5in; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .question, .equation, .equation-section { page-break-inside: avoid; break-inside: avoid; }
+  h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
+  /* Slightly tighter equations in print to pack better */
+  .equation-section { font-size: 0.98em; line-height: 1.32; }
+  /* If three columns are desired on wide paper, uncomment next line */
+  /* .equation-section { column-count: 3; } */
+}
+</style>
+<style>
+/* Word-like blue/purple labels for questions */
+.q-label { color: #2b579a; font-weight: 700; }
+/* Slight extra spacing after the label to separate from text */
+.q-label + * { margin-left: 0.05rem; }
+
+@media print {
+  /* Insert a single controlled page break after the instructions page */
+  .firstpage-only { break-after: page; page-break-after: always; }
+}
+</style><style>
+/* ===== First Page Layout (light mode) ===== */
+.instructions {
+  background: #fff;
+  color: #000;
+  min-height: 7.8in; /* ensures generous white space similar to the screenshot */
+  padding: 0.8in 0.9in 0.6in 0.9in;
+  position: relative;
+}
+/* Top-left name/date block */
+.nd-block {
+  position: absolute;
+  top: 0.9in;
+  left: 0.9in;
+}
+.nd-block p {
+  margin: 0.15rem 0;
+  font-size: 11pt;
+}
+
+/* Centered title */
+.title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.3in;   /* push title down for balanced page */
+  margin-bottom: 2.0in;
+  text-align: center;
+}
+.title-wrap h1 {
+  font-family: 'Times New Roman', Georgia, serif;
+  font-size: 28pt;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+}
+.title-wrap h2 {
+  font-family: 'Times New Roman', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Instructions heading + paragraphs */
+.inst-heading {
+  color: #2b579a; /* Word-like blue */
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+}
+.instructions p {
+  max-width: 7.2in;
+  line-height: 1.45;
+  margin: 0.25rem 0;
+  font-size: 11pt;
+}
+@media print { .instructions { break-after: page; page-break-after: always; } }
+</style><style>
+.var-defs .constants-note { margin-top: 0.2rem; font-size: 10pt; color: #333; }
+@media print { .var-defs .constants-note { font-size: 9.5pt; } }
+</style>
+<style>
+/* === Margin fix: make later pages match page 1's inner margins === */
+.doc-section.second,
+.doc-section.third,
+.doc-section.fourth {
+  padding: 0.8in 0.9in 0.6in 0.9in !important; /* top right bottom left */
+}
+@media print {
+  .doc-section.second,
+  .doc-section.third,
+  .doc-section.fourth {
+    padding: 0.8in 0.9in 0.6in 0.9in !important;
+  }
+  /* Keep headings from adding unexpected extra top spacing on new pages */
+  .doc-section.second .section-title,
+  .doc-section.third .section-title,
+  .doc-section.fourth .section-title {
+    margin-top: 0 !important;
+  }
+}
+</style>
+
+</head>
+<body><div class="instructions firstpage-only"><div class="nd-block"><p>Name:</p><p>Date:</p></div><div class="title-wrap"><h1>Physics 227</h1><h2>Practice Exam #3</h2></div><h3 class="inst-heading">Instructions</h3><p>This exam consists of 10 multiple choice questions. Five are conceptual, five involve calculations. Complete all problems in the allotted time. <strong>Show all work.</strong> Scratch paper will be provided on request. Any scratch paper returned with the exam at the end of the allotted time may be considered for partial credit during grading.</p><p>Equation sheets, useful constants, and mathematical formulas are provided in the last pages of the exam handout.</p></div>
+<!-- Title Page with Instructions -->
+<!-- Multiple Choice Section -->
+<div class="doc-section second">
+<h2 class="section-title">Multiple Choice Questions</h2>
+<p>There are 5 questions in this section, each is graded out of a total of <strong>5 points</strong>.</p>
+<div class="question"><div class="stem"><span class="q-label">[Q1] </span>
+ A copper wire and an aluminum wire with identical length and cross-sectional area are connected in series. Which statement is correct?
+      </div><div class="option">a. The current is larger in the copper wire than in the aluminum wire</div>
+<div class="option">b. The electric field is stronger in the copper wire than in the aluminum wire</div>
+<div class="option">c. The electric field is stronger in the aluminum wire than in the copper wire</div>
+<div class="option">d. The current density is larger in the copper wire than in the aluminum wire</div>
+<div class="option">e. The current density is smaller in the copper wire than in the aluminum wire</div>
+</div>
+<div class="question"><div class="stem"><span class="q-label">[Q2] </span>
+ Which of the following statements about RC circuits is correct?
+      </div><div class="option">a. The time constant of an RC circuit depends on the applied voltage</div>
+<div class="option">b. When a capacitor discharges through a resistor, the current decreases exponentially</div>
+<div class="option">c. In a charging RC circuit, the capacitor voltage increases linearly with time</div>
+<div class="option">d. When a battery is connected to an RC circuit, the current is initially zero</div>
+<div class="option">e. The energy stored in a fully charged capacitor equals the product of charge and voltage (E = QV)</div>
+</div>
+<div class="question"><div class="stem"><span class="q-label">[Q3] </span>
+ Three resistors with values R, 2R, and 3R are connected in parallel. The equivalent resistance is:
+      </div><div class="option">a. 6R</div>
+<div class="option">b. R/6</div>
+<div class="option">c. 11R/6</div>
+<div class="option">d. 6R/11</div>
+<div class="option">e. None of the above</div>
+<img alt="" src="e33rb.png" style="display: block; width: 200px; height: auto;"/>
+</div>
+<div class="question"><div class="stem"><span class="q-label">[Q4] </span>
+ A dielectric slab with constant κ = 3.0 is inserted halfway between the plates of a charged capacitor that has been disconnected from the battery. What happens to the electric field in the region with the dielectric?
+      </div><div class="option">a. It decreases by a factor of 3</div>
+<div class="option">b. It increases by a factor of 3</div>
+<div class="option">c. It remains the same</div>
+<div class="option">d. It decreases by a factor of 1.5</div>
+<div class="option">e. It increases by a factor of 1.5</div>
+<img alt="" src="dielectric_half.png" style="display: block; width: 150px; height: auto;"/>
+</div>
+<div class="question"><div class="stem"><span class="q-label">[Q5] </span>
+ What happens to the resistance of a copper wire if both its length and its diameter are doubled?
+      </div><div class="option">a. The resistance doubles</div>
+<div class="option">b. The resistance stays the same</div>
+<div class="option">c. The resistance becomes half the original value</div>
+<div class="option">d. The resistance becomes one-fourth of the original value</div>
+<div class="option">e. The resistance becomes four times the original value</div>
+</div>
+</div>
+<!-- Calculation Section -->
+<div class="doc-section third">
+<h2 class="section-title">Calculations</h2>
+<p>There are 5 questions in this section, each is graded out of a total of <strong>10 points</strong>.</p>
+<div class="question"><div class="stem"><span class="q-label">[Q6] </span>
+ A 10.0-meter-long copper wire has a circular cross-section with diameter 1.5 mm. If copper has a resistivity of 1.68 × 10⁻⁸ Ω·m at 20°C, what is the resistance of the wire?
+      </div><div class="option">a. 0.95 Ω</div>
+<div class="option">b. 9.5 Ω</div>
+<div class="option">c. 0.095 Ω</div>
+<div class="option">d. 95 Ω</div>
+<div class="option">e. 0.48 Ω</div>
+</div>
+<div class="question"><div class="stem"><span class="q-label">[Q7] </span>
+ In the circuit shown below, what is the equivalent resistance between points A and B?
+      
+     
+    <img alt="" src="e33R.png" style="display: block; width: 200px; height: auto;"/>
+</div><div class="option">a. 10 Ω</div>
+<div class="option">b. 2.2 Ω</div>
+<div class="option">c. 5.3 Ω</div>
+<div class="option">d. 8.4 Ω</div>
+<div class="option">e. 4.8 Ω</div>
+</div>
+<div class="question"><div class="stem"><span class="q-label">[Q8] </span>
+ A 6.0 μF capacitor is charged to 120 V and then connected across a 20 kΩ resistor at t = 0. What is the time constant of this circuit?
+      </div><div class="option">a. 120 ms</div>
+<div class="option">b. 833 ms</div>
+<div class="option">c. 1.2 s</div>
+<div class="option">d. 0.3 s</div>
+<div class="option">e. 83.3 ms</div>
+</div>
+<div class="question"><div class="stem"><span class="q-label">[Q9] </span>
+ Two capacitors, C₁ = 4.0 μF and C₂ = 6.0 μF, are connected in series across a 12 V battery. A third capacitor, C₃ = 3.0 μF, is connected in parallel with the series combination. What is the equivalent capacitance of the entire circuit?
+      </div><div class="option">a. 13.0 μF</div>
+<div class="option">b. 5.4 μF</div>
+<div class="option">c. 2.4 μF</div>
+<div class="option">d. 3.4 μF</div>
+<div class="option">e. 7.4 μF</div>
+<img alt="" src="e3eqc3.png" style="display: block; width: 200px; height: auto;"/>
+</div>
+<div class="question"><div class="stem"><span class="q-label">[Q10] </span>
+ A battery with an EMF of 12.0 V and internal resistance of 0.50 Ω is connected to an external circuit. If a current of 2.0 A flows through the battery, what is the terminal voltage?
+      </div><div class="option">a. 12.0 V</div>
+<div class="option">b. 11.0 V</div>
+<div class="option">c. 13.0 V</div>
+<div class="option">d. 10.0 V</div>
+<div class="option">e. 11.5 V</div>
+</div>
+</div>
+<!-- Reference Materials - COMBINED INTO ONE CONTINUOUS SECTION WITHOUT PAGE BREAKS -->
+<div class="doc-section fourth">
+<img alt="Table of Physical Constants" src="physical_constants.PNG" style="display: block; width: 650px; height: auto; max-width: 100%;"/>
+<h2 class="section-title" style="margin-top: 20px;">Trigonometry &amp; Calculus</h2>
+<img alt="Table of Trig and Calc" src="trig_calc.PNG" style="display: block; width: 650px; height: auto; max-width: 100%;"/>
+<h2 class="section-title" style="margin-top: 20px;">Exam #3 Key Equations</h2>
+<div class="grid-container">
+<!-- Left Column -->
+<div>
+<!-- Capacitance Section -->
+<div class="equation-section">
+<div class="equation-title">Capacitance</div>
+<div class="equation-group">
+<div class="equation-subtitle">Parallel-Plate Capacitor</div>
+<div class="equation">C = ε₀ A/d</div>
+<div class="equation">With dielectric: C = κε₀ A/d</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Spherical Capacitor</div>
+<div class="equation">C = 4πε₀(ab)/(b-a)</div>
+<div class="equation">With dielectric: C = 4πκε₀(ab)/(b-a)</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Cylindrical Capacitor</div>
+<div class="equation">C = 2πε₀L/ln(b/a)</div>
+<div class="equation">With dielectric: C = 2πκε₀L/ln(b/a)</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Capacitors in Series</div>
+<div class="equation">1/C<sub>eq</sub> = 1/C₁ + 1/C₂ + 1/C₃ + ...</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Capacitors in Parallel</div>
+<div class="equation">C<sub>eq</sub> = C₁ + C₂ + C₃ + ...</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Energy Stored in a Capacitor</div>
+<div class="equation">U = ½QV = ½CV² = ½Q²/C</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Energy Density in Electric Field</div>
+<div class="equation">u = ½ε₀E²</div>
+<div class="equation">With dielectric: u = ½κε₀E²</div>
+</div>
+<div class="equation">Inside linear dielectric: E = E₀/κ (for the same free charge configuration)</div><div class="var-defs"><div class="equation-title">Variable definitions</div><ul class="var-list"><li><strong>C: </strong>capacitance (farads, F)</li><li><strong>κ: </strong>dielectric constant (relative permittivity, unitless)</li><li><strong>A: </strong>plate area (m²)</li><li><strong>d: </strong>plate separation (m)</li><li><strong>a, b: </strong>inner and outer radii (m)</li><li><strong>L: </strong>cylinder length (m)</li><li><strong>V: </strong>potential difference (volts, V)</li><li><strong>U: </strong>stored energy (joules, J)</li><li><strong>u: </strong>energy density (J/m³)</li></ul><div class="constants-note">Note: constants (e, ε₀) are listed in Useful constants.</div></div></div>
+<!-- Current and Resistance Section -->
+<div class="equation-section">
+<div class="equation-title">Current and Resistance</div>
+<div class="equation-group">
+<div class="equation-subtitle">Current and Current Density</div>
+<div class="equation">I = dQ/dt</div>
+<div class="equation">J = nev<sub>d</sub></div>
+<div class="equation">I = ∫J·dA</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Drift Velocity</div>
+<div class="equation">v<sub>d</sub> = I/(neA)</div>
+<div class="note">n = number density of carriers</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Resistance and Resistivity</div>
+<div class="equation">R = ρL/A</div>
+<div class="equation">ρ = E/J = m/(ne²τ)</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Temperature Dependence</div>
+<div class="equation">R = R₀[1 + α(T - T₀)]</div>
+<div class="equation">ρ = ρ₀[1 + α(T - T₀)]</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Ohm's Law</div>
+<div class="equation">V = IR</div>
+<div class="equation">J = σE</div>
+<div class="equation">σ = 1/ρ</div>
+</div>
+<div class="var-defs"><div class="equation-title">Variable definitions</div><ul class="var-list"><li><strong>I: </strong>current (amperes, A)</li><li><strong>Q: </strong>charge (coulombs, C)</li><li><strong>t: </strong>time (s)</li><li><strong>J: </strong>current density (A/m²)</li><li><strong>n: </strong>charge carrier density (1/m³)</li><li><strong>v_d: </strong>drift velocity (m/s)</li><li><strong>A: </strong>cross‑sectional area (m²)</li><li><strong>ρ: </strong>resistivity (Ω·m)</li><li><strong>σ: </strong>conductivity (S/m), σ = 1/ρ</li><li><strong>m: </strong>carrier mass (kg)</li><li><strong>τ: </strong>mean free time between collisions (s)</li><li><strong>α: </strong>temperature coefficient (1/K)</li><li><strong>R: </strong>resistance (ohms, Ω)</li><li><strong>L: </strong>conductor length (m)</li><li><strong>V: </strong>voltage (volts, V)</li></ul><div class="constants-note">Note: constants (e, ε₀) are listed in Useful constants.</div></div></div>
+</div>
+<!-- Right Column -->
+<div>
+<!-- DC Circuits Section -->
+<div class="equation-section">
+<div class="equation-title">DC Circuits</div>
+<div class="equation-group">
+<div class="equation-subtitle">Kirchhoff's Rules</div>
+<div class="equation">Junction rule: ∑I<sub>in</sub> = ∑I<sub>out</sub></div>
+<div class="equation">Loop rule: ∑V = 0</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Resistors in Series</div>
+<div class="equation">R<sub>eq</sub> = R₁ + R₂ + R₃ + ...</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Resistors in Parallel</div>
+<div class="equation">1/R<sub>eq</sub> = 1/R₁ + 1/R₂ + 1/R₃ + ...</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Voltage Divider</div>
+<div class="equation">V<sub>out</sub> = (R<sub>out</sub>/(R₁ + R₂)) × V<sub>in</sub></div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Current Divider</div>
+<div class="equation">I₁ = (R₂/(R₁ + R₂)) × I<sub>total</sub></div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Power</div>
+<div class="equation">P = IV = I²R = V²/R</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">EMF and Terminal Voltage</div>
+<div class="equation">V<sub>terminal</sub> = ε - Ir</div>
+<div class="note">r = internal resistance of source</div>
+</div>
+<div class="var-defs"><div class="equation-title">Variable definitions</div><ul class="var-list"><li><strong>ε: </strong>emf (volts, V)</li><li><strong>r: </strong>internal resistance of source (Ω)</li><li><strong>R_eq: </strong>equivalent resistance (Ω)</li><li><strong>R₁, R₂, …: </strong>individual resistances (Ω)</li><li><strong>I_total, I₁: </strong>total and branch currents (A)</li><li><strong>V_in, V_out: </strong>input/output voltages (V)</li><li><strong>P: </strong>power (watts, W)</li></ul><div class="constants-note">Note: constants (e, ε₀) are listed in Useful constants.</div></div></div>
+<!-- RC Circuits Section -->
+<div class="equation-section">
+<div class="equation-title">RC Circuits</div>
+<div class="equation-group">
+<div class="equation-subtitle">Time Constant</div>
+<div class="equation">τ = RC</div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Charging a Capacitor</div>
+<div class="equation">q = C·ε(1 - e<sup>-t/τ</sup>)</div>
+<div class="equation">V<sub>C</sub> = ε(1 - e<sup>-t/τ</sup>)</div>
+<div class="equation">I = (ε/R)e<sup>-t/τ</sup></div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Discharging a Capacitor</div>
+<div class="equation">q = q₀e<sup>-t/τ</sup></div>
+<div class="equation">V<sub>C</sub> = V₀e<sup>-t/τ</sup></div>
+<div class="equation">I = (V₀/R)e<sup>-t/τ</sup></div>
+</div>
+<div class="equation-group">
+<div class="equation-subtitle">Energy in RC Circuit</div>
+<div class="equation">U = U₀e<sup>-2t/τ</sup></div>
+<div class="note">Energy dissipated: U₀(1 - e<sup>-2t/τ</sup>)</div>
+</div>
+<div class="var-defs"><div class="equation-title">Variable definitions</div><ul class="var-list"><li><strong>R: </strong>resistance (Ω)</li><li><strong>C: </strong>capacitance (F)</li><li><strong>τ: </strong>time constant = RC (s)</li><li><strong>ε: </strong>emf / source voltage (V)</li><li><strong>q, q₀: </strong>capacitor charge (C)</li><li><strong>V_C, V₀: </strong>capacitor voltage (V)</li><li><strong>I: </strong>current (A)</li><li><strong>t: </strong>time (s)</li><li><strong>U, U₀: </strong>energy stored in capacitor (J)</li></ul><div class="constants-note">Note: constants (e, ε₀) are listed in Useful constants.</div></div></div>
+<!-- Constants Section -->
+<div class="equation-section">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
