@@ -656,7 +656,7 @@
         const exportNow = () => {
           const rng = mulberry32(12345 + seedIndex);
           const letter = GREEK[seedIndex % GREEK.length] || "α";
-          const front = `<section class="instructions firstpage-only">\n      <div class="nd-block">\n        ${meta.nameLine ? `<p>Name:</p>` : ""}\n        ${meta.idLine ? `<p>ID:</p>` : ""}\n        <p>Date:${meta.dateStr ? ` ${meta.dateStr}` : ""}</p>\n      </div>\n      <div class="title-wrap">\n        <h1>${meta.course}</h1>\n        <h2>${meta.examTitle}<sup class="variant-mark">${letter}</sup>${showSolutions ? " — Solutions" : ""}</h2>\n      </div>\n      <h3 class="inst-heading">Instructions</h3>\n      <p>${(meta.instructions || "").replace(/\r?\n/g, "</p><p>")}</p>\n    </section><div class="page-break"></div>`;
+          const front = `<section class="instructions firstpage-only">\n      <div class="nd-block">\n        ${meta.nameLine ? `<p>Name:</p>` : ""}\n            <p>Date:${meta.dateStr ? ` ${meta.dateStr}` : ""}</p>\n      </div>\n      <div class="title-wrap">\n        <h1>${meta.course}</h1>\n        <h2>${meta.examTitle}${showSolutions ? " — Solutions" : ""}</h2>\n      </div>\n      <h3 class="inst-heading">Instructions<sup class="variant-mark">${letter}</sup></h3>\n      <p>${(meta.instructions || "").replace(/\r?\n/g, "</p><p>")}</p>\n    </section><div class="page-break"></div>`;
 
           const sheets = equationSheets
             .map((img, i) =>
