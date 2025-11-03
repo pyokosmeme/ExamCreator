@@ -4,26 +4,22 @@
 <meta charset="utf-8"/>
 <title>{{course_title}} - {{exam_title}}</title>
 
-<!-- ===== Base styles (kept compact, print-first) ===== -->
 <style>
+/* ===== Screen (authoring/preview) styles ===== */
 html, body { margin: 0; padding: 0; font-family: "Times New Roman", Georgia, serif; font-size: 11pt; line-height: 1.4; color: #000; background: #fff; }
 h1, h2, h3, h4 { margin: 0.6rem 0 0.35rem 0; font-weight: 700; color: #000; }
 p { margin: 0.35rem 0; }
 img { max-width: 100%; height: auto; display: block; }
 .section-title { font-weight: 700; font-size: 14pt; margin: 0.6rem 0 0.4rem 0; }
 
+/* Gentle padding for screen preview only */
 .doc-section { padding: 18px 24px; }
 .question { padding: 0; margin: 0.9rem 0 1.1rem 0; border: 0; background: transparent; }
 .question .stem { margin-bottom: 0.45rem; }
 .option { margin: 0.18rem 0; }
 
-/* First page */
-.instructions {
-  background: #fff; color: #000;
-  /* removed min-height to avoid extra blank page after page 1 */
-  padding: 0.75in 0.9in 0.6in 0.9in;
-  position: relative;
-}
+/* First page (screen preview) */
+.instructions { background: #fff; color: #000; padding: 0.75in 0.9in 0.6in 0.9in; position: relative; }
 .nd-block { position: absolute; top: 0.9in; left: 0.9in; }
 .nd-block p { margin: 0.15rem 0; font-size: 11pt; }
 .title-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 2.0in; margin-bottom: 1.8in; text-align: center; }
@@ -34,10 +30,10 @@ img { max-width: 100%; height: auto; display: block; }
 .inst-heading { color: #2b579a; font-weight: 700; margin: 0 0 0.25rem 0; display: inline-block; }
 .inst-heading .variant-mark { font-size: 0.45em; opacity: 0.38; vertical-align: text-top; position: relative; margin-left: -0.15em; left: -0.02em; }
 
-/* Page margin parity on later pages */
-.doc-section.second, .doc-section.third, .doc-section.fourth { padding: 0.8in 0.9in 0.6in 0.9in !important; }
+/* Later pages (screen preview padding) */
+.doc-section.second, .doc-section.third, .doc-section.fourth { padding: 0.8in 0.9in 0.6in 0.9in; }
 
-/* Equation sheet container: two columns (left/right) */
+/* Equation sheet container */
 .grid-container { display: flex; gap: 24px; align-items: flex-start; margin: 0.2in 0 0.15in 0; padding: 0; }
 .grid-container > div { flex: 1 1 0; min-width: 0; }
 
@@ -48,21 +44,35 @@ img { max-width: 100%; height: auto; display: block; }
 .equation-subtitle { font-weight: 700; margin: 0 0 0.2rem 0; }
 .equation { margin: 0.14rem 0; }
 .var-defs { margin-top: 0.25rem; font-size: 10.5pt; line-height: 1.35; }
-.var-defs .equation-title { font-size: 11pt; margin: 0.2rem 0 0.2rem 0; }
-.var-defs .var-list { margin: 0.1rem 0 0.35rem 0; padding-left: 1.0rem; }
-.var-defs .var-list li { margin: 0.1rem 0; }
-.constants-note { margin-top: 0.2rem; font-size: 10pt; color: #333; }
 
 /* Labels */
 .q-label { color: #2b579a; font-weight: 700; }
 .q-label + * { margin-left: 0.05rem; }
 
-/* Print safety */
-.firstpage-only { break-after: page; } /* single rule; removed duplicate to avoid extra blank pages */
+/* ===== Print overrides: enforce true 1-inch margins ===== */
+.firstpage-only { break-after: page; } /* single rule */
 
 @media print {
-  @page { size: Letter; margin: 1in; } /* standard 1-inch margins */
+  @page { size: Letter; margin: 1in; } /* Only this margin should apply */
   html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Remove ALL section paddings on print so @page margins are the only margins */
+  .instructions,
+  .doc-section,
+  .doc-section.second,
+  .doc-section.third,
+  .doc-section.fourth { padding: 0 !important; }
+
+  /* Position name/date block within the 1-inch box */
+  .nd-block { position: static; margin-bottom: 0.5rem; }
+
+  /* Adjust title spacing for print so first page fits nicely within 1" */
+  .title-wrap { margin-top: 0.75in; margin-bottom: 0.5in; }
+
+  /* Keep equations readable but avoid phantom extra space */
+  .grid-container { margin: 0.15in 0 0.1in 0; }
+
+  /* Avoid forced extra breaks at the very end */
   .question, .equation, .equation-section, .equation-group, .var-defs { page-break-inside: avoid; break-inside: avoid; }
   h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
 }
@@ -81,12 +91,8 @@ img { max-width: 100%; height: auto; display: block; }
     <h2>{{exam_title}}</h2>
   </div>
 
-  <!-- NOTE: no whitespace before <sup> so there is no visual gap -->
   <h3 class="inst-heading">{{{instructions_heading}}}{{#if variant_mark}}<sup class="variant-mark">{{variant_mark}}</sup>{{/if}}</h3>
-
-  {{#each instructions_paragraphs}}
-    <p>{{{this}}}</p>
-  {{/each}}
+  {{#each instructions_paragraphs}}<p>{{{this}}}</p>{{/each}}
 </div>
 
 <!-- Multiple Choice -->
@@ -146,21 +152,18 @@ img { max-width: 100%; height: auto; display: block; }
       {{#each left_equation_sections}}
         <div class="equation-section">
           {{#if title}}<div class="equation-title">{{title}}</div>{{/if}}
-
           {{#each groups}}
             <div class="equation-group">
               {{#if subtitle}}<div class="equation-subtitle">{{{subtitle}}}</div>{{/if}}
               {{#each lines}}<div class="equation">{{{this}}}</div>{{/each}}
             </div>
           {{/each}}
-
           {{#if var_defs}}
             <div class="var-defs">
               <div class="equation-title">Variable definitions</div>
               <ul class="var-list">
                 {{#each var_defs}}<li><strong>{{label}}: </strong>{{text}}</li>{{/each}}
               </ul>
-              {{#if constants_note}}<div class="constants-note">{{constants_note}}</div>{{/if}}
             </div>
           {{/if}}
         </div>
@@ -171,21 +174,18 @@ img { max-width: 100%; height: auto; display: block; }
       {{#each right_equation_sections}}
         <div class="equation-section">
           {{#if title}}<div class="equation-title">{{title}}</div>{{/if}}
-
           {{#each groups}}
             <div class="equation-group">
               {{#if subtitle}}<div class="equation-subtitle">{{{subtitle}}}</div>{{/if}}
               {{#each lines}}<div class="equation">{{{this}}}</div>{{/each}}
             </div>
           {{/each}}
-
           {{#if var_defs}}
             <div class="var-defs">
               <div class="equation-title">Variable definitions</div>
               <ul class="var-list">
                 {{#each var_defs}}<li><strong>{{label}}: </strong>{{text}}</li>{{/each}}
               </ul>
-              {{#if constants_note}}<div class="constants-note">{{constants_note}}</div>{{/if}}
             </div>
           {{/if}}
         </div>
