@@ -5,14 +5,13 @@
 <title>{{course_title}} - {{exam_title}}</title>
 
 <style>
-/* ===== Screen (authoring/preview) styles ===== */
+/* ===== Screen styles ===== */
 html, body { margin: 0; padding: 0; font-family: "Times New Roman", Georgia, serif; font-size: 11pt; line-height: 1.4; color: #000; background: #fff; }
 h1, h2, h3, h4 { margin: 0.6rem 0 0.35rem 0; font-weight: 700; color: #000; }
 p { margin: 0.35rem 0; }
 img { max-width: 100%; height: auto; display: block; }
 .section-title { font-weight: 700; font-size: 14pt; margin: 0.6rem 0 0.4rem 0; }
 
-/* Gentle padding for screen preview only */
 .doc-section { padding: 18px 24px; }
 .question { padding: 0; margin: 0.9rem 0 1.1rem 0; border: 0; background: transparent; }
 .question .stem { margin-bottom: 0.45rem; }
@@ -26,9 +25,7 @@ img { max-width: 100%; height: auto; display: block; }
 .title-wrap h1 { font-size: 28pt; font-weight: 600; margin: 0 0 0.25rem 0; }
 .title-wrap h2 { font-size: 22pt; font-weight: 600; margin: 0; }
 
-/* “Instructions α” — tighten */
 .inst-heading { color: #2b579a; font-weight: 700; margin: 0 0 0.25rem 0; display: inline-block; }
-.inst-heading .variant-mark { font-size: 0.45em; opacity: 0.38; vertical-align: text-top; position: relative; margin-left: -0.15em; left: -0.02em; }
 
 /* Later pages (screen preview padding) */
 .doc-section.second, .doc-section.third, .doc-section.fourth { padding: 0.8in 0.9in 0.6in 0.9in; }
@@ -49,30 +46,32 @@ img { max-width: 100%; height: auto; display: block; }
 .q-label { color: #2b579a; font-weight: 700; }
 .q-label + * { margin-left: 0.05rem; }
 
-/* ===== Print overrides: enforce true 1-inch margins ===== */
-.firstpage-only { break-after: page; } /* single rule */
+/* ===== Print overrides: true 1-inch and adjusted layout ===== */
+.firstpage-only { break-after: page; }
 
 @media print {
-  @page { size: Letter; margin: 1in; } /* Only this margin should apply */
+  @page { size: Letter; margin: 1in; }
   html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
-  /* Remove ALL section paddings on print so @page margins are the only margins */
+  /* Remove all paddings so only @page margins apply */
   .instructions,
   .doc-section,
   .doc-section.second,
   .doc-section.third,
   .doc-section.fourth { padding: 0 !important; }
 
-  /* Position name/date block within the 1-inch box */
+  /* Move front-page content further down */
+  .title-wrap { margin-top: 1.25in; margin-bottom: 0.9in; } /* pushes instructions lower */
+  .inst-heading { margin-top: 0.35in; } /* extra space before instruction text */
+
+  /* Name/Date block placed within content flow on print */
   .nd-block { position: static; margin-bottom: 0.5rem; }
 
-  /* Adjust title spacing for print so first page fits nicely within 1" */
-  .title-wrap { margin-top: 0.75in; margin-bottom: 0.5in; }
+  /* Slightly shrink the first constants image to prevent spillover */
+  .doc-section.fourth img:first-of-type { width: 560px !important; max-width: 100%; }
 
-  /* Keep equations readable but avoid phantom extra space */
   .grid-container { margin: 0.15in 0 0.1in 0; }
 
-  /* Avoid forced extra breaks at the very end */
   .question, .equation, .equation-section, .equation-group, .var-defs { page-break-inside: avoid; break-inside: avoid; }
   h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
 }
@@ -82,7 +81,6 @@ img { max-width: 100%; height: auto; display: block; }
 <body>
 <div id="app">Loading…</div>
 
-<!-- ===== Handlebars template ===== -->
 <script id="tpl" type="text/x-handlebars-template">
 <div class="instructions firstpage-only">
   <div class="nd-block"><p>Name:</p><p>Date:</p></div>
@@ -95,11 +93,9 @@ img { max-width: 100%; height: auto; display: block; }
   {{#each instructions_paragraphs}}<p>{{{this}}}</p>{{/each}}
 </div>
 
-<!-- Multiple Choice -->
 <div class="doc-section second">
   <h2 class="section-title">{{mc_section_title}}</h2>
   <p>{{{mc_section_intro}}}</p>
-
   {{#each mc_questions}}
     <div class="question">
       <div class="stem"><span class="q-label">[{{label}}] </span>{{#if stem_html}}{{{stem_html}}}{{else}}{{{stem}}}{{/if}}</div>
@@ -113,11 +109,9 @@ img { max-width: 100%; height: auto; display: block; }
   {{/each}}
 </div>
 
-<!-- Calculations -->
 <div class="doc-section third">
   <h2 class="section-title">{{calc_section_title}}</h2>
   <p>{{{calc_section_intro}}}</p>
-
   {{#each calc_questions}}
     <div class="question">
       <div class="stem"><span class="q-label">[{{label}}] </span>{{#if stem_html}}{{{stem_html}}}{{else}}{{{stem}}}{{/if}}</div>
@@ -131,7 +125,6 @@ img { max-width: 100%; height: auto; display: block; }
   {{/each}}
 </div>
 
-<!-- Reference Materials -->
 <div class="doc-section fourth">
   {{#if constants_image.src}}
     <img alt="{{constants_image.alt}}" src="{{constants_image.src}}" style="display:block; width:650px; height:auto; max-width:100%;"/>
@@ -146,7 +139,6 @@ img { max-width: 100%; height: auto; display: block; }
     <h2 class="section-title" style="margin-top:20px;">{{equations_title}}</h2>
   {{/if}}
 
-  <!-- Two-column: left/right stacks driven by JSON -->
   <div class="grid-container">
     <div>
       {{#each left_equation_sections}}
@@ -197,10 +189,7 @@ img { max-width: 100%; height: auto; display: block; }
 </div>
 </script>
 
-<!-- Handlebars -->
 <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.8/dist/handlebars.min.js"></script>
-
-<!-- Render -->
 <script>
 async function render() {
   const mount = document.getElementById('app');
@@ -210,14 +199,12 @@ async function render() {
     if (!resp.ok) throw new Error(`Failed to load exam_data.json (${resp.status})`);
     const data = await resp.json();
 
-    // Defaults: keep trig & calc present
     if (!data.trigcalc_title) data.trigcalc_title = "Trigonometry & Calculus";
     if (!data.trigcalc_image || !data.trigcalc_image.src) {
       data.trigcalc_image = { src: "trig_calc.PNG", alt: "Table of Trig and Calc" };
     }
     if (!data.equations_title) data.equations_title = "Key Equations";
 
-    // Normalize questions (stems + optional trailing image)
     const norm = (arr = []) => arr.map(q => {
       const trailing_image = q.trailing_image ??
         (q.image_src ? { src: q.image_src, alt: q.image_alt || "", width: q.image_width || "200px" } : undefined);
@@ -226,7 +213,6 @@ async function render() {
     data.mc_questions   = norm(data.mc_questions);
     data.calc_questions = norm(data.calc_questions);
 
-    // Ensure arrays
     data.left_equation_sections  = Array.isArray(data.left_equation_sections)  ? data.left_equation_sections  : [];
     data.right_equation_sections = Array.isArray(data.right_equation_sections) ? data.right_equation_sections : [];
 
@@ -243,6 +229,5 @@ async function render() {
 }
 window.addEventListener('DOMContentLoaded', render);
 </script>
-
 </body>
 </html>
