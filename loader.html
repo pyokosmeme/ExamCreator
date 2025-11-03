@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Exam Loader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 2rem; color:#111; }
+    .card { max-width: 760px; padding: 1.25rem 1.5rem; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+    h1 { font-size: 1.25rem; margin: 0 0 .5rem 0; }
+    p { margin: .25rem 0 .75rem 0; }
+    .row { display: flex; gap: .75rem; align-items: center; }
+    input[type="file"] { padding: .5rem; border: 1px solid #d1d5db; border-radius: 8px; }
+    button { padding: .6rem .9rem; border-radius: 10px; border: 1px solid #111; background: #111; color: #fff; cursor: pointer; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .tiny { color:#555; font-size: .875rem; }
+    .ok { color: #065f46; }
+    .warn { color: #92400e; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Load an Exam JSON into <span class="mono">template.html</span></h1>
+    <p class="tiny">Serve this folder (e.g., <code>python -m http.server 8000</code>) or any HTTPS host. Service Workers won’t register on <code>file://</code>.</p>
+    <ol>
+      <li>Select a local <span class="mono">*.json</span> exam file (e.g., one of the variants you exported).</li>
+      <li>Click <strong>Open template.html</strong>. The Service Worker will provide your JSON at <span class="mono">/exam_data.json</span> for that page load.</li>
+    </ol>
+
+    <div class="row" style="margin-top:.75rem;">
+      <input id="file" type="file" accept="application/json,.json">
+      <button id="open" disabled>Open template.html</button>
+    </div>
+    <p id="status" class="tiny" role="status"></p>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById('status');
+    const openBtn = document.getElementById('open');
+    const fileInput = document.getElementById('file');
+
+    let examText = null;
+
+    async function ensureSW() {
+      if (!('serviceWorker' in navigator)) {
+        statusEl.innerHTML = '<span class="warn">This browser does not support Service Workers.</span>';
+        return false;
+      }
+      try {
+        const reg = await navigator.serviceWorker.register('./sw.js', { scope: './' });
+        await navigator.serviceWorker.ready;
+        statusEl.textContent = 'Service Worker ready.';
+        return true;
+      } catch (e) {
+        console.error(e);
+        statusEl.innerHTML = '<span class="warn">Failed to register Service Worker. Serve over http(s) or localhost.</span>';
+        return false;
+      }
+    }
+
+    async function setDataOnSW(payload) {
+      const ctrl = navigator.serviceWorker.controller || (await navigator.serviceWorker.ready).active;
+      if (!ctrl) {
+        await new Promise(r => setTimeout(r, 100));
+      }
+      return new Promise((resolve, reject) => {
+        const chan = new MessageChannel();
+        chan.port1.onmessage = (ev) => {
+          if (ev.data && ev.data.ok) resolve(true);
+          else reject(ev.data && ev.data.error || 'Unknown SW error');
+        };
+        (navigator.serviceWorker.controller || navigator.serviceWorker.ready.then(r=>r.active)).then(sw => {
+          if (sw) sw.postMessage({ type: 'setExamData', text: payload }, [chan.port2]);
+          else reject('No active Service Worker.');
+        });
+      });
+    }
+
+    fileInput.addEventListener('change', async (e) => {
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      try {
+        examText = await f.text();
+        // Basic validation
+        JSON.parse(examText);
+        const ok = await ensureSW();
+        if (!ok) return;
+        await setDataOnSW(examText);
+        statusEl.innerHTML = '<span class="ok">JSON loaded into Service Worker. Ready to open template.</span>';
+        openBtn.disabled = false;
+      } catch (err) {
+        console.error(err);
+        statusEl.innerHTML = '<span class="warn">Invalid JSON or SW error: ' + (err && err.message ? err.message : err) + '</span>';
+        openBtn.disabled = true;
+      }
+    });
+
+    openBtn.addEventListener('click', () => {
+      // Open template.html in a new tab/window. It will fetch /exam_data.json.
+      window.open('./template.html', '_blank', 'noopener,noreferrer');
+    });
+
+    // Eagerly register SW on load so controller is available.
+    (async () => {
+      await ensureSW();
+      // Claim control to ensure fetch interception for same-tab navigations
+      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({ type: 'claim' });
+      }
+    })();
+  </script>
+</body>
+</html>
