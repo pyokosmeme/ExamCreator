@@ -42,6 +42,30 @@ img { max-width: 100%; height: auto; display: block; }
 .equation { margin: 0.14rem 0; }
 .var-defs { margin-top: 0.25rem; font-size: 10.5pt; line-height: 1.35; }
 
+/* re-adding variant mark */
+/* Tiny superscript for the variant mark next to "Instructions" */
+.inst-heading .variant-mark,
+.inst-heading sup.variant-mark {
+  font-size: 0.45em;
+  line-height: 0;
+  vertical-align: text-top;
+  opacity: 0.38;
+  position: relative;
+  left: -0.02em;
+  margin-left: 0.1em;
+}
+
+@media print {
+  .inst-heading .variant-mark,
+  .inst-heading sup.variant-mark {
+    font-size: 0.45em !important;
+    line-height: 0 !important;
+    vertical-align: text-top !important;
+    opacity: 0.38 !important;
+  }
+}
+
+
 /* Labels */
 .q-label { color: #2b579a; font-weight: 700; }
 .q-label + * { margin-left: 0.05rem; }
