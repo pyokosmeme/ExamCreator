@@ -762,6 +762,28 @@ async function render() {
 
 window.addEventListener('DOMContentLoaded', render);
 </script>
+<script>
+const resp = await fetch('exam_data.json', { cache: 'no-cache' });
+const data = await resp.json();
 
+function ensureStemAndImage(arr = []) {
+  return arr.map(q => {
+    const trailing_image =
+      q.trailing_image ??
+      (q.image_src ? { src: q.image_src, alt: q.image_alt || "", width: q.image_width || "200px" } : undefined);
+
+    return {
+      ...q,
+      stem_html: q.stem_html ?? q.stem ?? "",
+      trailing_image
+    };
+  });
+}
+
+data.mc_questions   = ensureStemAndImage(data.mc_questions);
+data.calc_questions = ensureStemAndImage(data.calc_questions);
+
+mount.innerHTML = template(data);
+</script>
 </body>
 </html>
