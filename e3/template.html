@@ -223,6 +223,9 @@ async function render() {
     if (!resp.ok) throw new Error(`Failed to load exam_data.json (${resp.status})`);
     const data = await resp.json();
 
+    // Set page title here (since <head><title> isn't templated)
+    document.title = `${data.course_title || 'Course'} - ${data.exam_title || 'Exam'}`;
+
     if (!data.trigcalc_title) data.trigcalc_title = "Trigonometry & Calculus";
     if (!data.trigcalc_image || !data.trigcalc_image.src) {
       data.trigcalc_image = { src: "trig_calc.PNG", alt: "Table of Trig and Calc" };
