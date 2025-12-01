@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Solutions</title>
+
+<style>
+/* ===== Base styles ===== */
+html, body { margin: 0; padding: 0; font-family: "Times New Roman", Georgia, serif; font-size: 11pt; line-height: 1.5; color: #000; background: #fff; }
+h1, h2, h3, h4 { margin: 0.6rem 0 0.35rem 0; font-weight: 700; color: #000; }
+p { margin: 0.35rem 0; }
+
+/* ===== Page sections ===== */
+.doc-section { padding: 0.75in 0.9in; }
+.title-section { text-align: center; border-bottom: 2px solid #2b579a; padding-bottom: 0.5in; margin-bottom: 0.4in; }
+.title-section h1 { font-size: 24pt; margin: 0 0 0.15rem 0; }
+.title-section h2 { font-size: 18pt; font-weight: 400; margin: 0; color: #333; }
+.title-section .meta { font-size: 11pt; color: #555; margin-top: 0.3rem; }
+
+/* ===== Quick answers table ===== */
+.quick-answers { margin: 0.4in 0; }
+.quick-answers h3 { font-size: 14pt; color: #2b579a; margin-bottom: 0.25in; }
+.answer-grid { display: flex; flex-wrap: wrap; gap: 0.15in 0.4in; }
+.answer-item { display: flex; align-items: center; min-width: 1.2in; }
+.answer-item .q-num { font-weight: 700; color: #2b579a; min-width: 0.5in; }
+.answer-item .q-ans { font-weight: 700; background: #e8f0fe; padding: 0.08in 0.15in; border-radius: 3px; text-transform: uppercase; }
+
+/* ===== Detailed solutions ===== */
+.solutions-section h3 { font-size: 14pt; color: #2b579a; margin: 0.3in 0 0.2in 0; border-bottom: 1px solid #ccc; padding-bottom: 0.1in; }
+.solution { margin: 0.25in 0; padding: 0.15in 0; border-bottom: 1px solid #eee; }
+.solution:last-child { border-bottom: none; }
+.solution-header { display: flex; align-items: baseline; gap: 0.15in; margin-bottom: 0.1in; }
+.solution-header .q-label { font-weight: 700; font-size: 12pt; color: #2b579a; }
+.solution-header .topic { font-style: italic; color: #666; font-size: 10pt; }
+.solution-answer { font-weight: 700; margin-bottom: 0.1in; }
+.solution-answer .correct { background: #d4edda; padding: 0.05in 0.12in; border-radius: 3px; color: #155724; }
+.solution-explanation { text-align: justify; line-height: 1.6; }
+
+/* ===== Grading notes ===== */
+.grading-section { margin-top: 0.4in; padding: 0.2in; background: #f8f9fa; border-radius: 4px; }
+.grading-section h3 { font-size: 12pt; color: #2b579a; margin: 0 0 0.15in 0; }
+.grading-section p { margin: 0.08in 0; font-size: 10.5pt; }
+
+/* ===== Vector and math notation ===== */
+.vec {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  padding-top: 0.15em;
+}
+.vec::after {
+  content: '→';
+  position: absolute;
+  top: -0.45em;
+  left: 0;
+  right: 0;
+  font-size: 0.55em;
+  text-align: center;
+  line-height: 1;
+}
+.hat {
+  display: inline-block;
+  position: relative;
+  padding-top: 0.1em;
+}
+.hat::after {
+  content: '^';
+  position: absolute;
+  top: -0.4em;
+  left: 0;
+  right: 0;
+  font-size: 0.6em;
+  text-align: center;
+  line-height: 1;
+}
+sub, sup { font-size: 0.75em; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.4em; }
+sub { bottom: -0.25em; }
+
+/* ===== Print styles ===== */
+@media print {
+  @page { size: Letter; margin: 0.75in; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .doc-section { padding: 0 !important; }
+  .solution { page-break-inside: avoid; break-inside: avoid; }
+  .grading-section { page-break-inside: avoid; }
+}
+</style>
+</head>
+
+<body>
+<div id="app">Loading…</div>
+
+<script id="tpl" type="text/x-handlebars-template">
+<div class="doc-section">
+  <div class="title-section">
+    <h1>{{exam_title}} — Answer Key</h1>
+    <h2>{{course}}</h2>
+    <div class="meta">{{semester}}</div>
+  </div>
+
+  <div class="quick-answers">
+    <h3>Quick Reference</h3>
+    <div class="answer-grid">
+      {{#each answers_list}}
+        <div class="answer-item">
+          <span class="q-num">{{question}}:</span>
+          <span class="q-ans">{{answer}}</span>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{#if has_grading}}
+  <div class="grading-section">
+    <h3>Grading Information</h3>
+    {{#if grading_notes.conceptual}}<p><strong>Conceptual:</strong> {{grading_notes.conceptual}}</p>{{/if}}
+    {{#if grading_notes.calculation}}<p><strong>Calculation:</strong> {{grading_notes.calculation}}</p>{{/if}}
+    {{#if grading_notes.total_points}}<p><strong>Total:</strong> {{grading_notes.total_points}}</p>{{/if}}
+  </div>
+  {{/if}}
+
+  <div class="solutions-section">
+    <h3>Detailed Solutions</h3>
+    {{#each solutions_list}}
+      <div class="solution">
+        <div class="solution-header">
+          <span class="q-label">{{question}}</span>
+          {{#if topic}}<span class="topic">({{topic}})</span>{{/if}}
+        </div>
+        <div class="solution-answer">Answer: <span class="correct">{{answer}}</span></div>
+        <div class="solution-explanation">{{{explanation}}}</div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.8/dist/handlebars.min.js"></script>
+<script>
+async function render() {
+  const mount = document.getElementById('app');
+  try {
+    const template = Handlebars.compile(document.getElementById('tpl').innerHTML);
+    const resp = await fetch('solutions_data.json', { cache: 'no-cache' });
+    if (!resp.ok) throw new Error(`Failed to load solutions_data.json (${resp.status})`);
+    const data = await resp.json();
+
+    document.title = `${data.exam_title || 'Exam'} — Answer Key`;
+
+    // Convert answers object to array for template iteration
+    data.answers_list = Object.entries(data.answers || {}).map(([q, a]) => ({
+      question: q,
+      answer: a
+    }));
+
+    // Convert solutions object to array, merging in topics
+    data.solutions_list = Object.entries(data.solutions || {}).map(([q, sol]) => ({
+      question: q,
+      answer: sol.answer,
+      explanation: sol.explanation,
+      topic: data.topics_covered ? data.topics_covered[q] : null
+    }));
+
+    // Check if grading notes exist
+    data.has_grading = data.grading_notes && 
+      (data.grading_notes.conceptual || data.grading_notes.calculation || data.grading_notes.total_points);
+
+    mount.innerHTML = template(data);
+  } catch (e) {
+    console.error(e);
+    mount.innerHTML = `
+      <div style="padding:16px; color:#b00020;">
+        <strong>Could not render the solutions.</strong><br/>
+        ${e.message}<br/>
+        <small>Serve this folder (e.g., <code>python -m http.server 8000</code>) so <code>fetch()</code> can read <code>solutions_data.json</code>.</small>
+      </div>`;
+  }
+}
+window.addEventListener('DOMContentLoaded', render);
+</script>
+</body>
+</html>
