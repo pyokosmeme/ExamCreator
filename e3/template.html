@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,90 +42,42 @@ img { max-width: 100%; height: auto; display: block; }
 .equation-subtitle { font-weight: 700; margin: 0 0 0.2rem 0; }
 .equation { margin: 0.14rem 0; }
 .var-defs { margin-top: 0.25rem; font-size: 10.5pt; line-height: 1.35; }
+.var-list { margin: 0.2rem 0; padding-left: 1.2em; }
+.var-list li { margin: 0.1rem 0; }
 
-/* re-adding variant mark */
-/* Tiny superscript for the variant mark next to "Instructions" */
-.inst-heading .variant-mark,
-.inst-heading sup.variant-mark {
-  font-size: 0.4em;
-  line-height: 0;
-  vertical-align: -0.05em;
-  opacity: 0.38;
-  position: relative;
-  left: -0.02em;
-  margin-left: 0.1em;
-}
-
-@media print {
-  .inst-heading .variant-mark,
-  .inst-heading sup.variant-mark {
-    font-size: 0.4em !important;
-    line-height: 0 !important;
-    vertical-align: -0.05em !important;
-    opacity: 0.38 !important;
-  }
-}
-
-
-/* Labels */
-.q-label { color: #2b579a; font-weight: 700; }
-.q-label + * { margin-left: 0.05rem; }
-
-/* ===== Print overrides: true 1-inch and adjusted layout ===== */
-.firstpage-only { break-after: page; }
-
-@media print {
-  @page { size: Letter; margin: 1in; }
-  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-  /* Remove all paddings so only @page margins apply */
-  .instructions,
-  .doc-section,
-  .doc-section.second,
-  .doc-section.third,
-  .doc-section.fourth { padding: 0 !important; }
-
-  /* Move front-page content further down */
-  .title-wrap { margin-top: 1.25in; margin-bottom: 0.9in; } /* pushes instructions lower */
-  .inst-heading { margin-top: 0.35in; } /* extra space before instruction text */
-
-  /* Name/Date block placed within content flow on print */
-  .nd-block { position: static; margin-bottom: 0.5rem; }
-
-  /* Slightly shrink the first constants image to prevent spillover */
-  .doc-section.fourth img:first-of-type { width: 550px !important; max-width: 100%; }
-
-  .grid-container { margin: 0.15in 0 0.1in 0; }
-
-  .question, .equation, .equation-section, .equation-group, .var-defs { page-break-inside: avoid; break-inside: avoid; }
-  h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
-
-  .vec {
-  position: relative;
+/* ========== VECTOR AND MATH NOTATION ========== */
+/* Vector arrow above letter */
+.vec {
   display: inline-block;
+  position: relative;
+  text-align: center;
+  padding-top: 0.15em;
 }
 .vec::after {
   content: '→';
   position: absolute;
-  top: -0.5em;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.65em;
+  top: -0.45em;
+  left: 0;
+  right: 0;
+  font-size: 0.55em;
+  text-align: center;
   line-height: 1;
 }
 
-/* Hat notation (unit vectors) - caret above letter */
+/* Hat/unit vector notation */
 .hat {
-  position: relative;
   display: inline-block;
+  position: relative;
+  padding-top: 0.1em;
 }
 .hat::after {
   content: '^';
   position: absolute;
-  top: -0.45em;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.7em;
+  top: -0.4em;
+  left: 0;
+  right: 0;
+  font-size: 0.6em;
+  text-align: center;
   line-height: 1;
 }
 
@@ -137,7 +90,53 @@ sub, sup {
 }
 sup { top: -0.4em; }
 sub { bottom: -0.25em; }
+/* ============================================== */
 
+/* Variant mark */
+.inst-heading .variant-mark,
+.inst-heading sup.variant-mark {
+  font-size: 0.4em;
+  line-height: 0;
+  vertical-align: -0.05em;
+  opacity: 0.38;
+  position: relative;
+  left: -0.02em;
+  margin-left: 0.1em;
+}
+
+/* Labels */
+.q-label { color: #2b579a; font-weight: 700; }
+.q-label + * { margin-left: 0.05rem; }
+
+/* ===== Print overrides ===== */
+.firstpage-only { break-after: page; }
+
+@media print {
+  @page { size: Letter; margin: 1in; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .instructions,
+  .doc-section,
+  .doc-section.second,
+  .doc-section.third,
+  .doc-section.fourth { padding: 0 !important; }
+
+  .title-wrap { margin-top: 1.25in; margin-bottom: 0.9in; }
+  .inst-heading { margin-top: 0.35in; }
+  .nd-block { position: static; margin-bottom: 0.5rem; }
+  .doc-section.fourth img:first-of-type { width: 550px !important; max-width: 100%; }
+  .grid-container { margin: 0.15in 0 0.1in 0; }
+
+  .question, .equation, .equation-section, .equation-group, .var-defs { page-break-inside: avoid; break-inside: avoid; }
+  h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
+
+  .inst-heading .variant-mark,
+  .inst-heading sup.variant-mark {
+    font-size: 0.4em !important;
+    line-height: 0 !important;
+    vertical-align: -0.05em !important;
+    opacity: 0.38 !important;
+  }
 }
 </style>
 </head>
@@ -162,12 +161,10 @@ sub { bottom: -0.25em; }
   <p>{{{mc_section_intro}}}</p>
   {{#each mc_questions}}
     <div class="question">
-      <div class="stem"><span class="q-label">[{{label}}] </span>{{#if stem_html}}{{{stem_html}}}{{else}}{{{stem}}}{{/if}}</div>
+      <div class="stem"><span class="q-label">[{{label}}] </span>{{{stem_html}}}</div>
       {{#each options}}<div class="option">{{{this}}}</div>{{/each}}
       {{#if trailing_image}}
         <img alt="{{trailing_image.alt}}" src="{{trailing_image.src}}" style="display:block; width: {{trailing_image.width}}; height:auto;"/>
-      {{else}}
-        {{#if image_src}}<img alt="{{image_alt}}" src="{{image_src}}" style="display:block; width: {{image_width}}; height:auto;"/>{{/if}}
       {{/if}}
     </div>
   {{/each}}
@@ -178,12 +175,10 @@ sub { bottom: -0.25em; }
   <p>{{{calc_section_intro}}}</p>
   {{#each calc_questions}}
     <div class="question">
-      <div class="stem"><span class="q-label">[{{label}}] </span>{{#if stem_html}}{{{stem_html}}}{{else}}{{{stem}}}{{/if}}</div>
+      <div class="stem"><span class="q-label">[{{label}}] </span>{{{stem_html}}}</div>
       {{#each options}}<div class="option">{{{this}}}</div>{{/each}}
       {{#if trailing_image}}
         <img alt="{{trailing_image.alt}}" src="{{trailing_image.src}}" style="display:block; width: {{trailing_image.width}}; height:auto;"/>
-      {{else}}
-        {{#if image_src}}<img alt="{{image_alt}}" src="{{image_src}}" style="display:block; width: {{image_width}}; height:auto;"/>{{/if}}
       {{/if}}
     </div>
   {{/each}}
@@ -207,7 +202,7 @@ sub { bottom: -0.25em; }
     <div>
       {{#each left_equation_sections}}
         <div class="equation-section">
-          {{#if title}}<div class="equation-title">{{title}}</div>{{/if}}
+          {{#if title}}<div class="equation-title">{{{title}}}</div>{{/if}}
           {{#each groups}}
             <div class="equation-group">
               {{#if subtitle}}<div class="equation-subtitle">{{{subtitle}}}</div>{{/if}}
@@ -218,7 +213,7 @@ sub { bottom: -0.25em; }
             <div class="var-defs">
               <div class="equation-title">Variable definitions</div>
               <ul class="var-list">
-                {{#each var_defs}}<li><strong>{{label}}: </strong>{{text}}</li>{{/each}}
+                {{#each var_defs}}<li><strong>{{{label}}}: </strong>{{{text}}}</li>{{/each}}
               </ul>
             </div>
           {{/if}}
@@ -229,7 +224,7 @@ sub { bottom: -0.25em; }
     <div>
       {{#each right_equation_sections}}
         <div class="equation-section">
-          {{#if title}}<div class="equation-title">{{title}}</div>{{/if}}
+          {{#if title}}<div class="equation-title">{{{title}}}</div>{{/if}}
           {{#each groups}}
             <div class="equation-group">
               {{#if subtitle}}<div class="equation-subtitle">{{{subtitle}}}</div>{{/if}}
@@ -240,14 +235,12 @@ sub { bottom: -0.25em; }
             <div class="var-defs">
               <div class="equation-title">Variable definitions</div>
               <ul class="var-list">
-                {{#each var_defs}}<li><strong>{{label}}: </strong>{{text}}</li>{{/each}}
+                {{#each var_defs}}<li><strong>{{{label}}}: </strong>{{{text}}}</li>{{/each}}
               </ul>
             </div>
           {{/if}}
         </div>
       {{/each}}
-
-      {{#if extra_right_placeholder}}<div class="equation-section"></div>{{/if}}
     </div>
   </div>
 </div>
@@ -263,7 +256,6 @@ async function render() {
     if (!resp.ok) throw new Error(`Failed to load exam_data.json (${resp.status})`);
     const data = await resp.json();
 
-    // Set page title here (since <head><title> isn't templated)
     document.title = `${data.course_title || 'Course'} - ${data.exam_title || 'Exam'}`;
 
     if (!data.trigcalc_title) data.trigcalc_title = "Trigonometry & Calculus";
