@@ -7,54 +7,184 @@
 
 <style>
 /* ===== Screen styles ===== */
-html, body { margin: 0; padding: 0; font-family: "Times New Roman", Georgia, serif; font-size: 11pt; line-height: 1.4; color: #000; background: #fff; }
-h1, h2, h3, h4 { margin: 0.6rem 0 0.35rem 0; font-weight: 700; color: #000; }
-p { margin: 0.35rem 0; }
-img { max-width: 100%; height: auto; display: block; }
-.section-title { font-weight: 700; font-size: 14pt; margin: 0.6rem 0 0.4rem 0; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 11pt;
+  line-height: 1.4;
+  color: #000;
+  background: #fff;
+}
 
-.doc-section { padding: 18px 24px; }
-.question { padding: 0; margin: 0.9rem 0 1.1rem 0; border: 0; background: transparent; }
-.question .stem { margin-bottom: 0.45rem; }
-.option { margin: 0.18rem 0; }
+h1, h2, h3, h4 {
+  margin: 0.6rem 0 0.35rem 0;
+  font-weight: 700;
+  color: #000;
+}
+
+p {
+  margin: 0.35rem 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.section-title {
+  font-weight: 700;
+  font-size: 14pt;
+  margin: 0.6rem 0 0.4rem 0;
+}
+
+.doc-section {
+  padding: 18px 24px;
+}
+
+.question {
+  padding: 0;
+  margin: 0.9rem 0 1.1rem 0;
+  border: 0;
+  background: transparent;
+}
+
+.question .stem {
+  margin-bottom: 0.45rem;
+}
+
+.option {
+  margin: 0.18rem 0;
+}
 
 /* First page (screen preview) */
-.instructions { background: #fff; color: #000; padding: 0.75in 0.9in 0.6in 0.9in; position: relative; }
-.nd-block { position: absolute; top: 0.9in; left: 0.9in; }
-.nd-block p { margin: 0.15rem 0; font-size: 12pt; }
-.title-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 2.0in; margin-bottom: 1.8in; text-align: center; }
-.title-wrap h1 { font-size: 28pt; font-weight: 600; margin: 0 0 0.25rem 0; }
-.title-wrap h2 { font-size: 22pt; font-weight: 600; margin: 0; }
+.instructions {
+  background: #fff;
+  color: #000;
+  padding: 0.75in 0.9in 0.6in 0.9in;
+  position: relative;
+}
 
-.inst-heading { color: #2b579a; font-weight: 700; margin: 0 0 0.25rem 0; display: inline-block; }
+.nd-block {
+  position: absolute;
+  top: 0.9in;
+  left: 0.9in;
+}
+
+.nd-block p {
+  margin: 0.15rem 0;
+  font-size: 12pt;
+}
+
+.title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.0in;
+  margin-bottom: 1.8in;
+  text-align: center;
+}
+
+.title-wrap h1 {
+  font-size: 28pt;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+}
+
+.title-wrap h2 {
+  font-size: 22pt;
+  font-weight: 600;
+  margin: 0;
+}
+
+.inst-heading {
+  color: #2b579a;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+  display: inline-block;
+}
 
 /* Later pages (screen preview padding) */
-.doc-section.second, .doc-section.third, .doc-section.fourth { padding: 0.8in 0.9in 0.6in 0.9in; }
+.doc-section.second,
+.doc-section.third,
+.doc-section.fourth {
+  padding: 0.8in 0.9in 0.6in 0.9in;
+}
 
 /* Equation sheet container */
-.grid-container { display: flex; gap: 24px; align-items: flex-start; margin: 0.2in 0 0.15in 0; padding: 0; }
-.grid-container > div { flex: 1 1 0; min-width: 0; }
+.grid-container {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin: 0.2in 0 0.15in 0;
+  padding: 0;
+}
+
+.grid-container > div {
+  flex: 1 1 0;
+  min-width: 0;
+}
 
 /* Equation sections and groups */
-.equation-section { margin: 0.4rem 0 0.6rem 0; padding: 0; background: none; border: 0; }
-.equation-title { margin: 0.1rem 0 0.3rem 0; font-weight: 700; font-size: 12pt; }
-.equation-group { margin: 0 0 0.5rem 0; break-inside: avoid; }
-.equation-subtitle { font-weight: 700; margin: 0 0 0.2rem 0; }
-.equation { margin: 0.14rem 0; }
-.var-defs { margin-top: 0.25rem; font-size: 10.5pt; line-height: 1.35; }
-.var-list { margin: 0.2rem 0; padding-left: 1.2em; }
-.var-list li { margin: 0.1rem 0; }
+.equation-section {
+  margin: 0.4rem 0 0.6rem 0;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.equation-title {
+  margin: 0.1rem 0 0.3rem 0;
+  font-weight: 700;
+  font-size: 12pt;
+}
+
+.equation-group {
+  margin: 0 0 0.5rem 0;
+  break-inside: avoid;
+}
+
+.equation-subtitle {
+  font-weight: 700;
+  margin: 0 0 0.2rem 0;
+}
+
+.equation {
+  margin: 0.14rem 0;
+}
+
+.var-defs {
+  margin-top: 0.25rem;
+  font-size: 10.5pt;
+  line-height: 1.35;
+}
+
+.var-list {
+  margin: 0.2rem 0;
+  padding-left: 1.2em;
+}
+
+.var-list li {
+  margin: 0.1rem 0;
+}
 
 /* ========== VECTOR AND MATH NOTATION ========== */
+
 /* Vector arrow above letter */
 .vec {
   display: inline-block;
   position: relative;
   text-align: center;
   padding-top: 0.15em;
+  font-style: normal;
+  font-weight: inherit;
+  font-family: inherit;
 }
+
 .vec::after {
-  content: '→';
+  content: "\2192"; /* right arrow */
   position: absolute;
   top: -0.45em;
   left: 0;
@@ -62,6 +192,7 @@ img { max-width: 100%; height: auto; display: block; }
   font-size: 0.55em;
   text-align: center;
   line-height: 1;
+  font-family: inherit; /* critical for print/PDF */
 }
 
 /* Hat/unit vector notation */
@@ -69,9 +200,13 @@ img { max-width: 100%; height: auto; display: block; }
   display: inline-block;
   position: relative;
   padding-top: 0.1em;
+  font-style: normal;
+  font-weight: inherit;
+  font-family: inherit;
 }
+
 .hat::after {
-  content: '^';
+  content: "^";
   position: absolute;
   top: -0.4em;
   left: 0;
@@ -79,17 +214,27 @@ img { max-width: 100%; height: auto; display: block; }
   font-size: 0.6em;
   text-align: center;
   line-height: 1;
+  font-family: inherit;
 }
 
 /* Ensure sub/sup render nicely */
-sub, sup {
+sub,
+sup {
   font-size: 0.75em;
   line-height: 0;
   position: relative;
   vertical-align: baseline;
+  font-family: inherit;
 }
-sup { top: -0.4em; }
-sub { bottom: -0.25em; }
+
+sup {
+  top: -0.4em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
 /* ============================================== */
 
 /* Variant mark */
@@ -105,30 +250,93 @@ sub { bottom: -0.25em; }
 }
 
 /* Labels */
-.q-label { color: #2b579a; font-weight: 700; }
-.q-label + * { margin-left: 0.05rem; }
+.q-label {
+  color: #2b579a;
+  font-weight: 700;
+}
+
+.q-label + * {
+  margin-left: 0.05rem;
+}
 
 /* ===== Print overrides ===== */
-.firstpage-only { break-after: page; }
+.firstpage-only {
+  break-after: page;
+}
 
 @media print {
-  @page { size: Letter; margin: 1in; }
-  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page {
+    size: Letter;
+    margin: 1in;
+  }
+
+  html,
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-family: "Times New Roman", Georgia, serif !important;
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
+  /* Force same font on math-ish bits so PDF doesn't swap fonts */
+  .vec,
+  .vec::after,
+  .hat,
+  .hat::after,
+  sub,
+  sup {
+    font-family: "Times New Roman", Georgia, serif !important;
+  }
 
   .instructions,
   .doc-section,
   .doc-section.second,
   .doc-section.third,
-  .doc-section.fourth { padding: 0 !important; }
+  .doc-section.fourth {
+    padding: 0 !important;
+  }
 
-  .title-wrap { margin-top: 1.25in; margin-bottom: 0.9in; }
-  .inst-heading { margin-top: 0.35in; }
-  .nd-block { position: static; margin-bottom: 0.5rem; }
-  .doc-section.fourth img:first-of-type { width: 550px !important; max-width: 100%; }
-  .grid-container { margin: 0.15in 0 0.1in 0; }
+  .title-wrap {
+    margin-top: 1.25in;
+    margin-bottom: 0.9in;
+  }
 
-  .question, .equation, .equation-section, .equation-group, .var-defs { page-break-inside: avoid; break-inside: avoid; }
-  h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
+  .inst-heading {
+    margin-top: 0.35in;
+  }
+
+  .nd-block {
+    position: static;
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-section.fourth img:first-of-type {
+    width: 550px !important;
+    max-width: 100%;
+  }
+
+  .grid-container {
+    margin: 0.15in 0 0.1in 0;
+  }
+
+  .question,
+  .equation,
+  .equation-section,
+  .equation-group,
+  .var-defs {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    page-break-after: avoid;
+    orphans: 3;
+    widows: 3;
+  }
 
   .inst-heading .variant-mark,
   .inst-heading sup.variant-mark {
@@ -138,6 +346,7 @@ sub { bottom: -0.25em; }
     opacity: 0.38 !important;
   }
 }
+
 </style>
 </head>
 
