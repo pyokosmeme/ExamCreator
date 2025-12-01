@@ -98,6 +98,46 @@ img { max-width: 100%; height: auto; display: block; }
 
   .question, .equation, .equation-section, .equation-group, .var-defs { page-break-inside: avoid; break-inside: avoid; }
   h1, h2, h3, h4 { page-break-after: avoid; orphans: 3; widows: 3; }
+
+  .vec {
+  position: relative;
+  display: inline-block;
+}
+.vec::after {
+  content: '→';
+  position: absolute;
+  top: -0.5em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65em;
+  line-height: 1;
+}
+
+/* Hat notation (unit vectors) - caret above letter */
+.hat {
+  position: relative;
+  display: inline-block;
+}
+.hat::after {
+  content: '^';
+  position: absolute;
+  top: -0.45em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7em;
+  line-height: 1;
+}
+
+/* Ensure sub/sup render nicely */
+sub, sup {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup { top: -0.4em; }
+sub { bottom: -0.25em; }
+
 }
 </style>
 </head>
