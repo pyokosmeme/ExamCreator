@@ -2,45 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Exam Loader</title>
+  <title>Exam/Solutions Loader</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 2rem; color:#111; }
-    .card { max-width: 760px; padding: 1.25rem 1.5rem; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+    .card { max-width: 800px; padding: 1.25rem 1.5rem; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
     h1 { font-size: 1.25rem; margin: 0 0 .5rem 0; }
+    h2 { font-size: 1rem; margin: 1.25rem 0 0.5rem 0; color: #374151; }
     p { margin: .25rem 0 .75rem 0; }
-    .row { display: flex; gap: .75rem; align-items: center; }
-    input[type="file"] { padding: .5rem; border: 1px solid #d1d5db; border-radius: 8px; }
+    .row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+    input[type="file"] { padding: .5rem; border: 1px solid #d1d5db; border-radius: 8px; flex: 1; min-width: 200px; }
     button { padding: .6rem .9rem; border-radius: 10px; border: 1px solid #111; background: #111; color: #fff; cursor: pointer; }
     button:disabled { opacity: .45; cursor: not-allowed; }
+    button.secondary { background: #fff; color: #111; }
+    button.secondary:hover:not(:disabled) { background: #f3f4f6; }
     code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
     .tiny { color:#555; font-size: .875rem; }
     .ok { color: #065f46; }
     .warn { color: #92400e; }
+    .filename { background: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.875rem; }
+    .divider { border-top: 1px solid #e5e7eb; margin: 1rem 0; }
+    .btn-group { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Load an Exam JSON into <span class="mono">template.html</span></h1>
-    <p class="tiny">Serve this folder (e.g., <code>python -m http.server 8000</code>) or any HTTPS host. Service Workers won’t register on <code>file://</code>.</p>
-    <ol>
-      <li>Select a local <span class="mono">*.json</span> exam file (e.g., one of the variants you exported).</li>
-      <li>Click <strong>Open template.html</strong>. The Service Worker will provide your JSON at <span class="mono">/exam_data.json</span> for that page load.</li>
-    </ol>
-
-    <div class="row" style="margin-top:.75rem;">
+    <h1>Exam & Solutions Loader</h1>
+    <p class="tiny">Serve this folder (e.g., <code>python -m http.server 8000</code>) or any HTTPS host. Service Workers won't register on <code>file://</code>.</p>
+    
+    <h2>Step 1: Select a JSON file</h2>
+    <div class="row">
       <input id="file" type="file" accept="application/json,.json">
-      <button id="open" disabled>Open template.html</button>
     </div>
+    <p id="fileStatus" class="tiny"></p>
+
+    <div class="divider"></div>
+
+    <h2>Step 2: Choose how to open it</h2>
+    <p class="tiny">Select which template to use for rendering:</p>
+    
+    <div class="btn-group">
+      <button id="openExam" disabled>Open as Exam</button>
+      <button id="openSolutions" class="secondary" disabled>Open as Solutions</button>
+    </div>
+    
     <p id="status" class="tiny" role="status"></p>
+
+    <div class="divider"></div>
+    
+    <details style="margin-top: 0.5rem;">
+      <summary class="tiny" style="cursor: pointer;">Advanced: Custom template</summary>
+      <div style="margin-top: 0.5rem;">
+        <label class="tiny">Template filename: </label>
+        <input id="customTemplate" type="text" placeholder="my_template.html" style="padding: 0.25rem 0.5rem; border: 1px solid #d1d5db; border-radius: 4px; width: 200px;">
+        <button id="openCustom" class="secondary" disabled style="margin-left: 0.5rem;">Open Custom</button>
+      </div>
+    </details>
   </div>
 
   <script>
-    const statusEl = document.getElementById('status');
-    const openBtn = document.getElementById('open');
     const fileInput = document.getElementById('file');
+    const fileStatus = document.getElementById('fileStatus');
+    const statusEl = document.getElementById('status');
+    const openExamBtn = document.getElementById('openExam');
+    const openSolutionsBtn = document.getElementById('openSolutions');
+    const openCustomBtn = document.getElementById('openCustom');
+    const customTemplateInput = document.getElementById('customTemplate');
 
     let examText = null;
+    let currentFileName = '';
 
     async function ensureSW() {
       if (!('serviceWorker' in navigator)) {
@@ -50,7 +80,6 @@
       try {
         const reg = await navigator.serviceWorker.register('./sw.js', { scope: './' });
         await navigator.serviceWorker.ready;
-        statusEl.textContent = 'Service Worker ready.';
         return true;
       } catch (e) {
         console.error(e);
@@ -60,12 +89,9 @@
     }
 
     async function setDataOnSW(payload) {
-      // Ensure the SW is registered and active
       const ready = await navigator.serviceWorker.ready;
       const active = ready && ready.active;
       const controller = navigator.serviceWorker.controller;
-
-      // If the page is already controlled, message the controller; otherwise, message the active worker
       const target = controller || active;
       if (!target) throw new Error('No active Service Worker.');
 
@@ -83,9 +109,19 @@
       });
     }
 
+    function enableButtons(enable) {
+      openExamBtn.disabled = !enable;
+      openSolutionsBtn.disabled = !enable;
+      openCustomBtn.disabled = !enable;
+    }
+
     fileInput.addEventListener('change', async (e) => {
       const f = e.target.files && e.target.files[0];
       if (!f) return;
+      
+      currentFileName = f.name;
+      fileStatus.innerHTML = `Selected: <span class="filename">${currentFileName}</span>`;
+      
       try {
         examText = await f.text();
         // Basic validation
@@ -93,26 +129,38 @@
         const ok = await ensureSW();
         if (!ok) return;
         await setDataOnSW(examText);
-        statusEl.innerHTML = '<span class="ok">JSON loaded into Service Worker. Ready to open template.</span>';
-        openBtn.disabled = false;
+        statusEl.innerHTML = '<span class="ok">✓ JSON loaded. Ready to open a template.</span>';
+        enableButtons(true);
       } catch (err) {
         console.error(err);
         statusEl.innerHTML = '<span class="warn">Invalid JSON or SW error: ' + (err && err.message ? err.message : err) + '</span>';
-        openBtn.disabled = true;
+        enableButtons(false);
       }
     });
 
-    openBtn.addEventListener('click', () => {
-      // Open template.html in a new tab/window. It will fetch /exam_data.json.
-      window.open('./template.html', '_blank', 'noopener,noreferrer');
+    function openTemplate(templateName) {
+      window.open('./' + templateName, '_blank', 'noopener,noreferrer');
+    }
+
+    openExamBtn.addEventListener('click', () => openTemplate('template.html'));
+    openSolutionsBtn.addEventListener('click', () => openTemplate('solutions_template.html'));
+    openCustomBtn.addEventListener('click', () => {
+      const custom = customTemplateInput.value.trim();
+      if (custom) {
+        openTemplate(custom);
+      } else {
+        statusEl.innerHTML = '<span class="warn">Enter a template filename first.</span>';
+      }
     });
 
-    // Eagerly register SW on load so controller is available.
+    // Eagerly register SW on load
     (async () => {
-      await ensureSW();
-      // Claim control to ensure fetch interception for same-tab navigations
-      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage({ type: 'claim' });
+      const ok = await ensureSW();
+      if (ok) {
+        statusEl.textContent = 'Service Worker ready. Select a JSON file to begin.';
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({ type: 'claim' });
+        }
       }
     })();
   </script>
