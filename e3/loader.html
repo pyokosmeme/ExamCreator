@@ -2,60 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Exam/Solutions Loader</title>
+  <title>Exam & Solutions Loader</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 2rem; color:#111; }
-    .card { max-width: 800px; padding: 1.25rem 1.5rem; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
-    h1 { font-size: 1.25rem; margin: 0 0 .5rem 0; }
-    h2 { font-size: 1rem; margin: 1.25rem 0 0.5rem 0; color: #374151; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 2rem; color:#111; background: #f9fafb; }
+    .card { max-width: 820px; padding: 1.5rem 1.75rem; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.08); background: #fff; }
+    h1 { font-size: 1.35rem; margin: 0 0 .25rem 0; }
+    h2 { font-size: 1rem; margin: 1.25rem 0 0.5rem 0; color: #374151; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.35rem; }
     p { margin: .25rem 0 .75rem 0; }
     .row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
-    input[type="file"] { padding: .5rem; border: 1px solid #d1d5db; border-radius: 8px; flex: 1; min-width: 200px; }
-    button { padding: .6rem .9rem; border-radius: 10px; border: 1px solid #111; background: #111; color: #fff; cursor: pointer; }
-    button:disabled { opacity: .45; cursor: not-allowed; }
+    input[type="file"] { padding: .5rem; border: 1px solid #d1d5db; border-radius: 8px; flex: 1; min-width: 220px; }
+    button { padding: .6rem 1rem; border-radius: 8px; border: 1px solid #111; background: #111; color: #fff; cursor: pointer; font-weight: 500; }
+    button:disabled { opacity: .4; cursor: not-allowed; }
     button.secondary { background: #fff; color: #111; }
     button.secondary:hover:not(:disabled) { background: #f3f4f6; }
-    code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-    .tiny { color:#555; font-size: .875rem; }
-    .ok { color: #065f46; }
-    .warn { color: #92400e; }
-    .filename { background: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.875rem; }
-    .divider { border-top: 1px solid #e5e7eb; margin: 1rem 0; }
-    .btn-group { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+    button.solutions-btn { background: #059669; border-color: #059669; }
+    button.solutions-btn:hover:not(:disabled) { background: #047857; }
+    code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+    .tiny { color:#6b7280; font-size: .875rem; }
+    .ok { color: #059669; }
+    .warn { color: #d97706; }
+    .error { color: #dc2626; }
+    .filename { background: #f3f4f6; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.875rem; font-family: monospace; }
+    .btn-group { display: flex; gap: 0.75rem; margin-top: 0.75rem; flex-wrap: wrap; }
+    .info-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 0.75rem 1rem; margin: 0.75rem 0; font-size: 0.9rem; }
+    .info-box.green { background: #ecfdf5; border-color: #a7f3d0; }
+    details { margin-top: 1rem; }
+    details summary { cursor: pointer; color: #6b7280; font-size: 0.9rem; }
+    details[open] summary { margin-bottom: 0.5rem; }
+    .custom-row { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem; flex-wrap: wrap; }
+    .custom-row input[type="text"] { padding: 0.4rem 0.6rem; border: 1px solid #d1d5db; border-radius: 6px; width: 180px; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Exam & Solutions Loader</h1>
-    <p class="tiny">Serve this folder (e.g., <code>python -m http.server 8000</code>) or any HTTPS host. Service Workers won't register on <code>file://</code>.</p>
+    <h1>📄 Exam & Solutions Loader</h1>
+    <p class="tiny">Load JSON files and open them with the appropriate template. Hosted on GitHub Pages.</p>
     
-    <h2>Step 1: Select a JSON file</h2>
+    <h2>1. Select a JSON File</h2>
     <div class="row">
       <input id="file" type="file" accept="application/json,.json">
     </div>
     <p id="fileStatus" class="tiny"></p>
 
-    <div class="divider"></div>
-
-    <h2>Step 2: Choose how to open it</h2>
-    <p class="tiny">Select which template to use for rendering:</p>
+    <h2>2. Choose Template</h2>
     
+    <div class="info-box">
+      <strong>Exam templates</strong> expect JSON with <code>mc_questions</code> and <code>calc_questions</code> arrays.
+    </div>
     <div class="btn-group">
       <button id="openExam" disabled>Open as Exam</button>
-      <button id="openSolutions" class="secondary" disabled>Open as Solutions</button>
+    </div>
+
+    <div class="info-box green" style="margin-top: 1rem;">
+      <strong>Solutions templates</strong> expect JSON with <code>answers</code> and <code>solutions</code> objects.
+    </div>
+    <div class="btn-group">
+      <button id="openSolutions" class="solutions-btn" disabled>Open as Solutions</button>
     </div>
     
-    <p id="status" class="tiny" role="status"></p>
+    <p id="status" class="tiny" role="status" style="margin-top: 1rem;"></p>
 
-    <div class="divider"></div>
-    
-    <details style="margin-top: 0.5rem;">
-      <summary class="tiny" style="cursor: pointer;">Advanced: Custom template</summary>
-      <div style="margin-top: 0.5rem;">
-        <label class="tiny">Template filename: </label>
-        <input id="customTemplate" type="text" placeholder="my_template.html" style="padding: 0.25rem 0.5rem; border: 1px solid #d1d5db; border-radius: 4px; width: 200px;">
-        <button id="openCustom" class="secondary" disabled style="margin-left: 0.5rem;">Open Custom</button>
+    <details>
+      <summary>Advanced: Custom template</summary>
+      <p class="tiny">Enter the filename and choose which JSON endpoint to use:</p>
+      <div class="custom-row">
+        <input id="customTemplate" type="text" placeholder="my_template.html">
+        <select id="customTarget" style="padding: 0.4rem; border: 1px solid #d1d5db; border-radius: 6px;">
+          <option value="exam">→ exam_data.json</option>
+          <option value="solutions">→ solutions_data.json</option>
+        </select>
+        <button id="openCustom" class="secondary" disabled>Open</button>
       </div>
     </details>
   </div>
@@ -68,13 +85,14 @@
     const openSolutionsBtn = document.getElementById('openSolutions');
     const openCustomBtn = document.getElementById('openCustom');
     const customTemplateInput = document.getElementById('customTemplate');
+    const customTargetSelect = document.getElementById('customTarget');
 
-    let examText = null;
+    let loadedText = null;
     let currentFileName = '';
 
     async function ensureSW() {
       if (!('serviceWorker' in navigator)) {
-        statusEl.innerHTML = '<span class="warn">This browser does not support Service Workers.</span>';
+        statusEl.innerHTML = '<span class="error">This browser does not support Service Workers.</span>';
         return false;
       }
       try {
@@ -83,17 +101,17 @@
         return true;
       } catch (e) {
         console.error(e);
-        statusEl.innerHTML = '<span class="warn">Failed to register Service Worker. Serve over http(s) or localhost.</span>';
+        statusEl.innerHTML = '<span class="error">Failed to register Service Worker. Make sure you\'re serving over HTTPS or localhost.</span>';
         return false;
       }
     }
 
-    async function setDataOnSW(payload) {
+    async function sendToSW(messageType, payload, target = null) {
       const ready = await navigator.serviceWorker.ready;
       const active = ready && ready.active;
       const controller = navigator.serviceWorker.controller;
-      const target = controller || active;
-      if (!target) throw new Error('No active Service Worker.');
+      const sw = controller || active;
+      if (!sw) throw new Error('No active Service Worker.');
 
       return new Promise((resolve, reject) => {
         const chan = new MessageChannel();
@@ -101,11 +119,9 @@
           if (ev.data && ev.data.ok) resolve(true);
           else reject(ev.data && ev.data.error || 'Unknown SW error');
         };
-        try {
-          target.postMessage({ type: 'setExamData', text: payload }, [chan.port2]);
-        } catch (e) {
-          reject(e);
-        }
+        const msg = { type: messageType, text: payload };
+        if (target) msg.target = target;
+        sw.postMessage(msg, [chan.port2]);
       });
     }
 
@@ -123,17 +139,34 @@
       fileStatus.innerHTML = `Selected: <span class="filename">${currentFileName}</span>`;
       
       try {
-        examText = await f.text();
-        // Basic validation
-        JSON.parse(examText);
+        loadedText = await f.text();
+        const parsed = JSON.parse(loadedText);
+        
+        // Detect JSON type
+        const isExamFormat = parsed.mc_questions || parsed.calc_questions;
+        const isSolutionsFormat = parsed.answers || parsed.solutions;
+        
+        let formatNote = '';
+        if (isExamFormat && !isSolutionsFormat) {
+          formatNote = ' (detected: exam format)';
+        } else if (isSolutionsFormat && !isExamFormat) {
+          formatNote = ' (detected: solutions format)';
+        } else if (isExamFormat && isSolutionsFormat) {
+          formatNote = ' (detected: combined format)';
+        }
+        
         const ok = await ensureSW();
         if (!ok) return;
-        await setDataOnSW(examText);
-        statusEl.innerHTML = '<span class="ok">✓ JSON loaded. Ready to open a template.</span>';
+        
+        // Pre-load both endpoints with the data
+        await sendToSW('setExamData', loadedText);
+        await sendToSW('setSolutionsData', loadedText);
+        
+        statusEl.innerHTML = `<span class="ok">✓ JSON loaded${formatNote}. Choose a template to open.</span>`;
         enableButtons(true);
       } catch (err) {
         console.error(err);
-        statusEl.innerHTML = '<span class="warn">Invalid JSON or SW error: ' + (err && err.message ? err.message : err) + '</span>';
+        statusEl.innerHTML = `<span class="error">Invalid JSON: ${err.message}</span>`;
         enableButtons(false);
       }
     });
@@ -144,16 +177,17 @@
 
     openExamBtn.addEventListener('click', () => openTemplate('template.html'));
     openSolutionsBtn.addEventListener('click', () => openTemplate('solutions_template.html'));
-    openCustomBtn.addEventListener('click', () => {
-      const custom = customTemplateInput.value.trim();
-      if (custom) {
-        openTemplate(custom);
-      } else {
-        statusEl.innerHTML = '<span class="warn">Enter a template filename first.</span>';
+    
+    openCustomBtn.addEventListener('click', async () => {
+      const templateName = customTemplateInput.value.trim();
+      if (!templateName) {
+        statusEl.innerHTML = '<span class="warn">Enter a template filename.</span>';
+        return;
       }
+      openTemplate(templateName);
     });
 
-    // Eagerly register SW on load
+    // Register SW on load
     (async () => {
       const ok = await ensureSW();
       if (ok) {
