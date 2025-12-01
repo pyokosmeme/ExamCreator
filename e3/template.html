@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -457,13 +456,54 @@ sub {
 
 <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.8/dist/handlebars.min.js"></script>
 <script>
+/**
+ * Replace combining-arrow / combining-hat vector notation
+ * F⃗, v⃗, B⃗, r̂, etc. -> <span class="vec">F</span> / <span class="hat">r</span>
+ */
+function sanitizeVectorsInEquations(str) {
+  if (typeof str !== "string") return str;
+  return str
+    // combining arrow above (U+20D7)
+    .replace(/F\u20D7/g, '<span class="vec">F</span>')
+    .replace(/v\u20D7/g, '<span class="vec">v</span>')
+    .replace(/B\u20D7/g, '<span class="vec">B</span>')
+    .replace(/L\u20D7/g, '<span class="vec">L</span>')
+    .replace(/μ\u20D7/g, '<span class="vec">μ</span>')
+    .replace(/l\u20D7/g, '<span class="vec">l</span>')
+    .replace(/A\u20D7/g, '<span class="vec">A</span>')
+    .replace(/E\u20D7/g, '<span class="vec">E</span>')
+    .replace(/S\u20D7/g, '<span class="vec">S</span>')
+    .replace(/τ\u20D7/g, '<span class="vec">τ</span>')
+    // combining hat (U+0302)
+    .replace(/r\u0302/g, '<span class="hat">r</span>');
+}
+
+/**
+ * Recursively sanitize every string in the loaded JSON
+ */
+function deepSanitize(obj) {
+  if (typeof obj === "string") return sanitizeVectorsInEquations(obj);
+  if (Array.isArray(obj)) return obj.map(deepSanitize);
+  if (obj && typeof obj === "object") {
+    const out = {};
+    for (const [k, v] of Object.entries(obj)) {
+      out[k] = deepSanitize(v);
+    }
+    return out;
+  }
+  return obj;
+}
+
 async function render() {
   const mount = document.getElementById('app');
   try {
     const template = Handlebars.compile(document.getElementById('tpl').innerHTML);
     const resp = await fetch('exam_data.json', { cache: 'no-cache' });
     if (!resp.ok) throw new Error(`Failed to load exam_data.json (${resp.status})`);
-    const data = await resp.json();
+    let data = await resp.json();
+
+    // Clean F⃗, v⃗, B⃗, r̂, etc. into <span class="vec"> / <span class="hat">
+    data = deepSanitize(data);
 
     document.title = `${data.course_title || 'Course'} - ${data.exam_title || 'Exam'}`;
 
@@ -476,8 +516,13 @@ async function render() {
     const norm = (arr = []) => arr.map(q => {
       const trailing_image = q.trailing_image ??
         (q.image_src ? { src: q.image_src, alt: q.image_alt || "", width: q.image_width || "200px" } : undefined);
-      return { ...q, stem_html: q.stem_html ?? q.stem ?? "", trailing_image };
+      return {
+        ...q,
+        stem_html: q.stem_html ?? q.stem ?? "",
+        trailing_image
+      };
     });
+
     data.mc_questions   = norm(data.mc_questions);
     data.calc_questions = norm(data.calc_questions);
 
