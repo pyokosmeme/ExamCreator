@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Grader</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .exam-info {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .upload-area {
+            background: white;
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .upload-area input {
+            display: none;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .section-header {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-points {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .question-row {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .question-row:last-child {
+            border-bottom: none;
+        }
+
+        .q-label {
+            font-weight: 600;
+            color: #444;
+            width: 50px;
+        }
+
+        .q-answer {
+            flex: 1;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .q-topic {
+            flex: 2;
+            font-size: 0.85rem;
+            color: #888;
+            padding-right: 10px;
+        }
+
+        .wrong-btn {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #ddd;
+            background: #f8f8f8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #999;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wrong-btn:hover {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        .wrong-btn.marked {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: white;
+        }
+
+        .ec-btn {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #ddd;
+            background: #f8f8f8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #999;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ec-btn:hover {
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+
+        .ec-btn.marked {
+            background: #27ae60;
+            border-color: #27ae60;
+            color: white;
+        }
+
+        .score-panel {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 25px;
+            color: white;
+            text-align: center;
+            position: sticky;
+            top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .score-breakdown {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        .score-max {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .reset-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #667eea;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 15px;
+        }
+
+        .reset-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .ec-section {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
+
+        .ec-section .section-header {
+            color: #155724;
+            border-bottom-color: #b1dfbb;
+        }
+
+        .part-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Exam Grader</h1>
+        <div class="exam-info" id="exam-info">Load a JSON file to begin</div>
+
+        <div class="upload-area" id="upload-area">
+            <input type="file" id="file-input" accept=".json">
+            <div>📁 Click to load exam JSON</div>
+        </div>
+
+        <div id="grader-content" class="hidden">
+            <div class="score-panel">
+                <div class="score-label">Final Score</div>
+                <div class="score-value" id="final-score">75</div>
+                <div class="score-breakdown" id="breakdown">75 − 0 + 0 EC</div>
+                <div class="score-max" id="max-score">Max possible: 95</div>
+            </div>
+
+            <div id="questions-container"></div>
+
+            <button class="reset-btn" id="reset">Reset All</button>
+        </div>
+    </div>
+
+    <script>
+        let examData = null;
+        let wrongAnswers = new Set();
+        let earnedEC = new Set();
+        
+        const BASE_SCORE = 75;
+        const MC_PENALTY = 2;
+        const CALC_PENALTY = 4;
+        const EC_MC_POINTS = 5;
+        const EC_OPEN_PART_POINTS = 5;
+
+        document.getElementById('upload-area').addEventListener('click', () => {
+            document.getElementById('file-input').click();
+        });
+
+        document.getElementById('file-input').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        examData = JSON.parse(event.target.result);
+                        renderExam();
+                    } catch (err) {
+                        alert('Error parsing JSON file');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function renderExam() {
+            document.getElementById('upload-area').classList.add('hidden');
+            document.getElementById('grader-content').classList.remove('hidden');
+
+            const info = `${examData.exam_title} • ${examData.course} • ${examData.semester} • Variant ${examData.variant_mark}`;
+            document.getElementById('exam-info').textContent = info;
+
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            // MC Section (Q1-Q5)
+            const mcSection = createSection('Multiple Choice (Q1–Q5)', `−${MC_PENALTY} pts if wrong`, false);
+            for (let i = 1; i <= 5; i++) {
+                const q = `Q${i}`;
+                const answer = examData.answers[q];
+                const topic = examData.solutions[q]?.topic || '';
+                mcSection.appendChild(createQuestionRow(q, answer.toUpperCase(), topic, MC_PENALTY, false));
+            }
+            container.appendChild(mcSection);
+
+            // Calculation Section (Q6-Q10)
+            const calcSection = createSection('Calculation (Q6–Q10)', `−${CALC_PENALTY} pts if wrong`, false);
+            for (let i = 6; i <= 10; i++) {
+                const q = `Q${i}`;
+                const answer = examData.answers[q];
+                const topic = examData.solutions[q]?.topic || '';
+                calcSection.appendChild(createQuestionRow(q, answer.toUpperCase(), topic, CALC_PENALTY, false));
+            }
+            container.appendChild(calcSection);
+
+            // Extra Credit MC (Q11)
+            const ecMcSection = createSection('Extra Credit MC (Q11)', `+${EC_MC_POINTS} pts`, true);
+            const q11 = examData.answers['Q11'];
+            const topic11 = examData.solutions['Q11']?.topic || '';
+            ecMcSection.appendChild(createQuestionRow('Q11', q11.toUpperCase(), topic11, EC_MC_POINTS, true));
+            container.appendChild(ecMcSection);
+
+            // Extra Credit Open (Q12)
+            const ecOpenSection = createSection('Extra Credit Open (Q12)', `+${EC_OPEN_PART_POINTS} pts each`, true);
+            const parts = ['a', 'b', 'c'];
+            parts.forEach(part => {
+                const partKey = `Q12${part}`;
+                const partData = examData.solutions['Q12'][`part_${part}`];
+                const topic = partData?.question?.substring(0, 40) + '...' || `Part ${part}`;
+                ecMcSection.appendChild(createQuestionRow(partKey, part.toUpperCase(), topic, EC_OPEN_PART_POINTS, true, `(${part})`));
+            });
+            container.appendChild(ecOpenSection);
+
+            updateScore();
+        }
+
+        function createSection(title, pointsText, isEC) {
+            const section = document.createElement('div');
+            section.className = `section${isEC ? ' ec-section' : ''}`;
+            section.innerHTML = `
+                <div class="section-header">
+                    <span>${title}</span>
+                    <span class="section-points">${pointsText}</span>
+                </div>
+            `;
+            return section;
+        }
+
+        function createQuestionRow(qId, answer, topic, points, isEC, partLabel = '') {
+            const row = document.createElement('div');
+            row.className = 'question-row';
+
+            const label = qId.replace('Q12', 'Q12 ');
+            
+            row.innerHTML = `
+                <span class="q-label">${label}</span>
+                <span class="q-answer">${answer}</span>
+                <span class="q-topic">${topic}</span>
+                <button class="${isEC ? 'ec-btn' : 'wrong-btn'}" data-qid="${qId}" data-points="${points}" data-ec="${isEC}">
+                    ${isEC ? '✓' : '✗'}
+                </button>
+            `;
+
+            const btn = row.querySelector('button');
+            btn.addEventListener('click', () => {
+                if (isEC) {
+                    btn.classList.toggle('marked');
+                    if (btn.classList.contains('marked')) {
+                        earnedEC.add(qId);
+                    } else {
+                        earnedEC.delete(qId);
+                    }
+                } else {
+                    btn.classList.toggle('marked');
+                    if (btn.classList.contains('marked')) {
+                        wrongAnswers.add(qId);
+                    } else {
+                        wrongAnswers.delete(qId);
+                    }
+                }
+                updateScore();
+            });
+
+            return row;
+        }
+
+        function updateScore() {
+            let deductions = 0;
+            let ecPoints = 0;
+
+            wrongAnswers.forEach(qId => {
+                const num = parseInt(qId.replace('Q', ''));
+                if (num <= 5) {
+                    deductions += MC_PENALTY;
+                } else if (num <= 10) {
+                    deductions += CALC_PENALTY;
+                }
+            });
+
+            earnedEC.forEach(qId => {
+                if (qId === 'Q11') {
+                    ecPoints += EC_MC_POINTS;
+                } else if (qId.startsWith('Q12')) {
+                    ecPoints += EC_OPEN_PART_POINTS;
+                }
+            });
+
+            const finalScore = BASE_SCORE - deductions + ecPoints;
+            
+            document.getElementById('final-score').textContent = finalScore;
+            document.getElementById('breakdown').textContent = `${BASE_SCORE} − ${deductions} + ${ecPoints} EC`;
+            document.getElementById('max-score').textContent = `Max possible: ${BASE_SCORE + 20}`;
+        }
+
+        document.getElementById('reset').addEventListener('click', () => {
+            wrongAnswers.clear();
+            earnedEC.clear();
+            document.querySelectorAll('.wrong-btn, .ec-btn').forEach(btn => {
+                btn.classList.remove('marked');
+            });
+            updateScore();
+        });
+    </script>
+</body>
+</html>
